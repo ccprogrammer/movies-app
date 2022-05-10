@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MovieCard extends StatefulWidget {
   const MovieCard({Key? key}) : super(key: key);
@@ -32,12 +33,15 @@ class _MovieCardState extends State<MovieCard> {
               width: 164.w,
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
-              imageUrl:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJj8mi21whbhJRrCU09210xZBByEQOVDZNGw&usqp=CAU",
-              placeholder: (context, url) => Container(
-                height: 250.h,
-                width: 164.w,
-                child: Image.asset('assets/loader.gif'),
+              imageUrl: Const.dummyImage,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[500]!,
+                highlightColor: Colors.grey[300]!,
+                child: Container(
+                  color: Colors.grey,
+                  height: 250.h,
+                  width: 164.w,
+                ),
               ),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),

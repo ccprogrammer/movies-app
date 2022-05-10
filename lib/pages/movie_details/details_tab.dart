@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/pages/view_all/blogs.dart';
+import 'package:movies_app/pages/view_all/cast.dart';
+import 'package:movies_app/pages/view_all/photos.dart';
+import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
 
 class DetailsTab extends StatefulWidget {
-  const DetailsTab({Key? key, required this.controller}) : super(key: key);
-  final ScrollController controller;
+  const DetailsTab({Key? key}) : super(key: key);
 
   @override
   State<DetailsTab> createState() => _DetailsTabState();
@@ -57,9 +60,10 @@ class _DetailsTabState extends State<DetailsTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-            title: 'Cast & Crew',
-          ),
-          for (var i = 0; i < 3; i++) _buildCastTile(name: 'Keanu Reeves'),
+              title: 'Cast & Crew',
+              route: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CastCrew()))),
+          for (var i = 0; i < 3; i++) CastTile(),
         ],
       ),
     );
@@ -72,15 +76,16 @@ class _DetailsTabState extends State<DetailsTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-            title: 'Photos',
-          ),
+              title: 'Photos',
+              route: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Photos()))),
           Container(
             margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  SizedBox(width: 24),
+                  SizedBox(width: 18),
                   for (var i = 0; i < 4; i++)
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 8.w, 0),
@@ -126,7 +131,7 @@ class _DetailsTabState extends State<DetailsTab> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  SizedBox(width: 24),
+                  SizedBox(width: 18),
                   for (var i = 0; i < 4; i++)
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 8.w, 0),
@@ -164,15 +169,16 @@ class _DetailsTabState extends State<DetailsTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-            title: 'Blogs About This Film',
-          ),
+              title: 'Blogs About This Film',
+              route: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Blogs()))),
           SizedBox(height: 8.h),
           Container(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  SizedBox(width: 16.w),
+                  SizedBox(width: 18.w),
                   for (int i = 0; i < 4; i++)
                     Container(
                       margin: EdgeInsets.only(right: 20.w),
@@ -238,7 +244,7 @@ class _DetailsTabState extends State<DetailsTab> {
   }
 
   // Reuseable Widget
-  Widget _buildSectionTitle({String? title}) {
+  Widget _buildSectionTitle({String? title, Function? route}) {
     return Container(
       margin: EdgeInsets.fromLTRB(18, 0, 18, 0),
       child: Row(
@@ -256,7 +262,9 @@ class _DetailsTabState extends State<DetailsTab> {
               minimumSize: Size.zero,
               padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
             ),
-            onPressed: () {},
+            onPressed: () {
+              route!();
+            },
             child: Text(
               'View All',
               style: TextStyle(
@@ -267,68 +275,6 @@ class _DetailsTabState extends State<DetailsTab> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCastTile({String? name}) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        margin: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
-        child: Row(
-          children: [
-            Container(
-              width: 62.w,
-              height: 62.h,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(Const.dummyImage),
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.cover,
-                ),
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-            ),
-            SizedBox(width: 12.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Keanu Reeves',
-                    style: Const.textPrimary.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: Const.medium,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 6.h),
-                  Text(
-                    'JOHN WICK',
-                    style: Const.textSecondary.copyWith(
-                      fontSize: 12.sp,
-                      fontWeight: Const.medium,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 54.w),
-            IconButton(
-              constraints: BoxConstraints(),
-              padding: EdgeInsets.zero,
-              onPressed: () {},
-              icon: Icon(
-                Icons.more_horiz,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
