@@ -19,180 +19,207 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   ScrollController scrollController = ScrollController();
 
-  late TabController _tabBarController;
+  late TabController _tabController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabBarController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
-@override
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _tabBarController.dispose();
+    _tabController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Const.colorPrimary,
-      body: ListView(
-        children: [
-          _buildHeaders(),
-          _buildTitle(),
-          _buildTabBar(),
-        ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Const.colorPrimary,
+        body: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            _buildSliverAppBar(),
+          ],
+          body: _buildTabView(),
+        ),
       ),
     );
   }
 
-  Widget _buildHeaders() {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(18.w, 12.h, 18.w, 0),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(Const.dummyImage),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
+  Widget _buildSliverAppBar() {
+    Widget _buildHeaders() {
+      return Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(18.w, 12.h, 18.w, 0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(Const.dummyImage),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
+            ),
+            height: 260.h,
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+              child: Container(),
             ),
           ),
-          height: 240.h,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Positioned(
+            top: 125,
+            right: 0,
+            left: 0,
+            child: Image.network(
+              Const.dummyImage,
+              width: 164.w,
+              height: 250.h,
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget _buildTitle() {
+      return Container(
+        margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
+        child: Column(
+          children: [
+            Text(
+              'John Wick 3: Parabellum',
+              style: Const.textPrimary,
+            ),
+            SizedBox(height: 16.h),
+            Text(
+              '2hr 10m | R',
+              style: Const.textSecondary,
+            ),
+            SizedBox(height: 9.h),
+            Text(
+              'Action, Crime, Thriller',
+              style: Const.textSecondary,
+            ),
+            SizedBox(height: 29.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
+                Text(
+                  '4.6/5',
+                  style: Const.textPrimary,
+                ),
+                SizedBox(width: 8.w),
+                RatingBar.builder(
+                  initialRating: 5,
+                  minRating: 0,
+                  direction: Axis.horizontal,
+                  glow: false,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
+                  ignoreGestures: true,
+                  itemSize: 20.w,
+                  itemBuilder: (context, _) => Image.asset(
+                    'assets/icon_star.png',
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (double value) {
+                    this.rating = rating;
                   },
-                  child: Icon(
-                    Icons.chevron_left,
-                    size: 34,
-                    color: Colors.white,
-                  ),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Image.asset(
-                    'assets/icon_share.png',
-                    width: 24,
-                  ),
-                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    PreferredSizeWidget _buildTabBar() {
+      return PreferredSize(
+        preferredSize: Size(80.0, 80.0),
+        child: Container(
+          color: Const.colorPrimary,
+          padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),
+          child: Container(
+            height: 48,
+            margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
+            padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
+            decoration: BoxDecoration(
+              border: Border.all(color: Const.colorIndicatorBorder),
+              borderRadius: BorderRadius.circular(50.r),
+            ),
+            child: TabBar(
+              indicator: ShapeDecoration(
+                shape: StadiumBorder(),
+                color: Const.colorIndicator,
+              ),
+              labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
+              tabs: [
+                Tab(text: 'Detail'),
+                Tab(text: 'Reviews'),
+                Tab(text: 'Showtime'),
               ],
             ),
           ),
         ),
-        Positioned(
-          bottom: -125.h,
-          right: 0,
-          left: 0,
-          child: Image.network(
-            Const.dummyImage,
-            width: 164.w,
-            height: 250.h,
-          ),
-        )
-      ],
-    );
-  }
+      );
+    }
 
-  Widget _buildTitle() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
-      child: Column(
-        children: [
-          Text(
-            'John Wick 3: Parabellum',
-            style: Const.textPrimary,
-          ),
-          SizedBox(height: 16.h),
-          Text(
-            '2hr 10m | R',
-            style: Const.textSecondary,
-          ),
-          SizedBox(height: 9.h),
-          Text(
-            'Action, Crime, Thriller',
-            style: Const.textSecondary,
-          ),
-          SizedBox(height: 29.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '4.6/5',
-                style: Const.textPrimary,
-              ),
-              SizedBox(width: 8.w),
-              RatingBar.builder(
-                initialRating: 5,
-                minRating: 0,
-                direction: Axis.horizontal,
-                glow: false,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
-                ignoreGestures: true,
-                itemSize: 20.w,
-                itemBuilder: (context, _) => Image.asset(
-                  'assets/icon_star.png',
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (double value) {
-                  this.rating = rating;
-                },
-              ),
-            ],
-          ),
-        ],
+    return SliverAppBar(
+      iconTheme: IconThemeData(color: Colors.white),
+      titleSpacing: 18.w,
+      expandedHeight: 580.h,
+      backgroundColor: Const.colorPrimary,
+      elevation: 0,
+      floating: true,
+      snap: false,
+      pinned: true,
+      automaticallyImplyLeading: false,
+      leading: IconButton(
+        constraints: BoxConstraints(),
+        padding: EdgeInsets.zero,
+        onPressed: () {},
+        icon: Icon(
+          Icons.chevron_left,
+          size: 32.w,
+        ),
       ),
+      actions: [
+        IconButton(
+          constraints: BoxConstraints(),
+          padding: EdgeInsets.zero,
+          onPressed: () {},
+          icon: Image.asset(
+            'assets/icon_share.png',
+            width: 24.w,
+          ),
+        ),
+        SizedBox(width: 18.w),
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        background: Column(
+          children: [
+            _buildHeaders(),
+            _buildTitle(),
+          ],
+        ),
+      ),
+      bottom: _buildTabBar(),
     );
   }
 
-  Widget _buildTabBar() {
-    return Column(
+  Widget _buildTabView() {
+    return TabBarView(
       children: [
-        Container(
-          height: 48.h,
-          margin: EdgeInsets.fromLTRB(18.w, 50.h, 18.w, 0),
-          padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
-          decoration: BoxDecoration(
-            border: Border.all(color: Const.colorIndicatorBorder),
-            borderRadius: BorderRadius.circular(50.r),
-          ),
-          child: TabBar(
-            controller: _tabBarController,
-            indicator: ShapeDecoration(
-              shape: StadiumBorder(),
-              color: Const.colorIndicator,
-            ),
-            labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
-            tabs: [
-              Tab(text: 'Detail'),
-              Tab(text: 'Reviews'),
-              Tab(text: 'Showtime'),
-            ],
-          ),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 1.4,
-          child: TabBarView(
-            controller: _tabBarController,
-            children: [
-              DetailsTab(controller: scrollController),
-              DetailsTab(controller: scrollController),
-              DetailsTab(controller: scrollController),
-            ],
-          ),
-        ),
+        DetailsTab(controller: scrollController),
+        DetailsTab(controller: scrollController),
+        DetailsTab(controller: scrollController),
       ],
     );
   }

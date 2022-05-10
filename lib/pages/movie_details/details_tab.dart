@@ -14,18 +14,15 @@ class DetailsTab extends StatefulWidget {
 class _DetailsTabState extends State<DetailsTab> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(0, 32.h, 0, 0),
-      child: Column(
-        // controller: widget.controller,
-        children: [
-          _buildSynopsis(),
-          _buildCast(),
-          _buildPhotos(),
-          _buildVideos(),
-          _buildBlogs(),
-        ],
-      ),
+    return ListView(
+      children: [
+        _buildSynopsis(),
+        _buildCast(),
+        _buildPhotos(),
+        _buildVideos(),
+        _buildBlogs(),
+        SizedBox(height: 24.h),
+      ],
     );
   }
 
