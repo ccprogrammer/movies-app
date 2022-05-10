@@ -42,7 +42,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       child: Scaffold(
         backgroundColor: Const.colorPrimary,
         body: NestedScrollView(
-          // floatHeaderSlivers: true,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
           ],
@@ -76,23 +75,23 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        constraints: BoxConstraints(),
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        iconSize: 32.w,
-                        icon: Icon(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
                           Icons.chevron_left,
                           color: Colors.white,
+                          size: 32.w,
                         ),
                       ),
-                      IconButton(
-                        constraints: BoxConstraints(),
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        iconSize: 24.w,
-                        icon: Image.asset(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Image.asset(
                           'assets/icon_share.png',
+                          width: 24.w,height: 24.h,
                         ),
                       ),
                     ],
