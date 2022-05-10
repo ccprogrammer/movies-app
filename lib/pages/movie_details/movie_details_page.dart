@@ -42,7 +42,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       child: Scaffold(
         backgroundColor: Const.colorPrimary,
         body: NestedScrollView(
-          floatHeaderSlivers: true,
+          // floatHeaderSlivers: true,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
           ],
@@ -58,7 +58,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         clipBehavior: Clip.none,
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(18.w, 12.h, 18.w, 0),
+            padding: EdgeInsets.fromLTRB(10.w, 12.h, 18.w, 0),
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -70,7 +70,35 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             height: 260.h,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-              child: Container(),
+              child: SafeArea(
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        constraints: BoxConstraints(),
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        iconSize: 32.w,
+                        icon: Icon(
+                          Icons.chevron_left,
+                          color: Colors.white,
+                        ),
+                      ),
+                      IconButton(
+                        constraints: BoxConstraints(),
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        iconSize: 24.w,
+                        icon: Image.asset(
+                          'assets/icon_share.png',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           Positioned(
@@ -181,6 +209,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       snap: false,
       pinned: true,
       automaticallyImplyLeading: false,
+      /*
       leading: IconButton(
         constraints: BoxConstraints(),
         padding: EdgeInsets.zero,
@@ -202,7 +231,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         ),
         SizedBox(width: 18.w),
       ],
+     */
       flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.pin,
         background: Column(
           children: [
             _buildHeaders(),
@@ -215,12 +246,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildTabView() {
-    return TabBarView(
-      children: [
-        DetailsTab(controller: scrollController),
-        DetailsTab(controller: scrollController),
-        DetailsTab(controller: scrollController),
-      ],
+    return Expanded(
+      child: TabBarView(
+        children: [
+          DetailsTab(controller: scrollController),
+          DetailsTab(controller: scrollController),
+          DetailsTab(controller: scrollController),
+        ],
+      ),
     );
   }
 }

@@ -15,6 +15,7 @@ class _DetailsTabState extends State<DetailsTab> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.zero,
       children: [
         _buildSynopsis(),
         _buildCast(),
