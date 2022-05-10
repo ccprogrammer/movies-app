@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 
 class Const {
 
-  static const String dummyImage =  'https://gintong.files.wordpress.com/2019/05/blog-andika-priyandana-john-wick-ch4623545575702282213..jpg';
+  static const String dummyImage =  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJj8mi21whbhJRrCU09210xZBByEQOVDZNGw&usqp=CAU';
   // colors
   static const Color colorPrimary = Color(0xff0F1B2B);
   static const Color colorIndicator = Color(0xffD9251D);

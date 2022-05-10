@@ -61,7 +61,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(Const.dummyImage),
+                image: NetworkImage(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJj8mi21whbhJRrCU09210xZBByEQOVDZNGw&usqp=CAU'),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),
@@ -91,7 +92,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                         },
                         child: Image.asset(
                           'assets/icon_share.png',
-                          width: 24.w,height: 24.h,
+                          width: 24.w,
+                          height: 24.h,
                         ),
                       ),
                     ],
@@ -104,8 +106,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             top: 125,
             right: 0,
             left: 0,
-            child: Image.network(
-              Const.dummyImage,
+            child: 
+            Image.network(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJj8mi21whbhJRrCU09210xZBByEQOVDZNGw&usqp=CAU',
               width: 164.w,
               height: 250.h,
             ),
@@ -201,7 +204,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return SliverAppBar(
       iconTheme: IconThemeData(color: Colors.white),
       titleSpacing: 18.w,
-      expandedHeight: 580.h,
+      expandedHeight: MediaQuery.of(context).size.height * 0.7,
       backgroundColor: Const.colorPrimary,
       elevation: 0,
       floating: true,
@@ -245,14 +248,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildTabView() {
-    return Expanded(
-      child: TabBarView(
-        children: [
-          DetailsTab(controller: scrollController),
-          DetailsTab(controller: scrollController),
-          DetailsTab(controller: scrollController),
-        ],
-      ),
+    return TabBarView(
+      children: [
+        DetailsTab(controller: scrollController),
+        DetailsTab(controller: scrollController),
+        DetailsTab(controller: scrollController),
+      ],
     );
   }
 }

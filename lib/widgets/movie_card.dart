@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
@@ -23,12 +24,22 @@ class _MovieCardState extends State<MovieCard> {
       },
       child: Container(
         padding: EdgeInsets.all(2),
-        width: 165.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-             Const.dummyImage,
+            CachedNetworkImage(
+              height: 250.h,
+              width: 164.w,
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+              imageUrl:
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJj8mi21whbhJRrCU09210xZBByEQOVDZNGw&usqp=CAU",
+              placeholder: (context, url) => Container(
+                height: 250.h,
+                width: 164.w,
+                child: Image.asset('assets/loader.gif'),
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
             SizedBox(height: 16.h),
             RatingBar.builder(

@@ -91,6 +91,7 @@ class _DetailsTabState extends State<DetailsTab> {
                         image: DecorationImage(
                           image: NetworkImage(Const.dummyImage),
                           fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
                         ),
                       ),
                       child: Material(
@@ -135,6 +136,7 @@ class _DetailsTabState extends State<DetailsTab> {
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
                           image: NetworkImage(Const.dummyImage),
+                          alignment: Alignment.topCenter,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -192,6 +194,7 @@ class _DetailsTabState extends State<DetailsTab> {
                                       Const.dummyImage,
                                     ),
                                     fit: BoxFit.cover,
+                                    alignment: Alignment.topCenter,
                                     colorFilter: ColorFilter.mode(
                                         Colors.black.withOpacity(0.3),
                                         BlendMode.darken),
@@ -281,6 +284,7 @@ class _DetailsTabState extends State<DetailsTab> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(Const.dummyImage),
+                  alignment: Alignment.topCenter,
                   fit: BoxFit.cover,
                 ),
                 color: Colors.white,
