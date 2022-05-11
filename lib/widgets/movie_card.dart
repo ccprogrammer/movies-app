@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -18,82 +19,84 @@ class _MovieCardState extends State<MovieCard> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MovieDetailsPage(
-                      url: widget.url,
-                    )));
-      },
-      child: Container(
-        padding: EdgeInsets.all(2),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CachedNetworkImage(
-              imageUrl: widget.url.toString(),
-              imageBuilder: (context, _) {
-                return Hero(
-                  transitionOnUserGestures: true,
-                  tag: widget.url.toString(),
-                  child: Image.network(
-                    widget.url.toString(),
-                    height: 250.h,
-                    width: 164.w,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                  ),
-                );
-              },
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey[500]!,
-                highlightColor: Colors.grey[300]!,
-                child: Container(
-                  color: Colors.grey,
-                  height: 250.h,
-                  width: 164.w,
-                ),
-              ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
-            SizedBox(height: 16.h),
-            RatingBar.builder(
-              initialRating: 5,
-              minRating: 0,
-              direction: Axis.horizontal,
-              glow: false,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              ignoreGestures: true,
-              itemSize: 14,
-              itemBuilder: (context, _) => Image.asset(
-                'assets/icon_star.png',
-                color: Colors.amber,
-              ),
-              onRatingUpdate: (double value) {
-                this.rating = rating;
-              },
-            ),
-            SizedBox(height: 7.h),
-            Text(
-              'John Wick 3',
-              style: Const.textPrimary.copyWith(fontSize: 16.sp),
-            ),
-            SizedBox(height: 4.h),
-            Row(
+    return OpenContainer(
+      closedColor: Const.colorPrimary,
+      openColor: Const.colorPrimary,
+      closedBuilder: (context, action) {
+        return InkWell(
+          onTap: () {
+            action();
+          },
+          child: Container(
+            padding: EdgeInsets.all(2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Crime • 2hr 10m | R',
-                  style: Const.textSecondary,
+                CachedNetworkImage(
+                  imageUrl: widget.url.toString(),
+                  imageBuilder: (context, _) {
+                    return Image.network(
+                      widget.url.toString(),
+                      height: 250.h,
+                      width: 164.w,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    );
+                  },
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[500]!,
+                    highlightColor: Colors.grey[300]!,
+                    child: Container(
+                      color: Colors.grey,
+                      height: 250.h,
+                      width: 164.w,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
+                SizedBox(height: 16.h),
+                RatingBar.builder(
+                  initialRating: 5,
+                  minRating: 0,
+                  direction: Axis.horizontal,
+                  glow: false,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  ignoreGestures: true,
+                  itemSize: 14,
+                  itemBuilder: (context, _) => Image.asset(
+                    'assets/icon_star.png',
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (double value) {
+                    this.rating = rating;
+                  },
+                ),
+                SizedBox(height: 7.h),
+                Text(
+                  'John Wick 3',
+                  style: Const.textPrimary.copyWith(fontSize: 16.sp),
+                ),
+                SizedBox(height: 4.h),
+                Row(
+                  children: [
+                    Text(
+                      'Crime • 2hr 10m | R',
+                      style: Const.textSecondary,
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          ),
+        );
+      },
+      openBuilder: (context, action) {
+        return MovieDetailsPage(
+          url: widget.url,
+        );
+      },
     );
   }
 }

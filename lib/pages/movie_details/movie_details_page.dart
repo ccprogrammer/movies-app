@@ -128,17 +128,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           top: 125.h,
           right: 0,
           left: 0,
-          child: Hero(
-            tag: widget.url.toString(),
-            child: Container(
-              margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
-              width: 164.w,
-              height: 250.h,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(widget.url.toString()),
-                  fit: BoxFit.cover,
-                ),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
+            width: 164.w,
+            height: 250.h,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(widget.url.toString()),
+                fit: BoxFit.cover,
               ),
             ),
           ),
