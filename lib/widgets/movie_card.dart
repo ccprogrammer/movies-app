@@ -22,6 +22,7 @@ class _MovieCardState extends State<MovieCard> {
     return OpenContainer(
       closedColor: Const.colorPrimary,
       openColor: Const.colorPrimary,
+      closedElevation: 0,
       closedBuilder: (context, action) {
         return InkWell(
           onTap: () {

@@ -9,6 +9,8 @@ class Const {
   static const Color colorIndicator = Color(0xffD9251D);
   static const Color colorIndicatorBorder = Color(0xff2C3F5B);
   static const Color colorBlue = Color(0xff47CFFF);
+  static const Color colorChatBubble = Color(0xff2B3543);
+
 
 
   // fontweight

@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
+import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage({Key? key, this.url}) : super(key: key);
@@ -232,7 +233,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return TabBarView(
       children: [
         DetailsTab(),
-        DetailsTab(),
+        ReviewsTab(),
         DetailsTab(),
       ],
     );
