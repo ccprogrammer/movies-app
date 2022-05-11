@@ -200,7 +200,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   PreferredSizeWidget _buildTabBar() {
     return PreferredSize(
-      preferredSize: Size(80.0, 80.0),
+      preferredSize: Size(80.0.w, 80.0.h),
       child: Container(
         color: Const.colorPrimary,
         padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),

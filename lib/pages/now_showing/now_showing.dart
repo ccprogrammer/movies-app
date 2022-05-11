@@ -17,13 +17,15 @@ class _NowShowingState extends State<NowShowing> {
       body: Container(
         padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             SizedBox(height: 24),
             GridView.builder(
+              padding: EdgeInsets.zero,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
-                childAspectRatio: 16/ 32,
+                childAspectRatio: 16 / 32,
               ),
               primary: false,
               shrinkWrap: true,
