@@ -7,8 +7,8 @@ import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MovieCard extends StatefulWidget {
-  const MovieCard({Key? key}) : super(key: key);
-
+  const MovieCard({Key? key, this.url}) : super(key: key);
+  final String? url;
   @override
   State<MovieCard> createState() => _MovieCardState();
 }
@@ -20,8 +20,12 @@ class _MovieCardState extends State<MovieCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => MovieDetailsPage()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MovieDetailsPage(
+                      url: widget.url,
+                    )));
       },
       child: Container(
         padding: EdgeInsets.all(2),
@@ -29,11 +33,20 @@ class _MovieCardState extends State<MovieCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CachedNetworkImage(
-              height: 250.h,
-              width: 164.w,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-              imageUrl: Const.dummyImage,
+              imageUrl: widget.url.toString(),
+              imageBuilder: (context, _) {
+                return Hero(
+                  transitionOnUserGestures: true,
+                  tag: widget.url.toString(),
+                  child: Image.network(
+                    widget.url.toString(),
+                    height: 250.h,
+                    width: 164.w,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+                );
+              },
               placeholder: (context, url) => Shimmer.fromColors(
                 baseColor: Colors.grey[500]!,
                 highlightColor: Colors.grey[300]!,

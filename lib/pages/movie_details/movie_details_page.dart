@@ -7,7 +7,8 @@ import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 
 class MovieDetailsPage extends StatefulWidget {
-  const MovieDetailsPage({Key? key}) : super(key: key);
+  const MovieDetailsPage({Key? key, this.url}) : super(key: key);
+  final String? url;
 
   @override
   State<MovieDetailsPage> createState() => _MovieDetailsPageState();
@@ -16,9 +17,7 @@ class MovieDetailsPage extends StatefulWidget {
 class _MovieDetailsPageState extends State<MovieDetailsPage>
     with SingleTickerProviderStateMixin {
   double rating = 0.0;
-
   ScrollController scrollController = ScrollController();
-
   late TabController _tabController;
 
   @override
@@ -129,14 +128,17 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           top: 125.h,
           right: 0,
           left: 0,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
-            width: 164.w,
-            height: 250.h,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(Const.dummyImage),
-                fit: BoxFit.cover,
+          child: Hero(
+            tag: widget.url.toString(),
+            child: Container(
+              margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
+              width: 164.w,
+              height: 250.h,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(widget.url.toString()),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

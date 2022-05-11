@@ -20,6 +20,7 @@ class _DetailsTabState extends State<DetailsTab> {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
+        SizedBox(height: 12.h),
         _buildSynopsis(),
         _buildCast(),
         _buildPhotos(),
