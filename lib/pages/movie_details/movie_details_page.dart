@@ -136,7 +136,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(widget.url.toString()),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),

@@ -10,6 +10,10 @@ class Const {
   static const Color colorIndicatorBorder = Color(0xff2C3F5B);
   static const Color colorBlue = Color(0xff47CFFF);
   static const Color colorChatBubble = Color(0xff2B3543);
+  static const Color colorSplashScreen = Color(0xffE51937);
+  static const Color colorSplashScreen2 = Color(0xffDB5252);
+
+
 
 
 
