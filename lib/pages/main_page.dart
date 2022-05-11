@@ -37,7 +37,6 @@ class _MainPageState extends State<MainPage> {
       iconTheme: IconThemeData(color: Colors.white),
       titleSpacing: 18.w,
       backgroundColor: Const.colorPrimary,
-      expandedHeight: 120.h,
       elevation: 0,
       floating: true,
       snap: true,
@@ -60,7 +59,7 @@ class _MainPageState extends State<MainPage> {
         SizedBox(width: 18.w),
       ],
       bottom: PreferredSize(
-        preferredSize: new Size(100.w, 80.h),
+        preferredSize: new Size(80.w, 80.h),
         child: Container(
           color: Const.colorPrimary,
           padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),
