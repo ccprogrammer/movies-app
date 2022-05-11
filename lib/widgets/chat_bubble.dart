@@ -25,6 +25,14 @@ class _ChatBubbleState extends State<ChatBubble> {
             painter: Bubble(),
             child: Container(
               width: double.infinity,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  spreadRadius: 1,
+                  blurRadius: 10,
+                  offset: Offset(0, 0), // changes position of shadow
+                )
+              ]),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 24.h),
                 child: Column(
