@@ -1,29 +1,26 @@
-import 'package:http/http.dart';
-
-class MovieModel {
+class NowPlayingModel {
   int? id;
   String? title;
   String? poster;
   double? rating;
 
-  MovieModel({
+  NowPlayingModel({
     this.id,
     this.title,
     this.poster,
     this.rating,
   });
 
-  MovieModel.fromJson(Map<String, dynamic> json) {
+  NowPlayingModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    title = json['title'];
+    title = json['original_title'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
     rating = json['vote_average'].toDouble();
-
   }
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
+      'original_title': title,
       'poster_path': poster,
       'vote_average': rating,
     };

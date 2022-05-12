@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_model.dart';
+import 'package:movies_app/models/now_playing_model.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
 
-class NowShowing extends StatefulWidget {
-  const NowShowing({Key? key}) : super(key: key);
+class NowPlaying extends StatefulWidget {
+  const NowPlaying({Key? key}) : super(key: key);
 
   @override
-  State<NowShowing> createState() => _NowShowingState();
+  State<NowPlaying> createState() => _NowPlayingState();
 }
 
-class _NowShowingState extends State<NowShowing> {
+class _NowPlayingState extends State<NowPlaying> {
   @override
   Widget build(BuildContext context) {
     var nowPlayingProvider = Provider.of<NowPlayingProvider>(context);
