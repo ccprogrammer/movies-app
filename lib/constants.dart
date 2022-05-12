@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
+import '.api.dart';
 
 class Const {
-  // api
-
   // Example '$baseUrl/now_playing?api_key=88ce4ef639f3a4e27b5420982212c77d'
-
   static const String baseUrl = 'https://api.themoviedb.org/3/movie';
-  static const String apiKey = '?api_key=YOUR_KEY';
-
-  // not used maybe
-  static const String readToken =
-      'YOUR_TOKEN';
+  static const String apiKey = '?api_key=${API.apiKey}';
 
   /*        
         /now_playing
@@ -28,7 +22,7 @@ class Const {
         this is for movie details
         /{movie_id}
 
-      */
+  */
 
   static const String dummyImage =
       'https://www.marketeers.com/wp-content/uploads/2019/05/Keanu-Reeves-John-Wick-3-Neon-Poster.jpg';

@@ -26,6 +26,7 @@
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.README.md
 .packages
 .pub-cache/
 .pub/
@@ -44,3 +45,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# dart files
+.api.dart

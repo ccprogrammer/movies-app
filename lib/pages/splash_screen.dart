@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/pages/main_page.dart';
+import 'package:movies_app/pages/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(milliseconds: 2000), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     });
   }
 

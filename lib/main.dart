@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/pages/main_page.dart';
+import 'package:movies_app/pages/home_page.dart';
 import 'package:movies_app/pages/splash_screen.dart';
 
 void main() => runApp(MyApp());
