@@ -1,6 +1,8 @@
 class MovieDetailModel {
   int? id;
   String? title;
+  String? synopsis;
+
   String? poster;
   double? rating;
   List<Genre>? genre;
@@ -8,6 +10,7 @@ class MovieDetailModel {
   MovieDetailModel({
     this.id,
     this.title,
+    this.synopsis,
     this.poster,
     this.rating,
     this.genre,
@@ -16,6 +19,7 @@ class MovieDetailModel {
   MovieDetailModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['original_title'];
+    synopsis = json['overview'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
     rating = json['vote_average'].toDouble();
     genre = List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x)));

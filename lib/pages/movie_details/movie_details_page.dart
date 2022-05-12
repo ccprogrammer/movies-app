@@ -233,7 +233,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget _buildTabView() {
     return TabBarView(
       children: [
-        DetailsTab(),
+        DetailsTab(movie: widget.movie,),
         ReviewsTab(),
         DetailsTab(),
       ],
@@ -264,5 +264,5 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       ),
     );
   }
-  
+
 }

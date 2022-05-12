@@ -28,8 +28,6 @@ class _MovieCardState extends State<MovieCard> {
         return InkWell(
           onTap: () {
             action();
-            for (var i = 0; i < widget.movie.genre!.length; i++)
-              print(widget.movie.genre![i].name);
           },
           borderRadius: BorderRadius.circular(12),
           child: Column(

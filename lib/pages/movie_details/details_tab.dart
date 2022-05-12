@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/movie_detail_model.dart';
 import 'package:movies_app/pages/view_all/blogs.dart';
 import 'package:movies_app/pages/view_all/cast.dart';
 import 'package:movies_app/pages/view_all/photos.dart';
@@ -8,7 +9,8 @@ import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
 
 class DetailsTab extends StatefulWidget {
-  const DetailsTab({Key? key}) : super(key: key);
+  const DetailsTab({Key? key, this.movie}) : super(key: key);
+  final MovieDetailModel? movie;
 
   @override
   State<DetailsTab> createState() => _DetailsTabState();
@@ -103,7 +105,7 @@ class _DetailsTabState extends State<DetailsTab> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10),
                           onTap: () {},
                         ),
                       ),
@@ -150,7 +152,7 @@ class _DetailsTabState extends State<DetailsTab> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10),
                           onTap: () {},
                         ),
                       ),
