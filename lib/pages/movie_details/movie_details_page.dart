@@ -4,14 +4,14 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'dart:ui';
 
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_detail_model.dart';
+import 'package:movies_app/models/movie_model.dart';
 
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage({Key? key, required this.movie}) : super(key: key);
-  final MovieDetailModel movie;
+  final MovieModel movie;
 
   @override
   State<MovieDetailsPage> createState() => _MovieDetailsPageState();

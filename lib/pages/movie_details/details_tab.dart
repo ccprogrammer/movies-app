@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_detail_model.dart';
+import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/view_all/blogs.dart';
 import 'package:movies_app/pages/view_all/cast.dart';
 import 'package:movies_app/pages/view_all/photos.dart';
@@ -10,7 +10,7 @@ import 'package:movies_app/widgets/expandable_text.dart';
 
 class DetailsTab extends StatefulWidget {
   const DetailsTab({Key? key, this.movie}) : super(key: key);
-  final MovieDetailModel? movie;
+  final MovieModel? movie;
 
   @override
   State<DetailsTab> createState() => _DetailsTabState();
@@ -47,7 +47,7 @@ class _DetailsTabState extends State<DetailsTab> {
           ),
           SizedBox(height: 16),
           ExpandableText(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris aliquam volutpat tellus at fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus rhoncus gravida dignissim. Nulla viverra ante nec lacus gravida lacinia. Vivamus condimentum risus quis mattis aliquet. Fusce semper orci in est eleifend hendrerit. Praesent viverra velit quis nisl viverra, at bibendum est vulputate. Donec at tempus.',
+            '${widget.movie!.synopsis}',
             trimLines: 4,
             style: Const.textSecondary,
           ),

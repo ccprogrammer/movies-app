@@ -1,13 +1,12 @@
-class MovieDetailModel {
+class MovieModel {
   int? id;
   String? title;
   String? synopsis;
-
   String? poster;
   double? rating;
   List<Genre>? genre;
 
-  MovieDetailModel({
+  MovieModel({
     this.id,
     this.title,
     this.synopsis,
@@ -16,7 +15,7 @@ class MovieDetailModel {
     this.genre,
   });
 
-  MovieDetailModel.fromJson(Map<String, dynamic> json) {
+  MovieModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['original_title'];
     synopsis = json['overview'];

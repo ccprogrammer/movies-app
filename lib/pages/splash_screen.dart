@@ -16,10 +16,14 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   getNowPlaying() async {
-    await Provider.of<NowPlayingProvider>(context, listen: false)
-        .getNowPlaying();
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+    Provider.of<NowPlayingProvider>(context, listen: false).getNowPlaying();
+
+    Timer(Duration(milliseconds: 2000), () {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+          (route) => false);
+    });
   }
 
   @override

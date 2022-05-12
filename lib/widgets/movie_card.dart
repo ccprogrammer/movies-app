@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_detail_model.dart';
+import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MovieCard extends StatefulWidget {
   const MovieCard({Key? key, required this.movie}) : super(key: key);
-  final MovieDetailModel movie;
+  final MovieModel movie;
   @override
   State<MovieCard> createState() => _MovieCardState();
 }

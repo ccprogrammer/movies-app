@@ -21,12 +21,6 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () async {
-        //     Http().getMovieDetail(297761);
-        //   },
-        //   child: Icon(Icons.print),
-        // ),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
