@@ -2,9 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
 class Const {
+  // api
+
+  // Example '$baseUrl/now_playing?api_key=88ce4ef639f3a4e27b5420982212c77d'
+
+  static const String baseUrl = 'https://api.themoviedb.org/3/movie';
+  static const String apiKey = '?api_key=YOUR_KEY';
+
+  // not used maybe
+  static const String readToken =
+      'YOUR_TOKEN';
+
+  /*        
+        /now_playing
+        /latest
+        /popular
+        /top_rated
+        /upcoming
+        /{movie_id}/images
+        /{movie_id}/videos
+        /{movie_id}/reviews
+        /{movie_id}/similar
+        /{movie_id}/recommendations
+
+        this is for movie details
+        /{movie_id}
+
+      */
+
   static const String dummyImage =
       'https://www.marketeers.com/wp-content/uploads/2019/05/Keanu-Reeves-John-Wick-3-Neon-Poster.jpg';
-      
   // colors
   static const Color colorPrimary = Color(0xff0F1B2B);
   static const Color colorIndicator = Color(0xffD9251D);
