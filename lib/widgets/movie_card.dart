@@ -28,6 +28,8 @@ class _MovieCardState extends State<MovieCard> {
         return InkWell(
           onTap: () {
             action();
+            for (var i = 0; i < widget.movie.genre!.length; i++)
+              print(widget.movie.genre![i].name);
           },
           borderRadius: BorderRadius.circular(12),
           child: Column(
@@ -81,11 +83,7 @@ class _MovieCardState extends State<MovieCard> {
                 maxLines: 2,
               ),
               SizedBox(height: 4.h),
-              Text(
-                'Crime • 2hr 10m | R',
-                style: Const.textSecondary,
-                maxLines: 1,
-              ),
+              _buildGenre(),
             ],
           ),
         );
@@ -95,6 +93,23 @@ class _MovieCardState extends State<MovieCard> {
           movie: widget.movie,
         );
       },
+    );
+  }
+
+  Widget _buildGenre() {
+    return Container(
+      child: Wrap(
+        children: [
+          for (var i = 0; i < widget.movie.genre!.length; i++)
+            Text(
+              widget.movie.genre![i].name == widget.movie.genre!.last.name
+                  ? '${widget.movie.genre![i].name} '
+                  : '${widget.movie.genre![i].name}, ',
+              maxLines: 1,
+              style: Const.textSecondary,
+            ),
+        ],
+      ),
     );
   }
 }

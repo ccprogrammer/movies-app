@@ -264,4 +264,5 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       ),
     );
   }
+  
 }
