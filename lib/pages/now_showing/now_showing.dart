@@ -20,12 +20,12 @@ class _NowPlayingState extends State<NowPlaying> {
 
     return Scaffold(
       backgroundColor: Const.colorPrimary,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print(nowPlayingProvider.nowPlaying);
-        },
-        child: Icon(Icons.print),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     print(nowPlayingProvider.nowPlaying);
+      //   },
+      //   child: Icon(Icons.print),
+      // ),
       body: Container(
         padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
         child: ListView(
