@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/now_playing_model.dart';
+
 import 'package:movies_app/pages/coming_soon/coming_soon.dart';
 import 'package:movies_app/pages/now_showing/now_showing.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
@@ -21,12 +21,12 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            print(await Http().getMovieDetail(550));
-          },
-          child: Icon(Icons.print),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () async {
+        //     Http().getMovieDetail(297761);
+        //   },
+        //   child: Icon(Icons.print),
+        // ),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),

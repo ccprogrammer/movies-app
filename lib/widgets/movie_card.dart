@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/now_playing_model.dart';
+import 'package:movies_app/models/movie_detail_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MovieCard extends StatefulWidget {
   const MovieCard({Key? key, required this.movie}) : super(key: key);
-  final NowPlayingModel movie;
+  final MovieDetailModel movie;
   @override
   State<MovieCard> createState() => _MovieCardState();
 }
@@ -28,7 +28,6 @@ class _MovieCardState extends State<MovieCard> {
         return InkWell(
           onTap: () {
             action();
-            print(widget.movie.rating);
           },
           borderRadius: BorderRadius.circular(12),
           child: Column(
@@ -82,11 +81,11 @@ class _MovieCardState extends State<MovieCard> {
                 maxLines: 2,
               ),
               SizedBox(height: 4.h),
-              // Text(
-              //   'Crime • 2hr 10m | R',
-              //   style: Const.textSecondary,
-              //   maxLines: 1,
-              // ),
+              Text(
+                'Crime • 2hr 10m | R',
+                style: Const.textSecondary,
+                maxLines: 1,
+              ),
             ],
           ),
         );

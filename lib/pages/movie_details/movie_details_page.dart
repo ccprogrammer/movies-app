@@ -4,13 +4,14 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'dart:ui';
 
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/now_playing_model.dart';
+import 'package:movies_app/models/movie_detail_model.dart';
+
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage({Key? key, required this.movie}) : super(key: key);
-  final NowPlayingModel movie;
+  final MovieDetailModel movie;
 
   @override
   State<MovieDetailsPage> createState() => _MovieDetailsPageState();
@@ -65,6 +66,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.pin,
         background: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildHeaders(),
             _buildTitle(),
@@ -149,9 +151,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return Container(
       margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             '${widget.movie.title}',
+            textAlign: TextAlign.center,
             style: Const.textPrimary,
           ),
           SizedBox(height: 16.h),
@@ -160,12 +164,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           //   style: Const.textSecondary,
           // ),
           // SizedBox(height: 9.h),
-          // Text(
-          //   'Action, Crime, Thriller',
-          //   style: Const.textSecondary,
-          // ),
-          // SizedBox(height: 29.h),
-
+          _buildGenre(),
+          SizedBox(height: 29.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -237,6 +237,31 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         ReviewsTab(),
         DetailsTab(),
       ],
+    );
+  }
+
+  Widget _buildGenre() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(68, 0, 68, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                for (var i = 0; i < widget.movie.genre!.length; i++)
+                  Text(
+                    widget.movie.genre![i].name == widget.movie.genre!.last.name
+                        ? '${widget.movie.genre![i].name} '
+                        : '${widget.movie.genre![i].name}, ',
+                    style: Const.textSecondary,
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

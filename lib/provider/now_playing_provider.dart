@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/now_playing_model.dart';
+import 'package:movies_app/models/movie_detail_model.dart';
 import 'package:movies_app/services/http_services.dart';
 import 'package:provider/provider.dart';
 
 class NowPlayingProvider with ChangeNotifier {
-  List<NowPlayingModel> _nowPlaying = [];
+  List<MovieDetailModel> _nowPlaying = [];
 
-  List<NowPlayingModel> get nowPlaying => _nowPlaying;
+  List<MovieDetailModel> get nowPlaying => _nowPlaying;
 
-  set nowPlaying(List<NowPlayingModel> _nowPlaying) {
+  set nowPlaying(List<MovieDetailModel> _nowPlaying) {
     _nowPlaying = _nowPlaying;
     notifyListeners();
   }
 
   Future getNowPlaying() async {
     try {
-      List<NowPlayingModel> nowPlaying = await Http().getNowPlaying();
+      List<MovieDetailModel> nowPlaying = await Http().getNowPlaying();
       _nowPlaying = nowPlaying;
     } catch (error) {
       print(error);
