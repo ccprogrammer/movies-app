@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
 class Const {
-
-  static const String dummyImage =  'https://www.marketeers.com/wp-content/uploads/2019/05/Keanu-Reeves-John-Wick-3-Neon-Poster.jpg';
+  static const String dummyImage =
+      'https://www.marketeers.com/wp-content/uploads/2019/05/Keanu-Reeves-John-Wick-3-Neon-Poster.jpg';
+      
   // colors
   static const Color colorPrimary = Color(0xff0F1B2B);
   static const Color colorIndicator = Color(0xffD9251D);
@@ -12,10 +13,6 @@ class Const {
   static const Color colorChatBubble = Color(0xff2B3543);
   static const Color colorSplashScreen = Color(0xffE51937);
   static const Color colorSplashScreen2 = Color(0xffDB5252);
-
-
-
-
 
   // fontweight
   static const FontWeight light = FontWeight.w300;

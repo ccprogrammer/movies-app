@@ -24,7 +24,7 @@ class _DetailsTabState extends State<DetailsTab> {
         _buildSynopsis(),
         _buildCast(),
         _buildPhotos(),
-        _buildVideos(),
+        // _buildVideos(),
         _buildBlogs(),
         SizedBox(height: 24.h),
       ],
@@ -103,6 +103,7 @@ class _DetailsTabState extends State<DetailsTab> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
                           onTap: () {},
                         ),
                       ),
@@ -149,6 +150,7 @@ class _DetailsTabState extends State<DetailsTab> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
                           onTap: () {},
                         ),
                       ),
@@ -179,7 +181,7 @@ class _DetailsTabState extends State<DetailsTab> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  SizedBox(width: 18.w),
+                  SizedBox(width: 14.w),
                   for (int i = 0; i < 4; i++)
                     Container(
                       margin: EdgeInsets.only(right: 20.w),

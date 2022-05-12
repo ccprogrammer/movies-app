@@ -85,7 +85,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(Const.dummyImage),
+              image: NetworkImage(widget.url.toString()),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
