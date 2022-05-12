@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/home_page.dart';
+import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,14 +15,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  getNowPlaying() async {
+    await Provider.of<NowPlayingProvider>(context, listen: false)
+        .getNowPlaying();
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(milliseconds: 2000), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
-    });
+
+    getNowPlaying();
   }
 
   @override

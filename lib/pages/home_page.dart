@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/coming_soon/coming_soon.dart';
 import 'package:movies_app/pages/now_showing/now_showing.dart';
+import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:movies_app/services/http_services.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,16 +21,12 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
           ],
-          body: TabBarView(
-            children: [
-              NowShowing(),
-              ComingSoon(),
-            ],
-          ),
+          body: _buildTabBarView(),
         ),
       ),
     );
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       pinned: true,
       automaticallyImplyLeading: false,
       title: Text(
-        'Star Movie',
+        Const.appName,
         style: Const.textPrimary,
       ),
       actions: [
@@ -94,6 +94,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTabBarView() {
+    return TabBarView(
+      children: [
+        NowShowing(),
+        ComingSoon(),
+      ],
     );
   }
 }

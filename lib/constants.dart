@@ -24,6 +24,7 @@ class Const {
 
   */
 
+  static const String appName = 'OneMovie';
   static const String dummyImage =
       'https://www.marketeers.com/wp-content/uploads/2019/05/Keanu-Reeves-John-Wick-3-Neon-Poster.jpg';
   // colors

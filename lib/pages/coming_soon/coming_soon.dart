@@ -47,23 +47,23 @@ class _ComingSoonState extends State<ComingSoon> {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(height: 24.h),
-            GridView.builder(
-              padding: EdgeInsets.zero,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12.w,
-                mainAxisSpacing: 12.h,
-                childAspectRatio: 16.w / 35.h,
-              ),
-              primary: false,
-              shrinkWrap: true,
-              itemCount: dummyImage.length,
-              itemBuilder: (context, index) {
-                return MovieCard(
-                  url: dummyImage[index]['url'],
-                );
-              },
-            ),
+            // GridView.builder(
+            //   padding: EdgeInsets.zero,
+            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2,
+            //     crossAxisSpacing: 12.w,
+            //     mainAxisSpacing: 12.h,
+            //     childAspectRatio: 16.w / 35.h,
+            //   ),
+            //   primary: false,
+            //   shrinkWrap: true,
+            //   itemCount: dummyImage.length,
+            //   itemBuilder: (context, index) {
+            //     return MovieCard(
+            //       movie: ,
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

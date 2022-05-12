@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'dart:ui';
 
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 
 class MovieDetailsPage extends StatefulWidget {
-  const MovieDetailsPage({Key? key, this.url}) : super(key: key);
-  final String? url;
+  const MovieDetailsPage({Key? key, required this.movie}) : super(key: key);
+  final MovieModel movie;
 
   @override
   State<MovieDetailsPage> createState() => _MovieDetailsPageState();
@@ -18,7 +19,6 @@ class MovieDetailsPage extends StatefulWidget {
 class _MovieDetailsPageState extends State<MovieDetailsPage>
     with SingleTickerProviderStateMixin {
   double rating = 0.0;
-  ScrollController scrollController = ScrollController();
   late TabController _tabController;
 
   @override
@@ -85,7 +85,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(widget.url.toString()),
+              image: NetworkImage(widget.movie.poster.toString()),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
@@ -135,7 +135,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             height: 250.h,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(widget.url.toString()),
+                image: NetworkImage(widget.movie.poster.toString()),
                 fit: BoxFit.fill,
               ),
             ),
@@ -151,30 +151,31 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       child: Column(
         children: [
           Text(
-            'John Wick 3: Parabellum',
+            '${widget.movie.title}',
             style: Const.textPrimary,
           ),
           SizedBox(height: 16.h),
-          Text(
-            '2hr 10m | R',
-            style: Const.textSecondary,
-          ),
-          SizedBox(height: 9.h),
-          Text(
-            'Action, Crime, Thriller',
-            style: Const.textSecondary,
-          ),
-          SizedBox(height: 29.h),
+          // Text(
+          //   '2hr 10m | R',
+          //   style: Const.textSecondary,
+          // ),
+          // SizedBox(height: 9.h),
+          // Text(
+          //   'Action, Crime, Thriller',
+          //   style: Const.textSecondary,
+          // ),
+          // SizedBox(height: 29.h),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '4.6/5',
+                '${(widget.movie.rating! / 2).toStringAsFixed(1)}/5',
                 style: Const.textPrimary,
               ),
               SizedBox(width: 8.w),
               RatingBar.builder(
-                initialRating: 5,
+                initialRating: widget.movie.rating! / 2,
                 minRating: 0,
                 direction: Axis.horizontal,
                 glow: false,
