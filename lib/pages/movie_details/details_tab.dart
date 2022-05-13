@@ -5,6 +5,7 @@ import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/view_all/similar_all.dart';
 import 'package:movies_app/pages/view_all/cast_all.dart';
 import 'package:movies_app/pages/view_all/photos_all.dart';
+import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
@@ -24,6 +25,8 @@ class _DetailsTabState extends State<DetailsTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<RecommendationsProvider>(context, listen: false)
+        .getrecommendationsMovie(widget.movie!.id);
   }
 
   @override
@@ -33,10 +36,8 @@ class _DetailsTabState extends State<DetailsTab> {
       children: [
         SizedBox(height: 12.h),
         _buildSynopsis(),
-        // _buildCast(),
-        // _buildPhotos(),
-        // _buildVideos(),
         _buildSimilar(),
+        _buildRecommendations(),
         SizedBox(height: 24.h),
       ],
     );
@@ -309,6 +310,200 @@ class _DetailsTabState extends State<DetailsTab> {
     );
   }
 
+  Widget _buildRecommendations() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionTitle(
+              title: 'Recommendations',
+              route: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SimilarMoviesAll()));
+              }),
+          _buildVerticalRecommendations(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVerticalRecommendations() {
+    return Consumer<RecommendationsProvider>(
+      builder: (context, data, child) {
+        if (data.recommendationsMovie.isEmpty) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (int i = 0; i < 5; i++)
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey[500]!,
+                    highlightColor: Colors.grey[300]!,
+                    child: Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(18.w, 12.h, 8.w, 12.h),
+                            width: 84.w,
+                            height: 84.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              for (var i = 0; i < 5; i++)
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
+                                  height: 10.h,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.65,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(3.r),
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        } else {
+          return Column(
+            children: [
+              for (var item in data.recommendationsMovie)
+                InkWell(
+                  onTap: () {},
+                  child: Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(18.w, 12.h, 24.w, 12.h),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: Image.network(
+                                item.poster ??
+                                    'https://images.unsplash.com/photo-1549877452-9c387954fbc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                                width: 84.w,
+                                height: 84.h,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // nama
+                                  Text(
+                                    item.title ?? '',
+                                    style: Const.textPrimary.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: Const.medium,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  SizedBox(height: 4.h),
+
+                                  Text(
+                                    item.synopsis ?? '',
+                                    style: Const.textSecondary
+                                        .copyWith(fontSize: 12),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+
+                                  SizedBox(height: 4.h),
+
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.watch_later_outlined,
+                                        size: 16,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      Text(
+                                        'Release Date ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 62.w),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 18,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(6.w, 4.h, 6.w, 4.h),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icon_star.png',
+                                width: 18.w,
+                                height: 18.h,
+                              ),
+                              SizedBox(width: 4.w),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          (item.rating! / 2).toStringAsFixed(0),
+                                      style: Const.textSecondary.copyWith(
+                                        color: Const.colorBlue,
+                                        fontSize: 14.sp,
+                                        fontWeight: Const.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '/5',
+                                      style: Const.textSecondary.copyWith(
+                                        color: Const.colorBlue,
+                                        fontSize: 12.sp,
+                                        fontWeight: Const.semiBold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+            ],
+          );
+        }
+      },
+    );
+  }
+
   // Reuseable Widget
   Widget _buildSectionTitle({String? title, Function? route}) {
     return Container(
@@ -336,7 +531,7 @@ class _DetailsTabState extends State<DetailsTab> {
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: Const.medium,
-                color: Colors.blue,
+                color: Const.colorBlue,
               ),
             ),
           ),

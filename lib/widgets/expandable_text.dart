@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/constants.dart';
 
 class ExpandableText extends StatefulWidget {
   const ExpandableText(
@@ -27,7 +28,7 @@ class ExpandableTextState extends State<ExpandableText> {
   @override
   Widget build(BuildContext context) {
     final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
-    final colorClickableText = Colors.blue;
+    final colorClickableText = Const.colorBlue;
     final widgetColor = Colors.black;
     TextSpan link = TextSpan(
         text: _readMore ? " Show more" : " Show Less",

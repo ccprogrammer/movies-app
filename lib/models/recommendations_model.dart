@@ -1,27 +1,24 @@
-class MovieModel {
+class RecommendationsModel {
   int? id;
   String? title;
   String? synopsis;
   String? poster;
   double? rating;
-  List<Genre>? genre;
 
-  MovieModel({
+  RecommendationsModel({
     this.id,
     this.title,
     this.synopsis,
     this.poster,
     this.rating,
-    this.genre,
   });
 
-  MovieModel.fromJson(Map<String, dynamic> json) {
+  RecommendationsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['original_title'];
     synopsis = json['overview'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
     rating = json['vote_average'].toDouble();
-    genre = List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x)));
   }
   Map<String, dynamic> toJson() {
     return {

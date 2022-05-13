@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/models/similar_model.dart';
 import 'package:movies_app/services/http_services.dart';
 
@@ -14,6 +13,7 @@ class SimilarMovieProvider with ChangeNotifier {
   }
 
   Future getSimilarMovie(movieId) async {
+    similarMovie.clear();
     try {
       List<SimilarMovieModel> similarMovie = await Http().getSimilarMovie(movieId);
       _similarMovie = similarMovie;
