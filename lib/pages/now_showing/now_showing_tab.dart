@@ -83,7 +83,7 @@ class _NowPlayingState extends State<NowPlaying> {
           crossAxisCount: 2,
           crossAxisSpacing: 12.w,
           mainAxisSpacing: 12.h,
-          childAspectRatio: 16.w / 35.h,
+          childAspectRatio: 16.w / 33.h,
         ),
         primary: false,
         shrinkWrap: true,
