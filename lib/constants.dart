@@ -7,23 +7,6 @@ class Const {
   static const String baseUrl = 'https://api.themoviedb.org/3/movie';
   static const String apiKey = '?api_key=${API.apiKey}';
 
-  /*        
-        /now_playing
-        /latest
-        /popular
-        /top_rated
-        /upcoming
-        /{movie_id}/images
-        /{movie_id}/videos
-        /{movie_id}/reviews
-        /{movie_id}/similar
-        /{movie_id}/recommendations
-
-        this is for movie details
-        /{movie_id}
-
-  */
-
   static const String appName = 'OneMovie';
   static const String dummyImage =
       'https://www.marketeers.com/wp-content/uploads/2019/05/Keanu-Reeves-John-Wick-3-Neon-Poster.jpg';
@@ -35,6 +18,7 @@ class Const {
   static const Color colorChatBubble = Color(0xff2B3543);
   static const Color colorSplashScreen = Color(0xffE51937);
   static const Color colorSplashScreen2 = Color(0xffDB5252);
+  static const Color colorReleaseDate = Colors.green;
 
   // fontweight
   static const FontWeight light = FontWeight.w300;
@@ -54,5 +38,11 @@ class Const {
     color: Colors.grey,
     fontWeight: medium,
     fontSize: 14.sp,
+  );
+
+  static TextStyle textReleaseDate = TextStyle(
+    fontWeight: medium,
+    fontSize: 14.sp,
+    color: colorReleaseDate,
   );
 }

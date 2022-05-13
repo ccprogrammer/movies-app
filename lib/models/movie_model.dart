@@ -3,6 +3,7 @@ class MovieModel {
   String? title;
   String? synopsis;
   String? poster;
+  String? releaseDate;
   double? rating;
   List<Genre>? genre;
 
@@ -11,6 +12,7 @@ class MovieModel {
     this.title,
     this.synopsis,
     this.poster,
+    this.releaseDate,
     this.rating,
     this.genre,
   });
@@ -20,6 +22,7 @@ class MovieModel {
     title = json['original_title'];
     synopsis = json['overview'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
+    releaseDate = json['release_date'];
     rating = json['vote_average'].toDouble();
     genre = List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x)));
   }
@@ -28,6 +31,7 @@ class MovieModel {
       'id': id,
       'original_title': title,
       'poster_path': poster,
+      'release_date': releaseDate,
       'vote_average': rating,
       'overview': synopsis,
     };

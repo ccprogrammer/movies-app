@@ -72,7 +72,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return SliverAppBar(
       iconTheme: IconThemeData(color: Colors.white),
       titleSpacing: 18.w,
-      expandedHeight: 600.h,
+      expandedHeight: 625.h,
       backgroundColor: Const.colorPrimary,
       elevation: 0,
       floating: false,
@@ -178,13 +178,20 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             style: Const.textPrimary,
           ),
           SizedBox(height: 16.h),
-          // Text(
-          //   '2hr 10m | R',
-          //   style: Const.textSecondary,
-          // ),
-          // SizedBox(height: 9.h),
           _buildGenre(),
-          SizedBox(height: 29.h),
+          SizedBox(height: 9.h),
+          Text(
+            'Release Date',
+            style: Const.textReleaseDate.copyWith(fontSize: 14),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            movie.releaseDate ?? '',
+            style: Const.textSecondary.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 16.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -471,11 +471,7 @@ class _DetailsTabState extends State<DetailsTab> {
                                           SizedBox(width: 4.w),
                                           Text(
                                             'Launch ${item.releaseDate}',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12.sp,
-                                              color: Colors.green,
-                                            ),
+                                            style: Const.textReleaseDate.copyWith(fontSize: 12),
                                           ),
                                         ],
                                       ),
