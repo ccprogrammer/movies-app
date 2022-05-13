@@ -12,7 +12,7 @@ class RecommendationsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getrecommendationsMovie(movieId) async {
+  Future getRecommendationsMovie(movieId) async {
     recommendationsMovie.clear();
     try {
       List<RecommendationsModel> recommendationsMovie = await Http().getRecommendations(movieId);

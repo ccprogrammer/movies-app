@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 
 class RecommendationsModel {
   int? id;
@@ -23,7 +22,7 @@ class RecommendationsModel {
     synopsis = json['overview'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
     rating = json['vote_average'].toDouble();
-    releaseDate = DateFormat.yMMMMd().format(DateTime.parse(json['release_date']));
+    releaseDate = json['release_date'];
   }
   Map<String, dynamic> toJson() {
     return {

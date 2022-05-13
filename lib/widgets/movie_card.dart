@@ -95,10 +95,8 @@ class _MovieCardState extends State<MovieCard> {
         );
       },
       openBuilder: (context, action) {
-        // return Container();
-
         return MovieDetailsPage(
-          nowPlaying: widget.movie,
+          movieId: widget.movie.id!,
         );
       },
     );

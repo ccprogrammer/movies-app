@@ -10,14 +10,13 @@ import 'package:movies_app/models/now_playing_model.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
+import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
-import 'package:movies_app/services/http_services.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailsPage extends StatefulWidget {
-  const MovieDetailsPage({Key? key, required this.nowPlaying})
-      : super(key: key);
-  final NowPlayingModel nowPlaying;
+  const MovieDetailsPage({Key? key, required this.movieId}) : super(key: key);
+  final int? movieId;
   @override
   State<MovieDetailsPage> createState() => _MovieDetailsPageState();
 }
@@ -27,18 +26,23 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   double rating = 0.0;
   late TabController _tabController;
 
-  getSimilar() async {
-    await Provider.of<SimilarMovieProvider>(context, listen: false)
-        .getSimilarMovie(widget.nowPlaying.id);
+  getSimilar() {
+    Provider.of<SimilarMovieProvider>(context, listen: false)
+        .getSimilarMovie(widget.movieId);
+  }
+
+  getRecommendations() {
+    Provider.of<RecommendationsProvider>(context, listen: false)
+        .getRecommendationsMovie(widget.movieId);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getSimilar();
-    // Http().getSimilarMovie(widget.nowPlaying.id);
     _tabController = TabController(length: 3, vsync: this);
+    getSimilar();
+    getRecommendations();
   }
 
   @override
