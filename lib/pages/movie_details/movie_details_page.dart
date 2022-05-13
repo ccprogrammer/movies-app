@@ -5,17 +5,19 @@ import 'dart:ui';
 
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
+import 'package:movies_app/models/now_playing_model.dart';
 
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
+import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/services/http_services.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailsPage extends StatefulWidget {
-  const MovieDetailsPage({Key? key, required this.movie}) : super(key: key);
-  final MovieModel movie;
-
+  const MovieDetailsPage({Key? key, required this.nowPlaying})
+      : super(key: key);
+  final NowPlayingModel nowPlaying;
   @override
   State<MovieDetailsPage> createState() => _MovieDetailsPageState();
 }
@@ -27,7 +29,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   getSimilar() async {
     await Provider.of<SimilarMovieProvider>(context, listen: false)
-        .getSimilarMovie(widget.movie.id);
+        .getSimilarMovie(widget.nowPlaying.id);
   }
 
   @override
@@ -35,6 +37,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     // TODO: implement initState
     super.initState();
     getSimilar();
+    // Http().getSimilarMovie(widget.nowPlaying.id);
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -50,12 +53,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Http().getSimilarMovie(widget.movie.id);
-          },
-          child: Icon(Icons.print),
-        ),
         backgroundColor: Const.colorPrimary,
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -94,6 +91,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildHeaders() {
+    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -102,7 +101,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(widget.movie.poster.toString()),
+              image: NetworkImage(movie.poster!),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
@@ -152,7 +151,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             height: 250.h,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(widget.movie.poster.toString()),
+                image: NetworkImage(movie.poster!),
                 fit: BoxFit.fill,
               ),
             ),
@@ -163,13 +162,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildTitle() {
+    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
     return Container(
       margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            '${widget.movie.title}',
+            '${movie.title}',
             textAlign: TextAlign.center,
             style: Const.textPrimary,
           ),
@@ -185,12 +185,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${(widget.movie.rating! / 2).toStringAsFixed(0)}/5',
+                '${(movie.rating! / 2).toStringAsFixed(0)}/5',
                 style: Const.textPrimary,
               ),
               SizedBox(width: 8.w),
               RatingBar.builder(
-                initialRating: widget.movie.rating! / 2,
+                initialRating: movie.rating! / 2,
                 minRating: 0,
                 direction: Axis.horizontal,
                 glow: false,
@@ -246,10 +246,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildTabView() {
+    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
+
     return TabBarView(
       children: [
         DetailsTab(
-          movie: widget.movie,
+          movie: movie,
         ),
         ReviewsTab(),
         DetailsTab(),
@@ -258,6 +260,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildGenre() {
+    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
+
     return Container(
       margin: EdgeInsets.fromLTRB(68, 0, 68, 0),
       child: Row(
@@ -267,11 +271,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             child: Wrap(
               alignment: WrapAlignment.center,
               children: [
-                for (var i = 0; i < widget.movie.genre!.length; i++)
+                for (var i = 0; i < movie.genre!.length; i++)
                   Text(
-                    widget.movie.genre![i].name == widget.movie.genre!.last.name
-                        ? '${widget.movie.genre![i].name} '
-                        : '${widget.movie.genre![i].name}, ',
+                    movie.genre![i].name == movie.genre!.last.name
+                        ? '${movie.genre![i].name} '
+                        : '${movie.genre![i].name}, ',
                     style: Const.textSecondary,
                   ),
               ],

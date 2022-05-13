@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_model.dart';
+import 'package:movies_app/models/now_playing_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
+import 'package:movies_app/provider/movie_detail_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MovieCard extends StatefulWidget {
   const MovieCard({Key? key, required this.movie}) : super(key: key);
-  final MovieModel movie;
+  final NowPlayingModel movie;
   @override
   State<MovieCard> createState() => _MovieCardState();
 }
@@ -20,13 +22,19 @@ class _MovieCardState extends State<MovieCard> {
 
   @override
   Widget build(BuildContext context) {
+    getData() async {
+      await Provider.of<MovieDetailProvider>(context, listen: false)
+          .getMovieDetail(movieId: widget.movie.id);
+    }
+
     return OpenContainer(
       closedColor: Const.colorPrimary,
       openColor: Const.colorPrimary,
       closedElevation: 0,
       closedBuilder: (context, action) {
         return InkWell(
-          onTap: () {
+          onTap: () async {
+            await getData();
             action();
           },
           borderRadius: BorderRadius.circular(12),
@@ -81,33 +89,36 @@ class _MovieCardState extends State<MovieCard> {
                 maxLines: 2,
               ),
               SizedBox(height: 4.h),
-              _buildGenre(),
+              // _buildGenre(),
             ],
           ),
         );
       },
       openBuilder: (context, action) {
+        // return Container();
+
         return MovieDetailsPage(
-          movie: widget.movie,
+          nowPlaying: widget.movie,
         );
       },
     );
   }
 
-  Widget _buildGenre() {
-    return Container(
-      child: Wrap(
-        children: [
-          for (var i = 0; i < widget.movie.genre!.length; i++)
-            Text(
-              widget.movie.genre![i].name == widget.movie.genre!.last.name
-                  ? '${widget.movie.genre![i].name} '
-                  : '${widget.movie.genre![i].name}, ',
-              maxLines: 1,
-              style: Const.textSecondary,
-            ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildGenre() {
+  //   return Container(
+  //     child: Wrap(
+  //       children: [
+  //         for (var i = 0; i < widget.movie.genre!.length; i++)
+  //           Text(
+  //             widget.movie.genre![i].name == widget.movie.genre!.last.name
+  //                 ? '${widget.movie.genre![i].name} '
+  //                 : '${widget.movie.genre![i].name}, ',
+  //             maxLines: 1,
+  //             style: Const.textSecondary,
+  //           ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
 }

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
+import 'package:movies_app/models/now_playing_model.dart';
+import 'package:movies_app/models/similar_model.dart';
 
 class Http {
   String _baseUrl = Const.baseUrl;
@@ -14,10 +16,10 @@ class Http {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body)['results'];
-      List<MovieModel> nowPlaying = [];
+      List<NowPlayingModel> nowPlaying = [];
 
       for (var item in data) {
-        nowPlaying.add(MovieModel.fromJson(await getMovieDetail(item['id'])));
+        nowPlaying.add(NowPlayingModel.fromJson(item));
       }
 
       return nowPlaying;
@@ -32,10 +34,10 @@ class Http {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body)['results'];
-      List<MovieModel> similarMovie = [];
+      List<SimilarMovieModel> similarMovie = [];
 
       for (var item in data) {
-        similarMovie.add(MovieModel.fromJson(await getMovieDetail(item['id'])));
+        similarMovie.add(SimilarMovieModel.fromJson(item));
       }
 
       return similarMovie;

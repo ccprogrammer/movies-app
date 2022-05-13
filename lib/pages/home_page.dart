@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 
-import 'package:movies_app/pages/coming_soon/coming_soon.dart';
-import 'package:movies_app/pages/now_showing/now_showing.dart';
+import 'package:movies_app/pages/coming_soon/coming_soon_tab.dart';
+import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
 
 
 class HomePage extends StatefulWidget {

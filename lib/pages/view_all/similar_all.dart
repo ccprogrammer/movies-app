@@ -7,14 +7,14 @@ import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SimilarMovies extends StatefulWidget {
-  const SimilarMovies({Key? key}) : super(key: key);
+class SimilarMoviesAll extends StatefulWidget {
+  const SimilarMoviesAll({Key? key}) : super(key: key);
 
   @override
-  State<SimilarMovies> createState() => _SimilarMoviesState();
+  State<SimilarMoviesAll> createState() => _SimilarMoviesAllState();
 }
 
-class _SimilarMoviesState extends State<SimilarMovies> {
+class _SimilarMoviesAllState extends State<SimilarMoviesAll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,56 +60,54 @@ class _SimilarMoviesState extends State<SimilarMovies> {
   }
 
   Widget _buildSimilarList() {
-    var data = Provider.of<SimilarMovieProvider>(context).similarMovie;
+    var similarMovie = Provider.of<SimilarMovieProvider>(context).similarMovie;
 
-    if (data.isEmpty) {
-    return ListView(
-      children: [
-        SizedBox(height: 10.h),
-        for (var i = 0; i < 4; i++)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Shimmer.fromColors(
-                baseColor: Colors.grey[500]!,
-                highlightColor: Colors.grey[300]!,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(18, 24, 18, 0),
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: Colors.grey,
-                        ),
-                        height: 168.h,
-                        width: double.infinity,
-                      ),
-                      for (var i = 0; i < 2; i++)
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          height: 16.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.r),
-                            color: Colors.grey,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-      ],
-    );
-  }
-
-    else {
+    if (similarMovie.isEmpty) {
       return ListView(
         children: [
           SizedBox(height: 10.h),
-          for (var item in data)
+          for (var i = 0; i < 4; i++)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[300]!,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(18, 24, 18, 0),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: Colors.grey,
+                          ),
+                          height: 168.h,
+                          width: double.infinity,
+                        ),
+                        for (var i = 0; i < 2; i++)
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                            height: 16.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              color: Colors.grey,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+        ],
+      );
+    } else {
+      return ListView(
+        children: [
+          SizedBox(height: 10.h),
+          for (var item in similarMovie)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

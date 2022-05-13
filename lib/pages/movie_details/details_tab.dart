@@ -186,7 +186,7 @@ class _DetailsTabState extends State<DetailsTab> {
               title: 'Similar Movies',
               route: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SimilarMovies()));
+                    MaterialPageRoute(builder: (context) => SimilarMoviesAll()));
               }),
           SizedBox(height: 8.h),
           _buildHorizontalSimilar(),
@@ -276,7 +276,7 @@ class _DetailsTabState extends State<DetailsTab> {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
                         child: Text(
-                          data[i].synopsis ?? '3 hours ago',
+                          data[i].synopsis ?? '',
                           style: Const.textSecondary,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
