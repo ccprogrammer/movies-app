@@ -185,8 +185,10 @@ class _DetailsTabState extends State<DetailsTab> {
           _buildSectionTitle(
               title: 'Similar Movies',
               route: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SimilarMoviesAll()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SimilarMoviesAll()));
               }),
           SizedBox(height: 8.h),
           _buildHorizontalSimilar(),
@@ -196,113 +198,115 @@ class _DetailsTabState extends State<DetailsTab> {
   }
 
   Widget _buildHorizontalSimilar() {
-    var data = Provider.of<SimilarMovieProvider>(context).similarMovie;
-
-    if (data.isEmpty) {
-      return Container(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: 18.w),
-              for (int i = 0; i < 5; i++)
-                Shimmer.fromColors(
-                  baseColor: Colors.grey[500]!,
-                  highlightColor: Colors.grey[300]!,
-                  child: Container(
-                    margin: EdgeInsets.only(right: 20.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 120.h,
-                          width: 160.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            color: Colors.grey,
-                          ),
-                          
-                        ),
-                        for (var i = 0; i < 2; i++)
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
-                            height: 16.h,
-                            width: 160.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.r),
-                              color: Colors.grey,
+    return Consumer<SimilarMovieProvider>(
+      builder: (context, data, child) {
+        if (data.similarMovie.isEmpty) {
+          return Container(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 18.w),
+                  for (int i = 0; i < 5; i++)
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[500]!,
+                      highlightColor: Colors.grey[300]!,
+                      child: Container(
+                        margin: EdgeInsets.only(right: 20.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 120.h,
+                              width: 160.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                      ],
+                            for (var i = 0; i < 2; i++)
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                height: 16.h,
+                                width: 160.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.r),
+                                  color: Colors.grey,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return Container(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: 18.w),
-              for (int i = 0; i < 5; i++)
-                Container(
-                  margin: EdgeInsets.only(right: 20.w),
-                  width: 160.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 120.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              data[i].poster ?? Const.dummyImage,
+                ],
+              ),
+            ),
+          );
+        } else {
+          return Container(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 18.w),
+                  for (int i = 0; i < 5; i++)
+                    Container(
+                      margin: EdgeInsets.only(right: 20.w),
+                      width: 160.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 120.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  data.similarMovie[i].poster ??
+                                      Const.dummyImage,
+                                ),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.topCenter,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.3),
+                                    BlendMode.darken),
+                              ),
                             ),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topCenter,
-                            colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.3),
-                                BlendMode.darken),
                           ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
-                        child: Text(
-                          data[i].synopsis ?? '',
-                          style: Const.textSecondary,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
-                        child: Text(
-                          data[i].title ?? '',
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: Const.textPrimary.copyWith(
-                            fontWeight: Const.medium,
-                            fontSize: 14.sp,
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
+                            child: Text(
+                              data.similarMovie[i].synopsis ?? '',
+                              style: Const.textSecondary,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
+                            child: Text(
+                              data.similarMovie[i].title ?? '',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Const.textPrimary.copyWith(
+                                fontWeight: Const.medium,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              SizedBox(width: 4),
-            ],
-          ),
-        ),
-      );
-    }
+                    ),
+                  SizedBox(width: 4),
+                ],
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 
   // Reuseable Widget
