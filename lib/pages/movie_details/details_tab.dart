@@ -333,6 +333,7 @@ class _DetailsTabState extends State<DetailsTab> {
   Widget _buildVerticalRecommendations() {
     return Consumer<RecommendationsProvider>(
       builder: (context, data, child) {
+        
         if (data.recommendationsMovie.isEmpty) {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
