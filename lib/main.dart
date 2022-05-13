@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/pages/home_page.dart';
 import 'package:movies_app/pages/splash_screen.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NowPlayingProvider(),
+        ),ChangeNotifierProvider(
+          create: (context) => SimilarMovieProvider(),
         ),
       ],
       child: ScreenUtilInit(

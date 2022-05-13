@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/services/http_services.dart';
-import 'package:provider/provider.dart';
 
 class NowPlayingProvider with ChangeNotifier {
   List<MovieModel> _nowPlaying = [];
@@ -9,7 +8,7 @@ class NowPlayingProvider with ChangeNotifier {
   List<MovieModel> get nowPlaying => _nowPlaying;
 
   set nowPlaying(List<MovieModel> _nowPlaying) {
-    _nowPlaying = _nowPlaying;
+    _nowPlaying = nowPlaying;
     notifyListeners();
   }
 

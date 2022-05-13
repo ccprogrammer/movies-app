@@ -4,9 +4,7 @@ import 'package:movies_app/constants.dart';
 
 import 'package:movies_app/pages/coming_soon/coming_soon.dart';
 import 'package:movies_app/pages/now_showing/now_showing.dart';
-import 'package:movies_app/provider/now_playing_provider.dart';
-import 'package:movies_app/services/http_services.dart';
-import 'package:provider/provider.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

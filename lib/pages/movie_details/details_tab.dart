@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
-import 'package:movies_app/pages/view_all/blogs.dart';
-import 'package:movies_app/pages/view_all/cast.dart';
-import 'package:movies_app/pages/view_all/photos.dart';
+import 'package:movies_app/pages/view_all/similar_all.dart';
+import 'package:movies_app/pages/view_all/cast_all.dart';
+import 'package:movies_app/pages/view_all/photos_all.dart';
+import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DetailsTab extends StatefulWidget {
   const DetailsTab({Key? key, this.movie}) : super(key: key);
@@ -18,16 +21,22 @@ class DetailsTab extends StatefulWidget {
 
 class _DetailsTabState extends State<DetailsTab> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
         SizedBox(height: 12.h),
         _buildSynopsis(),
-        _buildCast(),
-        _buildPhotos(),
+        // _buildCast(),
+        // _buildPhotos(),
         // _buildVideos(),
-        _buildBlogs(),
+        _buildSimilar(),
         SizedBox(height: 24.h),
       ],
     );
@@ -167,85 +176,133 @@ class _DetailsTabState extends State<DetailsTab> {
     );
   }
 
-  Widget _buildBlogs() {
+  Widget _buildSimilar() {
     return Container(
       margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-              title: 'Blogs About This Film',
-              route: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Blogs()))),
+              title: 'Similar Movies',
+              route: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SimilarMovies()));
+              }),
           SizedBox(height: 8.h),
-          Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  SizedBox(width: 14.w),
-                  for (int i = 0; i < 4; i++)
-                    Container(
-                      margin: EdgeInsets.only(right: 20.w),
-                      width: 160.w,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(10.r),
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 120.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      Const.dummyImage,
-                                    ),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.topCenter,
-                                    colorFilter: ColorFilter.mode(
-                                        Colors.black.withOpacity(0.3),
-                                        BlendMode.darken),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
-                                child: Text(
-                                  '3 hours ago',
-                                  style: Const.textSecondary,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
-                                child: Text(
-                                  'Female Action Stars We Can\’t Wait',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Const.textPrimary.copyWith(
-                                    fontWeight: Const.medium,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  SizedBox(width: 4),
-                ],
-              ),
-            ),
-          ),
+          _buildHorizontalSimilar(),
         ],
       ),
     );
+  }
+
+  Widget _buildHorizontalSimilar() {
+    var data = Provider.of<SimilarMovieProvider>(context).similarMovie;
+
+    if (data.isEmpty) {
+      return Container(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: 18.w),
+              for (int i = 0; i < 5; i++)
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[300]!,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 120.h,
+                          width: 160.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: Colors.grey,
+                          ),
+                          
+                        ),
+                        for (var i = 0; i < 2; i++)
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+                            height: 16.h,
+                            width: 160.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              color: Colors.grey,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: 18.w),
+              for (int i = 0; i < 5; i++)
+                Container(
+                  margin: EdgeInsets.only(right: 20.w),
+                  width: 160.w,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 120.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              data[i].poster ?? Const.dummyImage,
+                            ),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                            colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(0.3),
+                                BlendMode.darken),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
+                        child: Text(
+                          data[i].synopsis ?? '3 hours ago',
+                          style: Const.textSecondary,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
+                        child: Text(
+                          data[i].title ?? '',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: Const.textPrimary.copyWith(
+                            fontWeight: Const.medium,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              SizedBox(width: 4),
+            ],
+          ),
+        ),
+      );
+    }
   }
 
   // Reuseable Widget

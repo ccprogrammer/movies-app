@@ -8,6 +8,9 @@ import 'package:movies_app/models/movie_model.dart';
 
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
+import 'package:movies_app/provider/similar_movie_provider.dart';
+import 'package:movies_app/services/http_services.dart';
+import 'package:provider/provider.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage({Key? key, required this.movie}) : super(key: key);
@@ -22,10 +25,16 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   double rating = 0.0;
   late TabController _tabController;
 
+  getSimilar() async {
+    await Provider.of<SimilarMovieProvider>(context, listen: false)
+        .getSimilarMovie(widget.movie.id);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getSimilar();
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -41,6 +50,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Http().getSimilarMovie(widget.movie.id);
+          },
+          child: Icon(Icons.print),
+        ),
         backgroundColor: Const.colorPrimary,
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -170,7 +185,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${(widget.movie.rating! / 2).toStringAsFixed(1)}/5',
+                '${(widget.movie.rating! / 2).toStringAsFixed(0)}/5',
                 style: Const.textPrimary,
               ),
               SizedBox(width: 8.w),
@@ -233,7 +248,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget _buildTabView() {
     return TabBarView(
       children: [
-        DetailsTab(movie: widget.movie,),
+        DetailsTab(
+          movie: widget.movie,
+        ),
         ReviewsTab(),
         DetailsTab(),
       ],
@@ -264,5 +281,4 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       ),
     );
   }
-
 }

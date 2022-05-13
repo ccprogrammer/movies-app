@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   getNowPlaying() async {
     Provider.of<NowPlayingProvider>(context, listen: false).getNowPlaying();
 
-    Timer(Duration(milliseconds: 2000), () {
+    Timer(Duration(milliseconds: 3000), () {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
