@@ -279,15 +279,6 @@ class _DetailsTabState extends State<DetailsTab> {
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
                             child: Text(
-                              data.similarMovie[i].synopsis ?? '',
-                              style: Const.textSecondary,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
-                            child: Text(
                               data.similarMovie[i].title ?? '',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
@@ -295,6 +286,15 @@ class _DetailsTabState extends State<DetailsTab> {
                                 fontWeight: Const.medium,
                                 fontSize: 14.sp,
                               ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
+                            child: Text(
+                              data.similarMovie[i].synopsis ?? '',
+                              style: Const.textSecondary,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -312,7 +312,7 @@ class _DetailsTabState extends State<DetailsTab> {
 
   Widget _buildRecommendations() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0.w),
+      margin: EdgeInsets.fromLTRB(0.w, 8.h, 0.w, 0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -431,13 +431,13 @@ class _DetailsTabState extends State<DetailsTab> {
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.watch_later_outlined,
+                                        Icons.date_range_outlined,
                                         size: 16,
                                         color: Colors.white,
                                       ),
                                       SizedBox(width: 4.w),
                                       Text(
-                                        'Release Date ',
+                                        'Launch ${item.releaseDate}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp,

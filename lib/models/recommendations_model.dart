@@ -4,6 +4,7 @@ class RecommendationsModel {
   String? synopsis;
   String? poster;
   double? rating;
+  String? releaseDate;
 
   RecommendationsModel({
     this.id,
@@ -11,6 +12,7 @@ class RecommendationsModel {
     this.synopsis,
     this.poster,
     this.rating,
+    this.releaseDate,
   });
 
   RecommendationsModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class RecommendationsModel {
     synopsis = json['overview'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
     rating = json['vote_average'].toDouble();
+    releaseDate = json['release_date'];
   }
   Map<String, dynamic> toJson() {
     return {
@@ -27,6 +30,7 @@ class RecommendationsModel {
       'poster_path': poster,
       'vote_average': rating,
       'overview': synopsis,
+      'release_date': releaseDate,
     };
   }
 }
