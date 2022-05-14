@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-
 import 'package:movies_app/provider/now_playing_provider.dart';
 import 'package:movies_app/widgets/loading/shimmer_now_playing.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class NowPlaying extends StatefulWidget {
   const NowPlaying({Key? key}) : super(key: key);

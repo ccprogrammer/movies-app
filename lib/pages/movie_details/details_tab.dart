@@ -17,7 +17,6 @@ import 'package:movies_app/widgets/loading/shimmer_card.dart';
 import 'package:movies_app/widgets/loading/shimmer_overview.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class DetailsTab extends StatefulWidget {
   const DetailsTab({Key? key, this.movie}) : super(key: key);
@@ -233,73 +232,65 @@ class _DetailsTabState extends State<DetailsTab> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(width: 18.w),
+                  SizedBox(width: 9.w),
                   for (var item in data.similarMovie)
-                    OpenContainer(
-                      closedColor: Const.colorPrimary,
-                      openColor: Const.colorPrimary,
-                      closedElevation: 0,
-                      closedBuilder: (context, action) {
-                        return InkWell(
-                          onTap: () async {
-                            await Provider.of<MovieDetailProvider>(context,
-                                    listen: false)
-                                .getMovieDetail(movieId: item.id);
-                            action();
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(right: 20.w),
-                            width: 160.w,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 120.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        item.poster ?? Const.dummyImage,
-                                      ),
-                                      fit: BoxFit.cover,
-                                      alignment: Alignment.topCenter,
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.black.withOpacity(0.3),
-                                          BlendMode.darken),
-                                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetailsPage(
+                                movieId: item.id,
+                              ),
+                            ));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(9.w, 6.h, 9.w, 6.h),
+                        width: 160.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 120.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    item.poster ?? Const.dummyImage,
                                   ),
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.topCenter,
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.black.withOpacity(0.3),
+                                      BlendMode.darken),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
-                                  child: Text(
-                                    item.title ?? '',
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Const.textPrimary.copyWith(
-                                      fontWeight: Const.medium,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
-                                  child: Text(
-                                    item.synopsis ?? '',
-                                    style: Const.textSecondary,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      openBuilder: (context, action) {
-                        return MovieDetailsPage(
-                          movieId: item.id,
-                        );
-                      },
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
+                              child: Text(
+                                item.title ?? '',
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: Const.textPrimary.copyWith(
+                                  fontWeight: Const.medium,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
+                              child: Text(
+                                item.synopsis ?? '',
+                                style: Const.textSecondary,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   SizedBox(width: 4),
                 ],
@@ -345,136 +336,125 @@ class _DetailsTabState extends State<DetailsTab> {
           return Column(
             children: [
               for (var item in data.recommendationsMovie)
-                OpenContainer(
-                  closedColor: Const.colorPrimary,
-                  openColor: Const.colorPrimary,
-                  closedElevation: 0,
-                  closedBuilder: (context, action) {
-                    return InkWell(
-                      onTap: () async {
-                        await Provider.of<MovieDetailProvider>(context,
-                                listen: false)
-                            .getMovieDetail(movieId: item.id);
-                        action();
-                      },
-                      child: Stack(
-                        children: [
-                          Container(
-                            padding:
-                                EdgeInsets.fromLTRB(18.w, 18.h, 24.w, 18.h),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  child: Image.network(
-                                    item.poster ??
-                                        'https://images.unsplash.com/photo-1549877452-9c387954fbc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-                                    width: 84.w,
-                                    height: 84.h,
-                                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MovieDetailsPage(
+                            movieId: item.id,
+                          ),
+                        ));
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(18.w, 18.h, 24.w, 18.h),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: Image.network(
+                                item.poster ??
+                                    'https://images.unsplash.com/photo-1549877452-9c387954fbc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                                width: 84.w,
+                                height: 84.h,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // nama
+                                  Text(
+                                    item.title ?? '',
+                                    style: Const.textPrimary.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: Const.medium,
+                                    ),
+                                    maxLines: 2,
                                   ),
-                                ),
-                                SizedBox(width: 12.w),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // nama
-                                      Text(
-                                        item.title ?? '',
-                                        style: Const.textPrimary.copyWith(
-                                          fontSize: 14,
-                                          fontWeight: Const.medium,
-                                        ),
-                                        maxLines: 2,
-                                      ),
-                                      SizedBox(height: 4.h),
+                                  SizedBox(height: 4.h),
 
-                                      Text(
-                                        item.synopsis ?? '',
-                                        style: Const.textSecondary
-                                            .copyWith(fontSize: 12),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                  Text(
+                                    item.synopsis ?? '',
+                                    style: Const.textSecondary
+                                        .copyWith(fontSize: 12),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.date_range_outlined,
+                                        size: 16,
+                                        color: Colors.white,
                                       ),
-                                      SizedBox(height: 4.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.date_range_outlined,
-                                            size: 16,
-                                            color: Colors.white,
-                                          ),
-                                          SizedBox(width: 4.w),
-                                          Expanded(
-                                            child: Text(
-                                              'Launch ${item.releaseDate}',
-                                              style: Const.textReleaseDate
-                                                  .copyWith(fontSize: 12),
-                                            ),
-                                          ),
-                                        ],
+                                      SizedBox(width: 4.w),
+                                      Expanded(
+                                        child: Text(
+                                          'Launch ${item.releaseDate}',
+                                          style: Const.textReleaseDate
+                                              .copyWith(fontSize: 12),
+                                        ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                SizedBox(width: 62.w),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 18,
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(6.w, 4.h, 6.w, 4.h),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icon_star.png',
-                                    width: 18.w,
-                                    height: 18.h,
-                                  ),
-                                  SizedBox(width: 4.w),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: (item.rating! / 2)
-                                              .toStringAsFixed(0),
-                                          style: Const.textSecondary.copyWith(
-                                            color: Const.colorBlue,
-                                            fontSize: 14.sp,
-                                            fontWeight: Const.bold,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '/5',
-                                          style: Const.textSecondary.copyWith(
-                                            color: Const.colorBlue,
-                                            fontSize: 12.sp,
-                                            fontWeight: Const.semiBold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 62.w),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  openBuilder: (context, action) {
-                    return MovieDetailsPage(
-                      movieId: item.id,
-                    );
-                  },
+                      Positioned(
+                        top: 8,
+                        right: 18,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(6.w, 4.h, 6.w, 4.h),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icon_star.png',
+                                width: 18.w,
+                                height: 18.h,
+                              ),
+                              SizedBox(width: 4.w),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          (item.rating! / 2).toStringAsFixed(0),
+                                      style: Const.textSecondary.copyWith(
+                                        color: Const.colorBlue,
+                                        fontSize: 14.sp,
+                                        fontWeight: Const.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '/5',
+                                      style: Const.textSecondary.copyWith(
+                                        color: Const.colorBlue,
+                                        fontSize: 12.sp,
+                                        fontWeight: Const.semiBold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
             ],
           );

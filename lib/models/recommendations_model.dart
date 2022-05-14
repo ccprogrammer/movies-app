@@ -1,4 +1,3 @@
-
 class RecommendationsModel {
   int? id;
   String? title;

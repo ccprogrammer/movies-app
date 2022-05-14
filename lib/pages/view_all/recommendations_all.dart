@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_model.dart';
+import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
-import 'package:movies_app/provider/similar_movie_provider.dart';
-import 'package:movies_app/widgets/cast_tile.dart';
+import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -21,7 +20,7 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
     return Scaffold(
       backgroundColor: Const.colorPrimary,
       appBar: _buildAppBar(),
-      body: _buildSimilarList(),
+      body: _buildRecommendationsList(),
     );
   }
 
@@ -60,11 +59,10 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
     );
   }
 
-  Widget _buildSimilarList() {
-
+  Widget _buildRecommendationsList() {
     return Consumer<RecommendationsProvider>(
       builder: (context, data, child) {
-        if (data.recommendationsMovie.isEmpty) {
+        if (data.isLoading) {
           return ListView(
             children: [
               SizedBox(height: 10.h),
@@ -108,39 +106,54 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
         } else {
           return ListView(
             children: [
-              SizedBox(height: 10.h),
               for (var item in data.recommendationsMovie)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 168.h,
-                      width: double.infinity,
-                      margin: EdgeInsets.fromLTRB(18, 24, 18, 0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: NetworkImage(item.poster ?? Const.dummyImage),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MovieDetailsPage(
+                            movieId: item.id,
+                          ),
+                        ));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 168.h,
+                          width: double.infinity,
+                          margin: EdgeInsets.fromLTRB(18, 0, 18, 0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            image: DecorationImage(
+                              image:
+                                  NetworkImage(item.poster ?? Const.dummyImage),
+                              fit: BoxFit.fill,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
                         ),
-                      ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(18, 14, 18, 0),
+                          child: Text(
+                            item.title ?? '',
+                            style: Const.textPrimary.copyWith(fontSize: 16),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(18, 6, 18, 0),
+                          child: ExpandableText(
+                            '${item.synopsis}',
+                            style: Const.textSecondary,
+                            trimLines: 4,
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(18, 14, 18, 0),
-                      child: Text(
-                        item.title ?? '',
-                        style: Const.textPrimary.copyWith(fontSize: 16),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(18, 6, 18, 0),
-                      child: Text(
-                        item.synopsis ?? '',
-                        style: Const.textSecondary,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
             ],
           );

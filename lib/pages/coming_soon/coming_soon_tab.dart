@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/widgets/movie_card.dart';
 
 class ComingSoon extends StatefulWidget {
   const ComingSoon({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class ComingSoon extends StatefulWidget {
 }
 
 class _ComingSoonState extends State<ComingSoon> {
- List dummyImage = [
+  List dummyImage = [
     {
       'url':
           'https://cdn.shopify.com/s/files/1/0057/3728/3618/products/108b520c55e3c9760f77a06110d6a73b_e97cf224-d57f-44e3-8477-4f5479cd746b_500x749.jpg?v=1573616089',
@@ -47,23 +46,6 @@ class _ComingSoonState extends State<ComingSoon> {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(height: 24.h),
-            // GridView.builder(
-            //   padding: EdgeInsets.zero,
-            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //     crossAxisCount: 2,
-            //     crossAxisSpacing: 12.w,
-            //     mainAxisSpacing: 12.h,
-            //     childAspectRatio: 16.w / 35.h,
-            //   ),
-            //   primary: false,
-            //   shrinkWrap: true,
-            //   itemCount: dummyImage.length,
-            //   itemBuilder: (context, index) {
-            //     return MovieCard(
-            //       movie: ,
-            //     );
-            //   },
-            // ),
           ],
         ),
       ),

@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'dart:ui';
-
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
-import 'package:movies_app/models/now_playing_model.dart';
-
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
