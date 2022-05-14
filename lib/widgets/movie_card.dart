@@ -18,83 +18,71 @@ class MovieCard extends StatefulWidget {
 }
 
 class _MovieCardState extends State<MovieCard> {
-  double rating = 0.0;
-
   @override
   Widget build(BuildContext context) {
-   
-
-    return OpenContainer(
-      closedColor: Const.colorPrimary,
-      openColor: Const.colorPrimary,
-      closedElevation: 0,
-      closedBuilder: (context, action) {
-        return InkWell(
-          onTap: () {
-            action();
-          },
-          borderRadius: BorderRadius.circular(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CachedNetworkImage(
-                imageUrl: widget.movie.poster.toString(),
-                imageBuilder: (context, _) {
-                  return Image.network(
-                    widget.movie.poster.toString(),
-                    height: 250.h,
-                    width: 164.w,
-                    fit: BoxFit.fill,
-                    alignment: Alignment.topCenter,
-                  );
-                },
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey[500]!,
-                  highlightColor: Colors.grey[300]!,
-                  child: Container(
-                    color: Colors.grey,
-                    height: 250.h,
-                    width: 164.w,
-                  ),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MovieDetailsPage(
+                movieId: widget.movie.id!,
+              ),
+            ));
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CachedNetworkImage(
+            imageUrl: widget.movie.poster.toString(),
+            imageBuilder: (context, _) {
+              return Image.network(
+                widget.movie.poster.toString(),
+                height: 250.h,
+                width: 164.w,
+                fit: BoxFit.fill,
+                alignment: Alignment.topCenter,
+              );
+            },
+            placeholder: (context, url) => Container(
+              height: 250.h,
+              width: 164.w,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Const.colorBlue,
                 ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
-              SizedBox(height: 16.h),
-              RatingBar.builder(
-                initialRating: widget.movie.rating! / 2,
-                minRating: 0,
-                direction: Axis.horizontal,
-                glow: false,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                ignoreGestures: true,
-                itemSize: 14,
-                itemBuilder: (context, _) => Image.asset(
-                  'assets/icon_star.png',
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (double value) {
-                  this.rating = rating;
-                },
-              ),
-              SizedBox(height: 7.h),
-              Text(
-                '${widget.movie.title}',
-                style: Const.textPrimary.copyWith(fontSize: 16.sp),
-                maxLines: 2,
-              ),
-              SizedBox(height: 4.h),
-              // _buildGenre(),
-            ],
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
-        );
-      },
-      openBuilder: (context, action) {
-        return MovieDetailsPage(
-          movieId: widget.movie.id!,
-        );
-      },
+          SizedBox(height: 16.h),
+          RatingBar.builder(
+            initialRating: widget.movie.rating! / 2,
+            minRating: 0,
+            direction: Axis.horizontal,
+            glow: false,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            ignoreGestures: true,
+            itemSize: 14,
+            itemBuilder: (context, _) => Image.asset(
+              'assets/icon_star.png',
+              color: Colors.amber,
+            ),
+            onRatingUpdate: (double value) {},
+          ),
+          SizedBox(height: 7.h),
+          Text(
+            '${widget.movie.title}',
+            style: Const.textPrimary.copyWith(fontSize: 16.sp),
+            maxLines: 2,
+          ),
+          SizedBox(height: 4.h),
+          // _buildGenre(),
+        ],
+      ),
     );
   }
 

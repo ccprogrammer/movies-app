@@ -13,6 +13,7 @@ import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/widgets/shimmer_headers.dart';
+import 'package:movies_app/widgets/shimmer_tabbar.dart';
 import 'package:movies_app/widgets/shimmer_title.dart';
 import 'package:movies_app/widgets/skeleton.dart';
 import 'package:provider/provider.dart';
@@ -243,30 +244,38 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   PreferredSizeWidget _buildTabBar() {
     return PreferredSize(
       preferredSize: Size(80.0.w, 80.0.h),
-      child: Container(
-        color: Const.colorPrimary,
-        padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),
-        child: Container(
-          height: 48.h,
-          margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-          padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
-          decoration: BoxDecoration(
-            border: Border.all(color: Const.colorIndicatorBorder),
-            borderRadius: BorderRadius.circular(50.r),
-          ),
-          child: TabBar(
-            indicator: ShapeDecoration(
-              shape: StadiumBorder(),
-              color: Const.colorIndicator,
-            ),
-            labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
-            tabs: [
-              Tab(text: 'Detail'),
-              Tab(text: 'Reviews'),
-              Tab(text: 'Showtime'),
-            ],
-          ),
-        ),
+      child: Consumer<MovieDetailProvider>(
+        builder: (context, data, child) {
+          if (data.isLoading) {
+            return ShimmerTabBar();
+          } else {
+            return Container(
+              color: Const.colorPrimary,
+              padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),
+              child: Container(
+                height: 48.h,
+                margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
+                padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Const.colorIndicatorBorder),
+                  borderRadius: BorderRadius.circular(50.r),
+                ),
+                child: TabBar(
+                  indicator: ShapeDecoration(
+                    shape: StadiumBorder(),
+                    color: Const.colorIndicator,
+                  ),
+                  labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
+                  tabs: [
+                    Tab(text: 'Detail'),
+                    Tab(text: 'Reviews'),
+                    Tab(text: 'Showtime'),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

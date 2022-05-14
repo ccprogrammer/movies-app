@@ -21,12 +21,6 @@ class _NowPlayingState extends State<NowPlaying> {
 
     return Scaffold(
       backgroundColor: Const.colorPrimary,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     print(nowPlayingProvider.nowPlaying);
-      //   },
-      //   child: Icon(Icons.print),
-      // ),
       body: Container(
         padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
         child: ListView(
@@ -42,40 +36,40 @@ class _NowPlayingState extends State<NowPlaying> {
 
   Widget _buildMoviesGrid({data}) {
     if (data.isEmpty) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12.w,
-        mainAxisSpacing: 0.h,
-        childAspectRatio: 16.w / 33.h,
-      ),
-      primary: false,
-      shrinkWrap: true,
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        return Shimmer.fromColors(
-          baseColor: Colors.grey[500]!,
-          highlightColor: Colors.grey[400]!,
-          child: Column(
-            children: [
-              Container(
-                height: 230.h,
-                width: double.infinity,
-                color: Colors.grey,
-              ),
-              for (var i = 0; i < 3; i++)
+      return GridView.builder(
+        padding: EdgeInsets.zero,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12.w,
+          mainAxisSpacing: 0.h,
+          childAspectRatio: 16.w / 33.h,
+        ),
+        primary: false,
+        shrinkWrap: true,
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          return Shimmer.fromColors(
+            baseColor: Colors.grey[500]!,
+            highlightColor: Colors.grey[400]!,
+            child: Column(
+              children: [
                 Container(
-                  margin: EdgeInsets.only(top: 8.h),
-                  height: 16.h,
+                  height: 230.h,
                   width: double.infinity,
                   color: Colors.grey,
                 ),
-            ],
-          ),
-        );
-      },
-    );
+                for (var i = 0; i < 3; i++)
+                  Container(
+                    margin: EdgeInsets.only(top: 8.h),
+                    height: 16.h,
+                    width: double.infinity,
+                    color: Colors.grey,
+                  ),
+              ],
+            ),
+          );
+        },
+      );
     } else {
       return GridView.builder(
         padding: EdgeInsets.zero,
