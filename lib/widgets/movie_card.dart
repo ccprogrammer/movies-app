@@ -22,10 +22,7 @@ class _MovieCardState extends State<MovieCard> {
 
   @override
   Widget build(BuildContext context) {
-    getData() async {
-      await Provider.of<MovieDetailProvider>(context, listen: false)
-          .getMovieDetail(movieId: widget.movie.id);
-    }
+   
 
     return OpenContainer(
       closedColor: Const.colorPrimary,
@@ -33,8 +30,7 @@ class _MovieCardState extends State<MovieCard> {
       closedElevation: 0,
       closedBuilder: (context, action) {
         return InkWell(
-          onTap: () async {
-            await getData();
+          onTap: () {
             action();
           },
           borderRadius: BorderRadius.circular(12),

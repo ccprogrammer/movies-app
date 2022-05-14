@@ -12,7 +12,11 @@ import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
+import 'package:movies_app/widgets/shimmer_headers.dart';
+import 'package:movies_app/widgets/shimmer_title.dart';
+import 'package:movies_app/widgets/skeleton.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage({Key? key, required this.movieId}) : super(key: key);
@@ -26,12 +30,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   double rating = 0.0;
   late TabController _tabController;
 
-  getSimilar() {
+  getData() {
+    Provider.of<MovieDetailProvider>(context, listen: false)
+        .getMovieDetail(movieId: widget.movieId);
     Provider.of<SimilarMovieProvider>(context, listen: false)
         .getSimilarMovie(widget.movieId);
-  }
-
-  getRecommendations() {
     Provider.of<RecommendationsProvider>(context, listen: false)
         .getRecommendationsMovie(widget.movieId);
   }
@@ -41,8 +44,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    getSimilar();
-    getRecommendations();
+    getData();
   }
 
   @override
@@ -95,133 +97,146 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildHeaders() {
-    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
-
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(10.w, 12.h, 18.w, 0),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(movie.poster!),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
-          ),
-          height: 260.h,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-            child: SafeArea(
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.chevron_left,
-                        color: Colors.white,
-                        size: 32.w,
+    return Consumer<MovieDetailProvider>(
+      builder: (context, data, child) {
+        if (data.isLoading) {
+          return ShimmerHeaders();
+        } else {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(10.w, 12.h, 18.w, 0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(data.movieDetail.poster!),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+                height: 260.h,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+                  child: SafeArea(
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.chevron_left,
+                              color: Colors.white,
+                              size: 32.w,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset(
+                              'assets/icon_share.png',
+                              width: 24.w,
+                              height: 24.h,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Image.asset(
-                        'assets/icon_share.png',
-                        width: 24.w,
-                        height: 24.h,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 125.h,
-          right: 0,
-          left: 0,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
-            width: 164.w,
-            height: 250.h,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(movie.poster!),
-                fit: BoxFit.fill,
+              Positioned(
+                top: 125.h,
+                right: 0,
+                left: 0,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
+                  width: 164.w,
+                  height: 250.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(data.movieDetail.poster!),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ],
+            ],
+          );
+        }
+      },
     );
   }
 
   Widget _buildTitle() {
-    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
-    return Container(
-      margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            '${movie.title}',
-            textAlign: TextAlign.center,
-            style: Const.textPrimary,
-          ),
-          SizedBox(height: 16.h),
-          _buildGenre(),
-          SizedBox(height: 9.h),
-          Text(
-            'Release Date',
-            style: Const.textReleaseDate.copyWith(fontSize: 14),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            movie.releaseDate ?? '',
-            style: Const.textSecondary.copyWith(
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 16.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '${(movie.rating! / 2).toStringAsFixed(0)}/5',
-                style: Const.textPrimary,
-              ),
-              SizedBox(width: 8.w),
-              RatingBar.builder(
-                initialRating: movie.rating! / 2,
-                minRating: 0,
-                direction: Axis.horizontal,
-                glow: false,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
-                ignoreGestures: true,
-                itemSize: 20.w,
-                itemBuilder: (context, _) => Image.asset(
-                  'assets/icon_star.png',
-                  color: Colors.amber,
+    return Consumer<MovieDetailProvider>(
+      builder: (context, data, child) {
+        if (data.isLoading) {
+          return ShimmerTitle();
+        } else {
+          return Container(
+            margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${data.movieDetail.title}',
+                  textAlign: TextAlign.center,
+                  style: Const.textPrimary,
                 ),
-                onRatingUpdate: (double value) {
-                  this.rating = rating;
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+                SizedBox(height: 16.h),
+                _buildGenre(),
+                SizedBox(height: 9.h),
+                Text(
+                  'Release Date',
+                  style: Const.textReleaseDate.copyWith(fontSize: 14),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  data.movieDetail.releaseDate ?? '',
+                  style: Const.textSecondary.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${(data.movieDetail.rating! / 2).toStringAsFixed(0)}/5',
+                      style: Const.textPrimary,
+                    ),
+                    SizedBox(width: 8.w),
+                    RatingBar.builder(
+                      initialRating: data.movieDetail.rating! / 2,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      glow: false,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
+                      ignoreGestures: true,
+                      itemSize: 20.w,
+                      itemBuilder: (context, _) => Image.asset(
+                        'assets/icon_star.png',
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (double value) {
+                        this.rating = rating;
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }
+      },
     );
   }
 

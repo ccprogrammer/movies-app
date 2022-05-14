@@ -13,6 +13,10 @@ import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
+import 'package:movies_app/widgets/shimmer_card.dart';
+import 'package:movies_app/widgets/shimmer_overview.dart';
+import 'package:movies_app/widgets/shimmer_tile.dart';
+import 'package:movies_app/widgets/skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -46,26 +50,33 @@ class _DetailsTabState extends State<DetailsTab> {
   }
 
   Widget _buildSynopsis() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Synopsis',
-            style: Const.textPrimary.copyWith(
-              fontSize: 18,
-            ),
+    return Consumer<MovieDetailProvider>(builder: (context, data, child) {
+      if (data.isLoading) {
+        return ShimmerOverview();
+      } else {
+        return Container(
+          margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Synopsis',
+                style: Const.textPrimary.copyWith(
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: 16),
+              ExpandableText(
+                '${widget.movie!.synopsis}',
+                trimLines: 4,
+                style: Const.textSecondary,
+              ),
+            ],
           ),
-          SizedBox(height: 16),
-          ExpandableText(
-            '${widget.movie!.synopsis}',
-            trimLines: 4,
-            style: Const.textSecondary,
-          ),
-        ],
-      ),
-    );
+        );
+      }
+    });
+    // return ShimmerOverview();
   }
 
   Widget _buildCast() {
@@ -203,7 +214,7 @@ class _DetailsTabState extends State<DetailsTab> {
   Widget _buildHorizontalSimilar() {
     return Consumer<SimilarMovieProvider>(
       builder: (context, data, child) {
-        if (data.similarMovie.isEmpty) {
+        if (data.isLoading) {
           return Container(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -211,37 +222,7 @@ class _DetailsTabState extends State<DetailsTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(width: 18.w),
-                  for (int i = 0; i < 5; i++)
-                    Shimmer.fromColors(
-                      baseColor: Colors.grey[500]!,
-                      highlightColor: Colors.grey[300]!,
-                      child: Container(
-                        margin: EdgeInsets.only(right: 20.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 120.h,
-                              width: 160.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: Colors.grey,
-                              ),
-                            ),
-                            for (var i = 0; i < 2; i++)
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
-                                height: 16.h,
-                                width: 160.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.r),
-                                  color: Colors.grey,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  for (int i = 0; i < 5; i++) ShimmerCard(),
                 ],
               ),
             ),
@@ -354,50 +335,12 @@ class _DetailsTabState extends State<DetailsTab> {
   Widget _buildVerticalRecommendations() {
     return Consumer<RecommendationsProvider>(
       builder: (context, data, child) {
-        if (data.recommendationsMovie.isEmpty) {
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (int i = 0; i < 5; i++)
-                  Shimmer.fromColors(
-                    baseColor: Colors.grey[500]!,
-                    highlightColor: Colors.grey[300]!,
-                    child: Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(18.w, 12.h, 8.w, 12.h),
-                            width: 84.w,
-                            height: 84.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              for (var i = 0; i < 5; i++)
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
-                                  height: 10.h,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.65,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3.r),
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+        if (data.isLoading) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (int i = 0; i < 5; i++) ShimmerTile(),
+            ],
           );
         } else {
           return Column(
@@ -458,9 +401,7 @@ class _DetailsTabState extends State<DetailsTab> {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
-
                                       SizedBox(height: 4.h),
-
                                       Row(
                                         children: [
                                           Icon(
@@ -469,9 +410,12 @@ class _DetailsTabState extends State<DetailsTab> {
                                             color: Colors.white,
                                           ),
                                           SizedBox(width: 4.w),
-                                          Text(
-                                            'Launch ${item.releaseDate}',
-                                            style: Const.textReleaseDate.copyWith(fontSize: 12),
+                                          Expanded(
+                                            child: Text(
+                                              'Launch ${item.releaseDate}',
+                                              style: Const.textReleaseDate
+                                                  .copyWith(fontSize: 12),
+                                            ),
                                           ),
                                         ],
                                       ),
