@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 
 import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:movies_app/widgets/loading/shimmer_now_playing.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -17,8 +18,6 @@ class NowPlaying extends StatefulWidget {
 class _NowPlayingState extends State<NowPlaying> {
   @override
   Widget build(BuildContext context) {
-    var nowPlayingProvider = Provider.of<NowPlayingProvider>(context);
-
     return Scaffold(
       backgroundColor: Const.colorPrimary,
       body: Container(
@@ -27,67 +26,52 @@ class _NowPlayingState extends State<NowPlaying> {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(height: 24.h),
-            _buildMoviesGrid(data: nowPlayingProvider.nowPlaying),
+            _buildMoviesGrid(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMoviesGrid({data}) {
-    if (data.isEmpty) {
-      return GridView.builder(
-        padding: EdgeInsets.zero,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12.w,
-          mainAxisSpacing: 0.h,
-          childAspectRatio: 16.w / 33.h,
-        ),
-        primary: false,
-        shrinkWrap: true,
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return Shimmer.fromColors(
-            baseColor: Colors.grey[500]!,
-            highlightColor: Colors.grey[400]!,
-            child: Column(
-              children: [
-                Container(
-                  height: 230.h,
-                  width: double.infinity,
-                  color: Colors.grey,
-                ),
-                for (var i = 0; i < 3; i++)
-                  Container(
-                    margin: EdgeInsets.only(top: 8.h),
-                    height: 16.h,
-                    width: double.infinity,
-                    color: Colors.grey,
-                  ),
-              ],
+  Widget _buildMoviesGrid() {
+    return Consumer<NowPlayingProvider>(
+      builder: (context, data, child) {
+        if (data.isLoading) {
+          return GridView.builder(
+            padding: EdgeInsets.zero,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12.w,
+              mainAxisSpacing: 0.h,
+              childAspectRatio: 16.w / 33.h,
             ),
+            primary: false,
+            shrinkWrap: true,
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return ShimmerNowPlaying();
+            },
           );
-        },
-      );
-    } else {
-      return GridView.builder(
-        padding: EdgeInsets.zero,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12.w,
-          mainAxisSpacing: 12.h,
-          childAspectRatio: 16.w / 33.h,
-        ),
-        primary: false,
-        shrinkWrap: true,
-        itemCount: data.length,
-        itemBuilder: (context, index) {
-          return MovieCard(
-            movie: data[index],
+        } else {
+          return GridView.builder(
+            padding: EdgeInsets.zero,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12.w,
+              mainAxisSpacing: 12.h,
+              childAspectRatio: 16.w / 33.h,
+            ),
+            primary: false,
+            shrinkWrap: true,
+            itemCount: data.nowPlaying.length,
+            itemBuilder: (context, index) {
+              return MovieCard(
+                movie: data.nowPlaying[index],
+              );
+            },
           );
-        },
-      );
-    }
+        }
+      },
+    );
   }
 }

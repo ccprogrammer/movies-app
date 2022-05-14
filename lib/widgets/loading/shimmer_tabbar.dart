@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:movies_app/widgets/skeleton.dart';
+import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerTabBar extends StatelessWidget {

@@ -12,10 +12,10 @@ import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
-import 'package:movies_app/widgets/shimmer_headers.dart';
-import 'package:movies_app/widgets/shimmer_tabbar.dart';
-import 'package:movies_app/widgets/shimmer_title.dart';
-import 'package:movies_app/widgets/skeleton.dart';
+import 'package:movies_app/widgets/loading/shimmer_headers.dart';
+import 'package:movies_app/widgets/loading/shimmer_tabbar.dart';
+import 'package:movies_app/widgets/loading/shimmer_title.dart';
+
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

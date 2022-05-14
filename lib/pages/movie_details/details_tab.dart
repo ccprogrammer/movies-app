@@ -13,10 +13,9 @@ import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
-import 'package:movies_app/widgets/shimmer_card.dart';
-import 'package:movies_app/widgets/shimmer_overview.dart';
-import 'package:movies_app/widgets/shimmer_tile.dart';
-import 'package:movies_app/widgets/skeleton.dart';
+import 'package:movies_app/widgets/loading/shimmer_card.dart';
+import 'package:movies_app/widgets/loading/shimmer_overview.dart';
+import 'package:movies_app/widgets/loading/shimmer_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
