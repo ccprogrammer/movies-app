@@ -6,10 +6,9 @@ import 'package:movies_app/models/reviews_model.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({Key? key, this.reviews}) : super(key: key);
-  final ReviewsModel? reviews;
+  const ChatBubble({Key? key, required this.reviews}) : super(key: key);
+  final ReviewsModel reviews;
 
-  final double rating = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class ChatBubble extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RatingBar.builder(
-                      initialRating: 5,
+                      initialRating: reviews.rating! / 2,
                       minRating: 0,
                       direction: Axis.horizontal,
                       glow: false,
@@ -53,7 +52,7 @@ class ChatBubble extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     ExpandableText(
-                      '${this.reviews!.review}',
+                      '${this.reviews.review}',
                       style: Const.textSecondary,trimLines: 4,
                     ),
                   ],
@@ -78,13 +77,13 @@ class ChatBubble extends StatelessWidget {
             //   ),
             // ),
             title: Text(
-              '${reviews!.username}',
+              '${reviews.username}',
               style: Const.textPrimary.copyWith(fontSize: 14.sp),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
             subtitle: Text(
-              '${reviews!.createdAt}',
+              '${reviews.createdAt}',
               style: Const.textSecondary.copyWith(fontSize: 12.sp),
               maxLines: 1,
             ),

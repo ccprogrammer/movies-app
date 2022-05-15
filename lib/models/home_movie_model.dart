@@ -1,17 +1,17 @@
-class NowPlayingModel {
+class HomeMovieModel {
   int? id;
   String? title;
   String? poster;
   double? rating;
 
-  NowPlayingModel({
+  HomeMovieModel({
     this.id,
     this.title,
     this.poster,
     this.rating,
   });
 
-  NowPlayingModel.fromJson(Map<String, dynamic> json) {
+  HomeMovieModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['original_title'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];

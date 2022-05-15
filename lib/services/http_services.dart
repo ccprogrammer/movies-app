@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
-import 'package:movies_app/models/now_playing_model.dart';
+import 'package:movies_app/models/home_movie_model.dart';
 import 'package:movies_app/models/recommendations_model.dart';
 import 'package:movies_app/models/reviews_model.dart';
 import 'package:movies_app/models/similar_model.dart';
@@ -18,13 +18,49 @@ class Http {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body)['results'];
-      List<NowPlayingModel> nowPlaying = [];
+      List<HomeMovieModel> nowPlaying = [];
 
       for (var item in data) {
-        nowPlaying.add(NowPlayingModel.fromJson(item));
+        nowPlaying.add(HomeMovieModel.fromJson(item));
       }
 
       return nowPlaying;
+    } else {
+      throw Exception('Error get data');
+    }
+  }
+
+  Future getComingSoon() async {
+    Uri url = Uri.parse('$_baseUrl/upcoming$_apiKey');
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body)['results'];
+      List<HomeMovieModel> comingSoon = [];
+
+      for (var item in data) {
+        comingSoon.add(HomeMovieModel.fromJson(item));
+      }
+
+      return comingSoon;
+    } else {
+      throw Exception('Error get data');
+    }
+  }
+
+  Future getPopular() async {
+    Uri url = Uri.parse('$_baseUrl/popular$_apiKey');
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body)['results'];
+      List<HomeMovieModel> popular = [];
+
+      for (var item in data) {
+        popular.add(HomeMovieModel.fromJson(item));
+      }
+
+      return popular;
     } else {
       throw Exception('Error get data');
     }

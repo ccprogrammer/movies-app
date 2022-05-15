@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/pages/splash_screen.dart';
+import 'package:movies_app/provider/coming_soon_provider.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:movies_app/provider/popular_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/reviews_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
@@ -21,6 +23,12 @@ class MyApp extends StatelessWidget {
           create: (context) => NowPlayingProvider(),
         ),
         ChangeNotifierProvider(
+          create: (context) => ComingSoonProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PopularProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => SimilarMovieProvider(),
         ),
         ChangeNotifierProvider(
@@ -29,7 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => RecommendationsProvider(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => ReviewsProvider(),
         ),
       ],

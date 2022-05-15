@@ -4,6 +4,7 @@ import 'package:movies_app/constants.dart';
 
 import 'package:movies_app/pages/coming_soon/coming_soon_tab.dart';
 import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
+import 'package:movies_app/pages/popular/popular_tab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -62,17 +63,19 @@ class _HomePageState extends State<HomePage> {
               ),
               labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
               tabs: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      'assets/icon_now_showing.png',
-                      width: 24.w,
-                    ),
-                    Tab(text: 'Now Playing'),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     Image.asset(
+                //       'assets/icon_now_showing.png',
+                //       width: 24.w,
+                //     ),
+                //     Tab(text: 'Now Playing'),
+                //   ],
+                // ),
+                Tab(text: 'Now Playing'),
                 Tab(text: 'Coming Soon'),
+                Tab(text: 'Popular'),
               ],
             ),
           ),
@@ -86,6 +89,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         NowPlaying(),
         ComingSoon(),
+        Popular(),
       ],
     );
   }

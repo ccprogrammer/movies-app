@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/now_playing_model.dart';
+import 'package:movies_app/models/home_movie_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
-
+import 'package:movies_app/widgets/loading/skeleton.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MovieCard extends StatelessWidget {
   const MovieCard({Key? key, required this.movie}) : super(key: key);
-  final NowPlayingModel movie;
+  final HomeMovieModel movie;
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +28,48 @@ class MovieCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CachedNetworkImage(
-            imageUrl: movie.poster.toString(),
-            imageBuilder: (context, _) {
-              return Image.network(
-                movie.poster.toString(),
+          Image.network(
+            movie.poster.toString(),
+            height: 250.h,
+            width: 164.w,
+            fit: BoxFit.fill,
+            alignment: Alignment.topCenter,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
                 height: 250.h,
                 width: 164.w,
-                fit: BoxFit.fill,
-                alignment: Alignment.topCenter,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Const.colorBlue,
+                  ),
+                ),
               );
             },
-            placeholder: (context, url) => Container(
-              height: 250.h,
-              width: 164.w,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Const.colorBlue,
-                ),
-              ),
-            ),
-            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
+          // CachedNetworkImage(
+          //   imageUrl: movie.poster.toString(),
+          //   imageBuilder: (context, _) {
+          //     return Image.network(
+          //       movie.poster.toString(),
+          //       height: 250.h,
+          //       width: 164.w,
+          //       fit: BoxFit.fill,
+          //       alignment: Alignment.topCenter,
+          //     );
+          //   },
+          //   placeholder: (context, url) => Container(
+          //     height: 250.h,
+          //     width: 164.w,
+          //     child: Center(
+          //       child: CircularProgressIndicator(
+          //         color: Const.colorBlue,
+          //       ),
+          //     ),
+          //   ),
+          //   errorWidget: (context, url, error) => Icon(Icons.error),
+          // ),
           SizedBox(height: 16.h),
           RatingBar.builder(
             initialRating: movie.rating! / 2,

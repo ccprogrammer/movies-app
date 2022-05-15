@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:movies_app/provider/popular_provider.dart';
 import 'package:movies_app/widgets/loading/shimmer_home_movie.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
 
-class NowPlaying extends StatefulWidget {
-  const NowPlaying({Key? key}) : super(key: key);
+class Popular extends StatefulWidget {
+  const Popular({Key? key}) : super(key: key);
 
   @override
-  State<NowPlaying> createState() => _NowPlayingState();
+  State<Popular> createState() => _PopularState();
 }
 
-class _NowPlayingState extends State<NowPlaying> {
+class _PopularState extends State<Popular> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +33,7 @@ class _NowPlayingState extends State<NowPlaying> {
   }
 
   Widget _buildMoviesGrid() {
-    return Consumer<NowPlayingProvider>(
+    return Consumer<PopularProvider>(
       builder: (context, data, child) {
         if (data.isLoading) {
           return GridView.builder(
@@ -61,10 +62,10 @@ class _NowPlayingState extends State<NowPlaying> {
             ),
             primary: false,
             shrinkWrap: true,
-            itemCount: data.nowPlaying.length,
+            itemCount: data.popular.length,
             itemBuilder: (context, index) {
               return MovieCard(
-                movie: data.nowPlaying[index],
+                movie: data.popular[index],
               );
             },
           );

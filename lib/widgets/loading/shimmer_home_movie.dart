@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerNowPlaying extends StatelessWidget {
-  const ShimmerNowPlaying({
+class ShimmerHomeMovies extends StatelessWidget {
+  const ShimmerHomeMovies({
     Key? key,
   }) : super(key: key);
 
