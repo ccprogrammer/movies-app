@@ -440,7 +440,7 @@ class _DetailsTabState extends State<DetailsTab> {
                                         SizedBox(width: 4.w),
                                         Expanded(
                                           child: Text(
-                                            'Launch ${item.releaseDate}',
+                                            item.releaseDate ?? '',
                                             style: Const.textReleaseDate
                                                 .copyWith(fontSize: 12),
                                           ),

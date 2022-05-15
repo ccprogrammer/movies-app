@@ -72,7 +72,7 @@ class MovieCard extends StatelessWidget {
           // ),
           SizedBox(height: 16.h),
           RatingBar.builder(
-            initialRating: movie.rating! / 2,
+            initialRating: movie.rating != null ? movie.rating! / 2 : 0,
             minRating: 0,
             direction: Axis.horizontal,
             glow: false,
@@ -89,11 +89,15 @@ class MovieCard extends StatelessWidget {
           ),
           SizedBox(height: 7.h),
           Text(
-            '${movie.title}',
+            movie.title ?? '',
             style: Const.textPrimary.copyWith(fontSize: 16.sp),
             maxLines: 2,
           ),
           SizedBox(height: 4.h),
+          Text(
+            movie.releaseDate ?? '',
+            style: Const.textReleaseDate,
+          )
           // _buildGenre(),
         ],
       ),

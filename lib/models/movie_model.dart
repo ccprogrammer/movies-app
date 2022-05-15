@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class MovieModel {
   int? id;
   String? title;
@@ -22,7 +24,7 @@ class MovieModel {
     title = json['original_title'];
     synopsis = json['overview'];
     poster = 'https://image.tmdb.org/t/p/w500' + json['poster_path'];
-    releaseDate = json['release_date'];
+    releaseDate = DateFormat.yMMMMd().format(DateTime.parse(json['release_date']));
     rating = json['vote_average'].toDouble();
     genre = List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x)));
   }
