@@ -5,7 +5,6 @@ import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/coming_soon/coming_soon_tab.dart';
 import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -32,29 +31,17 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSliverAppBar() {
     return SliverAppBar(
       iconTheme: IconThemeData(color: Colors.white),
-      titleSpacing: 18.w,
       backgroundColor: Const.colorPrimary,
       elevation: 0,
       floating: true,
       snap: true,
       pinned: true,
       automaticallyImplyLeading: false,
+      centerTitle: true,
       title: Text(
         Const.appName,
         style: Const.textPrimary,
       ),
-      actions: [
-        IconButton(
-          constraints: BoxConstraints(),
-          padding: EdgeInsets.zero,
-          onPressed: () {},
-          icon: Image.asset(
-            'assets/icon_search.png',
-            width: 24.w,
-          ),
-        ),
-        SizedBox(width: 18.w),
-      ],
       bottom: PreferredSize(
         preferredSize: new Size(80.w, 80.h),
         child: Container(

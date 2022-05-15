@@ -8,7 +8,9 @@ import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
+import 'package:movies_app/provider/reviews_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
+import 'package:movies_app/services/http_services.dart';
 import 'package:movies_app/widgets/loading/shimmer_headers.dart';
 import 'package:movies_app/widgets/loading/shimmer_tabbar.dart';
 import 'package:movies_app/widgets/loading/shimmer_title.dart';
@@ -35,14 +37,16 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         .getSimilarMovie(widget.movieId);
     Provider.of<RecommendationsProvider>(context, listen: false)
         .getRecommendationsMovie(widget.movieId);
+    Provider.of<ReviewsProvider>(context, listen: false)
+        .getReviews(widget.movieId);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     getData();
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -55,7 +59,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: Const.colorPrimary,
         body: NestedScrollView(
@@ -266,7 +270,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                   tabs: [
                     Tab(text: 'Detail'),
                     Tab(text: 'Reviews'),
-                    Tab(text: 'Showtime'),
                   ],
                 ),
               ),
@@ -283,10 +286,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return TabBarView(
       children: [
         DetailsTab(
-          movie: movie,
         ),
         ReviewsTab(),
-        DetailsTab(),
       ],
     );
   }

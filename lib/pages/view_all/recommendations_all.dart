@@ -40,22 +40,22 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
         },
         icon: Icon(
           Icons.chevron_left,
-          size: 32,
+          size: 32.w,
         ),
       ),
       title: Text(
-        'Similar Movies',
+        'Recommendations Movies',
         style: Const.textPrimary.copyWith(
-          fontSize: 18,
+          fontSize: 18.sp,
           fontWeight: Const.semiBold,
         ),
       ),
       bottom: PreferredSize(
           child: Container(
             color: Const.colorIndicatorBorder,
-            height: 1.0,
+            height: 1.0.h,
           ),
-          preferredSize: Size.fromHeight(4.0)),
+          preferredSize: Size.fromHeight(4.0.h)),
     );
   }
 
@@ -118,14 +118,14 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
                         ));
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(vertical: 16.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           height: 168.h,
                           width: double.infinity,
-                          margin: EdgeInsets.fromLTRB(18, 0, 18, 0),
+                          margin: EdgeInsets.fromLTRB(18.h, 0, 18.h, 0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             image: DecorationImage(
@@ -137,14 +137,14 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(18, 14, 18, 0),
+                          margin: EdgeInsets.fromLTRB(18.h, 14.w, 18.h, 0),
                           child: Text(
                             item.title ?? '',
-                            style: Const.textPrimary.copyWith(fontSize: 16),
+                            style: Const.textPrimary.copyWith(fontSize: 16.sp),
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(18, 6, 18, 0),
+                          margin: EdgeInsets.fromLTRB(18.w, 6.h, 18.w, 0),
                           child: ExpandableText(
                             '${item.synopsis}',
                             style: Const.textSecondary,

@@ -5,6 +5,7 @@ import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/models/now_playing_model.dart';
 import 'package:movies_app/models/recommendations_model.dart';
+import 'package:movies_app/models/reviews_model.dart';
 import 'package:movies_app/models/similar_model.dart';
 
 class Http {
@@ -72,6 +73,24 @@ class Http {
       Map<String, dynamic> movieDetail = jsonDecode(response.body);
 
       return movieDetail;
+    } else {
+      throw Exception('Error get data');
+    }
+  }
+
+  Future getReviews(movieId) async {
+    Uri url = Uri.parse('$_baseUrl/${movieId}/reviews$_apiKey');
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body)['results'];
+      List<ReviewsModel> reviews = [];
+
+      for (var item in data) {
+        reviews.add(ReviewsModel.fromJson(item));
+      }
+
+      return reviews;
     } else {
       throw Exception('Error get data');
     }

@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/reviews_model.dart';
+import 'package:movies_app/widgets/expandable_text.dart';
 
-class ChatBubble extends StatefulWidget {
-  const ChatBubble({Key? key, this.data}) : super(key: key);
-  final dynamic data;
+class ChatBubble extends StatelessWidget {
+  const ChatBubble({Key? key, this.reviews}) : super(key: key);
+  final ReviewsModel? reviews;
 
-  @override
-  State<ChatBubble> createState() => _ChatBubbleState();
-}
-
-class _ChatBubbleState extends State<ChatBubble> {
-  double rating = 0.0;
+  final double rating = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +49,12 @@ class _ChatBubbleState extends State<ChatBubble> {
                         'assets/icon_star.png',
                         color: Colors.amber,
                       ),
-                      onRatingUpdate: (double value) {
-                        this.rating = rating;
-                      },
+                      onRatingUpdate: (double value) {},
                     ),
                     SizedBox(height: 8),
-                    Text(
-                      'This is the legendary Lorem Ipsum Brother ',
-                      style: Const.textSecondary,
+                    ExpandableText(
+                      '${this.reviews!.review}',
+                      style: Const.textSecondary,trimLines: 4,
                     ),
                   ],
                 ),
@@ -70,26 +65,26 @@ class _ChatBubbleState extends State<ChatBubble> {
           // user
           ListTile(
             contentPadding: EdgeInsets.fromLTRB(6, 0, 0, 0),
-            leading: Container(
-              width: 46.w,
-              height: 46.h,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(Const.dummyImage),
-                  fit: BoxFit.cover,
-                ),
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-            ),
+            // leading: Container(
+            //   width: 46.w,
+            //   height: 46.h,
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: NetworkImage(reviews!.avatar.toString()),
+            //       fit: BoxFit.cover,
+            //     ),
+            //     color: Colors.white,
+            //     shape: BoxShape.circle,
+            //   ),
+            // ),
             title: Text(
-              'Devin	Hopkins',
+              '${reviews!.username}',
               style: Const.textPrimary.copyWith(fontSize: 14.sp),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
             subtitle: Text(
-              'May 20, 2019',
+              '${reviews!.createdAt}',
               style: Const.textSecondary.copyWith(fontSize: 12.sp),
               maxLines: 1,
             ),
