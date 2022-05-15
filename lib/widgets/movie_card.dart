@@ -28,48 +28,23 @@ class MovieCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            movie.poster.toString(),
+          CachedNetworkImage(
             height: 250.h,
             width: 164.w,
             fit: BoxFit.fill,
             alignment: Alignment.topCenter,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Container(
-                height: 250.h,
-                width: 164.w,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: Const.colorBlue,
-                  ),
+            imageUrl: movie.poster.toString(),
+            placeholder: (context, url) => Container(
+              height: 250.h,
+              width: 164.w,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Const.colorBlue,
                 ),
-              );
-            },
+              ),
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
-          // CachedNetworkImage(
-          //   imageUrl: movie.poster.toString(),
-          //   imageBuilder: (context, _) {
-          //     return Image.network(
-          //       movie.poster.toString(),
-          //       height: 250.h,
-          //       width: 164.w,
-          //       fit: BoxFit.fill,
-          //       alignment: Alignment.topCenter,
-          //     );
-          //   },
-          //   placeholder: (context, url) => Container(
-          //     height: 250.h,
-          //     width: 164.w,
-          //     child: Center(
-          //       child: CircularProgressIndicator(
-          //         color: Const.colorBlue,
-          //       ),
-          //     ),
-          //   ),
-          //   errorWidget: (context, url, error) => Icon(Icons.error),
-          // ),
           SizedBox(height: 16.h),
           RatingBar.builder(
             initialRating: movie.rating != null ? movie.rating! / 2 : 0,

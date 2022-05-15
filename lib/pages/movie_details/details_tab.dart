@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
@@ -16,7 +17,9 @@ import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:movies_app/widgets/loading/shimmer_card.dart';
 import 'package:movies_app/widgets/loading/shimmer_overview.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
+import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DetailsTab extends StatefulWidget {
   const DetailsTab({Key? key}) : super(key: key);
@@ -245,42 +248,21 @@ class _DetailsTabState extends State<DetailsTab> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(10.r),
-                              child: Image.network(
-                                item.poster.toString(),
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
                                 height: 240.h,
                                 fit: BoxFit.fill,
-                                alignment: Alignment.bottomCenter,
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent? loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Container(
-                                    height: 220.w,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: Const.colorBlue,
-                                      ),
-                                    ),
-                                  );
-                                },
+                                alignment: Alignment.topCenter,
+                                imageUrl: item.poster.toString(),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                        child: Skeleton(),
+                                        baseColor: Colors.grey[500]!,
+                                        highlightColor: Colors.grey[300]!),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
                               ),
                             ),
-
-                            // Container(
-                            //   height: 120.h,
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(10.r),
-                            //     image: DecorationImage(
-                            //       image: NetworkImage(
-                            //         item.poster ?? Const.dummyImage,
-                            //       ),
-                            //       fit: BoxFit.cover,
-                            //       alignment: Alignment.topCenter,
-                            //     ),
-                            //   ),
-                            // ),
-
                             Container(
                               margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
                               child: Text(
@@ -369,27 +351,20 @@ class _DetailsTabState extends State<DetailsTab> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(10.r),
-                                child: Image.network(
-                                  item.poster.toString(),
+                                borderRadius: BorderRadius.circular(10),
+                                child: CachedNetworkImage(
                                   width: 84.w,
                                   height: 84.h,
                                   fit: BoxFit.cover,
                                   alignment: Alignment.bottomCenter,
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Container(
-                                      width: 84.w,
-                                      height: 84.h,
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          color: Const.colorBlue,
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                  imageUrl: item.poster.toString(),
+                                  placeholder: (context, url) =>
+                                      Shimmer.fromColors(
+                                          child: Skeleton(),
+                                          baseColor: Colors.grey[500]!,
+                                          highlightColor: Colors.grey[300]!),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
                               ),
 
