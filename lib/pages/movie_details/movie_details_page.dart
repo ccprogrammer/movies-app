@@ -76,7 +76,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return SliverAppBar(
       iconTheme: IconThemeData(color: Colors.white),
       titleSpacing: 18.w,
-      expandedHeight: 625.h,
+      expandedHeight: 635.h,
       backgroundColor: Const.colorPrimary,
       elevation: 0,
       floating: false,
@@ -187,22 +187,25 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${data.movieDetail.title}',
+                  data.movieDetail.title ?? '',
                   textAlign: TextAlign.center,
                   style: Const.textPrimary,
                 ),
                 SizedBox(height: 16.h),
                 _buildGenre(),
-                SizedBox(height: 9.h),
+                SizedBox(height: 12.h),
                 Text(
                   'Release Date',
-                  style: Const.textReleaseDate.copyWith(fontSize: 14),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  data.movieDetail.releaseDate ?? '',
                   style: Const.textSecondary.copyWith(
+                    fontSize: 14,
                     color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 6.h),
+                Text(
+                  data.movieDetail.releaseDate ?? 'TBA',
+                  style: Const.textReleaseDate.copyWith(
+                    fontSize: 12,
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -215,7 +218,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     ),
                     SizedBox(width: 8.w),
                     RatingBar.builder(
-                      initialRating: data.movieDetail.rating! / 2,
+                      initialRating: data.movieDetail.rating != null
+                          ? data.movieDetail.rating! / 2
+                          : 0,
                       minRating: 0,
                       direction: Axis.horizontal,
                       glow: false,
@@ -281,7 +286,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildTabView() {
-
     return TabBarView(
       children: [
         DetailsTab(),
