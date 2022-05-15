@@ -9,7 +9,6 @@ class ChatBubble extends StatelessWidget {
   const ChatBubble({Key? key, required this.reviews}) : super(key: key);
   final ReviewsModel reviews;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +34,8 @@ class ChatBubble extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RatingBar.builder(
-                      initialRating: reviews.rating! / 2,
+                      initialRating:
+                          reviews.rating == null ? 0 : reviews.rating! / 2,
                       minRating: 0,
                       direction: Axis.horizontal,
                       glow: false,
@@ -50,10 +50,11 @@ class ChatBubble extends StatelessWidget {
                       ),
                       onRatingUpdate: (double value) {},
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 14),
                     ExpandableText(
-                      '${this.reviews.review}',
-                      style: Const.textSecondary,trimLines: 4,
+                      reviews.review ?? 'empty',
+                      style: Const.textSecondary,
+                      trimLines: 4,
                     ),
                   ],
                 ),
@@ -77,13 +78,13 @@ class ChatBubble extends StatelessWidget {
             //   ),
             // ),
             title: Text(
-              '${reviews.username}',
+              reviews.username ?? 'empty',
               style: Const.textPrimary.copyWith(fontSize: 14.sp),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
             subtitle: Text(
-              '${reviews.createdAt}',
+              reviews.createdAt ?? 'empty',
               style: Const.textSecondary.copyWith(fontSize: 12.sp),
               maxLines: 1,
             ),

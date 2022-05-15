@@ -281,12 +281,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildTabView() {
-    MovieModel movie = Provider.of<MovieDetailProvider>(context).movieDetail;
 
     return TabBarView(
       children: [
-        DetailsTab(
-        ),
+        DetailsTab(),
         ReviewsTab(),
       ],
     );

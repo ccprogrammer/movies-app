@@ -12,34 +12,35 @@ class ReviewsTab extends StatefulWidget {
 }
 
 class _ReviewsTabState extends State<ReviewsTab> {
-  double rating = 0.0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<ReviewsProvider>(builder: (context, data, child) {
-      if (data.reviews.isNotEmpty) {
-        return ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            // Center(
-            //   child: Text(
-            //     '38 Reviews',
-            //     style: Const.textSecondary.copyWith(fontSize: 16),
-            //   ),
-            // ),
-            for (var item in data.reviews)
-              ChatBubble(
-                reviews: item,
-              ),
-          ],
-        );
-      } else {
-        return Center(
-              child: Text(
-                'NO REVIEWS',
-                style: Const.textPrimary,
-              ),
-            );
-      }
-    });
+    return Consumer<ReviewsProvider>(
+      builder: (context, data, child) {
+        if (data.reviews.isEmpty) {
+          return Center(
+            child: Text(
+              'NO REVIEWS',
+              style: Const.textPrimary,
+            ),
+          );
+        } else {
+          return ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              for (var item in data.reviews)
+                ChatBubble(
+                  reviews: item,
+                ),
+            ],
+          );
+        }
+      },
+    );
   }
 }

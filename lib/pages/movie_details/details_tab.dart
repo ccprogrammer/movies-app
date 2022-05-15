@@ -240,26 +240,47 @@ class _DetailsTabState extends State<DetailsTab> {
                       },
                       child: Container(
                         padding: EdgeInsets.fromLTRB(9.w, 6.h, 9.w, 6.h),
-                        width: 160.w,
+                        width: 170.w,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 120.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    item.poster ?? Const.dummyImage,
-                                  ),
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.topCenter,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black.withOpacity(0.3),
-                                      BlendMode.darken),
-                                ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: Image.network(
+                                item.poster.toString(),
+                                height: 240.h,
+                                fit: BoxFit.fill,
+                                alignment: Alignment.bottomCenter,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Container(
+                                    height: 220.w,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: Const.colorBlue,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
+
+                            // Container(
+                            //   height: 120.h,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(10.r),
+                            //     image: DecorationImage(
+                            //       image: NetworkImage(
+                            //         item.poster ?? Const.dummyImage,
+                            //       ),
+                            //       fit: BoxFit.cover,
+                            //       alignment: Alignment.topCenter,
+                            //     ),
+                            //   ),
+                            // ),
+
                             Container(
                               margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
                               child: Text(
@@ -297,7 +318,7 @@ class _DetailsTabState extends State<DetailsTab> {
 
   Widget _buildRecommendations() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 14.h, 0.w, 0.w),
+      margin: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -345,17 +366,44 @@ class _DetailsTabState extends State<DetailsTab> {
                         Container(
                           padding: EdgeInsets.fromLTRB(18.w, 18.h, 24.w, 18.h),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10.r),
                                 child: Image.network(
-                                  item.poster ??
-                                      'https://images.unsplash.com/photo-1549877452-9c387954fbc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                                  item.poster.toString(),
                                   width: 84.w,
                                   height: 84.h,
                                   fit: BoxFit.cover,
+                                  alignment: Alignment.bottomCenter,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Container(
+                                      width: 84.w,
+                                      height: 84.h,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Const.colorBlue,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
+
+                              // ClipRRect(
+                              //   borderRadius: BorderRadius.circular(10.r),
+                              //   child: Image.network(
+                              //     item.poster ??
+                              //         'https://images.unsplash.com/photo-1549877452-9c387954fbc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                              //     width: 84.w,
+                              //     height: 84.h,
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
+
                               SizedBox(width: 12.w),
                               Expanded(
                                 child: Column(
