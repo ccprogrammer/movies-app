@@ -25,6 +25,8 @@ class _NowPlayingState extends State<NowPlaying> {
           children: [
             SizedBox(height: 24.h),
             _buildMoviesGrid(),
+            SizedBox(height: 68.h),
+
           ],
         ),
       ),

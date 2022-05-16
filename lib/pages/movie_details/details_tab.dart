@@ -369,18 +369,6 @@ class _DetailsTabState extends State<DetailsTab> {
                                       Icon(Icons.error),
                                 ),
                               ),
-
-                              // ClipRRect(
-                              //   borderRadius: BorderRadius.circular(10.r),
-                              //   child: Image.network(
-                              //     item.poster ??
-                              //         'https://images.unsplash.com/photo-1549877452-9c387954fbc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-                              //     width: 84.w,
-                              //     height: 84.h,
-                              //     fit: BoxFit.cover,
-                              //   ),
-                              // ),
-
                               SizedBox(width: 12.w),
                               Expanded(
                                 child: Column(

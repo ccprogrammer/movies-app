@@ -26,6 +26,7 @@ class _ComingSoonState extends State<ComingSoon> {
           children: [
             SizedBox(height: 24.h),
             _buildMoviesGrid(),
+            SizedBox(height: 68.h),
           ],
         ),
       ),

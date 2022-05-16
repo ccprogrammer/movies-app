@@ -7,6 +7,7 @@ import 'package:movies_app/provider/now_playing_provider.dart';
 import 'package:movies_app/provider/popular_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/reviews_provider.dart';
+import 'package:movies_app/provider/search_movie_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ReviewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SearchedMoviesProvider(),
         ),
       ],
       child: ScreenUtilInit(

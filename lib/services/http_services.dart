@@ -6,6 +6,7 @@ import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/models/home_movie_model.dart';
 import 'package:movies_app/models/recommendations_model.dart';
 import 'package:movies_app/models/reviews_model.dart';
+import 'package:movies_app/models/search_movie_model.dart';
 import 'package:movies_app/models/similar_model.dart';
 
 class Http {
@@ -13,7 +14,11 @@ class Http {
   String _apiKey = Const.apiKey;
 
   Future getNowPlaying() async {
-    Uri url = Uri.parse('$_baseUrl/now_playing$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/now_playing').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -31,7 +36,11 @@ class Http {
   }
 
   Future getComingSoon() async {
-    Uri url = Uri.parse('$_baseUrl/upcoming$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/upcoming').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -49,7 +58,11 @@ class Http {
   }
 
   Future getPopular() async {
-    Uri url = Uri.parse('$_baseUrl/popular$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/popular').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -67,7 +80,11 @@ class Http {
   }
 
   Future getSimilarMovie(movieId) async {
-    Uri url = Uri.parse('$_baseUrl/$movieId/similar$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/$movieId/similar').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -85,7 +102,11 @@ class Http {
   }
 
   Future getRecommendations(movieId) async {
-    Uri url = Uri.parse('$_baseUrl/${movieId}/recommendations$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/${movieId}/recommendations').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -103,7 +124,11 @@ class Http {
   }
 
   Future getMovieDetail(movieId) async {
-    Uri url = Uri.parse('$_baseUrl/$movieId$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/$movieId').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
     var response = await http.get(url);
     if (response.statusCode == 200) {
       Map<String, dynamic> movieDetail = jsonDecode(response.body);
@@ -115,7 +140,11 @@ class Http {
   }
 
   Future getReviews(movieId) async {
-    Uri url = Uri.parse('$_baseUrl/${movieId}/reviews$_apiKey');
+    Uri url = Uri.parse('$_baseUrl/movie/${movieId}/reviews').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+      },
+    );
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -127,6 +156,31 @@ class Http {
       }
 
       return reviews;
+    } else {
+      throw Exception('Error get data');
+    }
+  }
+
+  Future searchMovie(movieName) async {
+    String query = movieName;
+
+    Uri url = Uri.parse('$_baseUrl/search/movie').replace(
+      queryParameters: {
+        'api_key': _apiKey,
+        'query': query,
+      },
+    );
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body)['results'];
+      List<SearchMovieModel> searchedMovies = [];
+
+      for (var item in data) {
+        searchedMovies.add(SearchMovieModel.fromJson(item));
+      }
+
+      return searchedMovies;
     } else {
       throw Exception('Error get data');
     }

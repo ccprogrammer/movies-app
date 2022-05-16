@@ -1,10 +1,13 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-
 import 'package:movies_app/pages/coming_soon/coming_soon_tab.dart';
 import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
 import 'package:movies_app/pages/popular/popular_tab.dart';
+import 'package:movies_app/pages/search/search_movie_page.dart';
+import 'package:movies_app/provider/search_movie_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,10 +18,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        floatingActionButton: _buildFAB(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
@@ -26,6 +37,34 @@ class _HomePageState extends State<HomePage> {
           body: _buildTabBarView(),
         ),
       ),
+    );
+  }
+
+  Widget _buildFAB() {
+    return Consumer<SearchedMoviesProvider>(
+      builder: (context, data, child) {
+        return OpenContainer(
+          closedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(50),
+            ),
+          ),
+          closedColor: Const.colorIndicator,
+          openColor: Const.colorPrimary,
+          closedBuilder: (context, action) => FloatingActionButton(
+            onPressed: () {
+              action();
+            },
+            child: Image.asset(
+              'assets/icon_search.png',
+              width: 24,
+              height: 24,
+            ),
+            backgroundColor: Const.colorIndicator,
+          ),
+          openBuilder: (context, action) => SearchMoviePage(),
+        );
+      },
     );
   }
 

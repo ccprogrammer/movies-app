@@ -26,6 +26,7 @@ class _PopularState extends State<Popular> {
           children: [
             SizedBox(height: 24.h),
             _buildMoviesGrid(),
+            SizedBox(height: 68.h),
           ],
         ),
       ),

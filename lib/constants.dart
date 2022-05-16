@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import '.api.dart';
 
 class Const {
-  // Example '$baseUrl/now_playing?api_key=88ce4ef639f3a4e27b5420982212c77d'
-  static const String baseUrl = 'https://api.themoviedb.org/3/movie';
-  static const String apiKey = '?api_key=${API.apiKey}';
+  // Example '$baseUrl/movie/now_playing?api_key=88ce4ef639f3a4e27b5420982212c77d'
+  static const String baseUrl = 'https://api.themoviedb.org/3';
+  static const String apiKey = '${API.apiKey}'; // make your own class contain your api
 
   static const String appName = 'OneMovie';
   static const String dummyImage =
