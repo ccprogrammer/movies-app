@@ -302,7 +302,7 @@ class _DetailsTabState extends State<DetailsTab> {
 
   Widget _buildRecommendations() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 12.h, 0.w, 0.w),
+      margin: EdgeInsets.fromLTRB(0.w, 6.h, 0.w, 0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
