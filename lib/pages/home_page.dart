@@ -51,7 +51,9 @@ class _HomePageState extends State<HomePage> {
           ),
           closedColor: Const.colorIndicator,
           openColor: Const.colorPrimary,
+          transitionDuration: Duration(milliseconds: 500),
           closedBuilder: (context, action) => FloatingActionButton(
+            elevation: 0,
             onPressed: () {
               action();
             },

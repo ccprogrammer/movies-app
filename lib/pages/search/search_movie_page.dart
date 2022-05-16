@@ -20,8 +20,13 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
   var _searchController = TextEditingController(text: '');
 
   handleExit(data) {
-    data.searchedMovies.clear();
+    FocusScope.of(context).unfocus();
     Navigator.pop(context);
+  }
+
+  handleSearch(provider) {
+    FocusScope.of(context).unfocus();
+    provider.searchMovie(_searchController.text);
   }
 
   @override
@@ -43,107 +48,14 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
         if (data.isLoading) return _buildIsLoading();
         if (data.noMovies == true || data.isError == true)
           return _buildCannotFindMovie();
-        return _buildMoviesTile(data.searchedMovies);
+        return _buildMoviesTile(
+          data: data.searchedMovies,
+        );
       },
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      iconTheme: IconThemeData(color: Colors.white),
-      backgroundColor: Const.colorPrimary,
-      elevation: 1,
-      titleSpacing: 0,
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-      leading: Consumer<SearchedMoviesProvider>(
-        builder: (context, data, child) {
-          return IconButton(
-            onPressed: () {
-              handleExit(data);
-            },
-            icon: Icon(
-              Icons.chevron_left,
-              size: 32,
-            ),
-          );
-        },
-      ),
-      title: Container(
-        height: 45,
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        margin: EdgeInsets.fromLTRB(0, 0, 24, 0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Const.colorChatBubble,
-        ),
-        child: Focus(
-          onFocusChange: (focus) {},
-          child: TextField(
-            controller: _searchController,
-            style: Const.textPrimary.copyWith(
-              fontSize: 14,
-            ),
-            decoration: InputDecoration(
-              hintText: 'Search Movie',
-              hintStyle: Const.textSecondary,
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ),
-      actions: [
-        Consumer<SearchedMoviesProvider>(
-          builder: (context, provider, child) {
-            return IconButton(
-              padding: EdgeInsets.zero,
-              constraints: BoxConstraints(),
-              onPressed: () async {
-                FocusScope.of(context).unfocus();
-                await provider.searchMovie(_searchController.text);
-              },
-              icon: Image.asset(
-                'assets/icon_search.png',
-                width: 24,
-                height: 24,
-              ),
-            );
-          },
-        ),
-        SizedBox(width: 18),
-      ],
-      bottom: PreferredSize(
-          child: Container(
-            color: Const.colorIndicatorBorder,
-            height: 1.0,
-          ),
-          preferredSize: Size.fromHeight(4.0)),
-    );
-  }
-
-  Widget _buildIsLoading() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 20),
-        for (int i = 0; i < 5; i++) ShimmerTile(),
-      ],
-    );
-  }
-
-  Widget _buildCannotFindMovie() {
-    return Container(
-      margin: EdgeInsets.only(top: 300),
-      child: Center(
-        child: Text(
-          'Cannot Find Movie',
-          style: Const.textPrimary,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMoviesTile(data) {
+  Widget _buildMoviesTile({data}) {
     return Column(
       children: [
         SizedBox(height: 14),
@@ -211,6 +123,107 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
             ),
           ),
       ],
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      iconTheme: IconThemeData(color: Colors.white),
+      backgroundColor: Const.colorPrimary,
+      elevation: 1,
+      titleSpacing: 0,
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+      leading: Consumer<SearchedMoviesProvider>(
+        builder: (context, provider, child) {
+          return IconButton(
+            onPressed: () {
+              handleExit(provider);
+            },
+            icon: Icon(
+              Icons.chevron_left,
+              size: 32,
+            ),
+          );
+        },
+      ),
+      title:
+          Consumer<SearchedMoviesProvider>(builder: (context, provider, child) {
+        return Container(
+          height: 45,
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          margin: EdgeInsets.fromLTRB(0, 0, 24, 0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Const.colorChatBubble,
+          ),
+          child: Focus(
+            onFocusChange: (focus) {},
+            child: TextField(
+              controller: _searchController,
+              style: Const.textPrimary.copyWith(
+                fontSize: 14,
+              ),
+              onEditingComplete: () {
+                handleSearch(provider);
+              },
+              decoration: InputDecoration(
+                hintText: 'Search Movie',
+                hintStyle: Const.textSecondary,
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        );
+      }),
+      actions: [
+        Consumer<SearchedMoviesProvider>(
+          builder: (context, provider, child) {
+            return IconButton(
+              padding: EdgeInsets.zero,
+              constraints: BoxConstraints(),
+              onPressed: () {
+                handleSearch(provider);
+              },
+              icon: Image.asset(
+                'assets/icon_search.png',
+                width: 24,
+                height: 24,
+              ),
+            );
+          },
+        ),
+        SizedBox(width: 18),
+      ],
+      bottom: PreferredSize(
+          child: Container(
+            color: Const.colorIndicatorBorder,
+            height: 1.0,
+          ),
+          preferredSize: Size.fromHeight(4.0)),
+    );
+  }
+
+  // Error Condition
+  Widget _buildIsLoading() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20),
+        for (int i = 0; i < 5; i++) ShimmerTile(),
+      ],
+    );
+  }
+
+  Widget _buildCannotFindMovie() {
+    return Container(
+      margin: EdgeInsets.only(top: 300),
+      child: Center(
+        child: Text(
+          'Cannot Find Movie',
+          style: Const.textPrimary,
+        ),
+      ),
     );
   }
 }
