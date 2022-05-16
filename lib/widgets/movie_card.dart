@@ -34,15 +34,10 @@ class MovieCard extends StatelessWidget {
             fit: BoxFit.fill,
             alignment: Alignment.topCenter,
             imageUrl: movie.poster.toString(),
-            placeholder: (context, url) => Container(
-              height: 250.h,
-              width: 164.w,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Const.colorBlue,
-                ),
-              ),
-            ),
+            placeholder: (context, url) => Shimmer.fromColors(
+                child: Skeleton(),
+                baseColor: Colors.grey[500]!,
+                highlightColor: Colors.grey[300]!),
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           SizedBox(height: 16.h),

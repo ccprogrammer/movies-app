@@ -63,18 +63,8 @@ class _HomePageState extends State<HomePage> {
               ),
               labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
               tabs: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     Image.asset(
-                //       'assets/icon_now_showing.png',
-                //       width: 24.w,
-                //     ),
-                //     Tab(text: 'Now Playing'),
-                //   ],
-                // ),
                 Tab(text: 'Now Playing'),
-                Tab(text: 'Coming Soon'),
+                Tab(text: 'Upcoming'),
                 Tab(text: 'Popular'),
               ],
             ),

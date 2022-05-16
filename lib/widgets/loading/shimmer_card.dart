@@ -18,21 +18,21 @@ class ShimmerCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Skeleton(
-              height: 230,
+              height: 210,
               width: 160,
-              radius: 4,
+              radius: 8,
             ),
             SizedBox(height: 10),
             Skeleton(
-              height: 8,
+              height: 14,
               width: 160,
-              radius: 2,
+              radius: 4,
             ),
             SizedBox(height: 6),
             Skeleton(
-              height: 8,
+              height: 14,
               width: 160,
-              radius: 2,
+              radius: 4,
             ),
           ],
         ),

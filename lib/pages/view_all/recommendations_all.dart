@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
+import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -77,11 +79,7 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
                         margin: EdgeInsets.fromLTRB(18, 24, 18, 0),
                         child: Column(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: Colors.grey,
-                              ),
+                            Skeleton(
                               height: 168.h,
                               width: double.infinity,
                             ),
@@ -123,16 +121,33 @@ class _RecommendationsAllState extends State<RecommendationsAll> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 168.h,
-                          width: double.infinity,
-                          margin: EdgeInsets.fromLTRB(18.h, 0, 18.h, 0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: DecorationImage(
-                              image:
-                                  NetworkImage(item.poster ?? Const.dummyImage),
-                              fit: BoxFit.fill,
-                              alignment: Alignment.topCenter,
+                          margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.black87,
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset:
+                                  Offset(0, 0), // changes position of shadow
+                            )
+                          ]),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: CachedNetworkImage(
+                              height: 168.h,
+                              width: double.infinity.w,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                              imageUrl: item.poster.toString(),
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                  child: Skeleton(
+                                    height: 168.h,
+                                    width: double.infinity,
+                                  ),
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[300]!),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
                             ),
                           ),
                         ),

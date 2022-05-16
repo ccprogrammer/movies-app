@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
@@ -6,6 +7,7 @@ import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:movies_app/widgets/cast_tile.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
+import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -120,21 +122,35 @@ class _SimilarMoviesAllState extends State<SimilarMoviesAll> {
                         ));
                   },
                   child: Padding(
-                    padding:  EdgeInsets.symmetric(vertical: 16.h),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 168.h,
-                          width: double.infinity,
                           margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-                          decoration: BoxDecoration(
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.black87,
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset:
+                                  Offset(0, 0), // changes position of shadow
+                            )
+                          ]),
+                          child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.r),
-                            image: DecorationImage(
-                              image:
-                                  NetworkImage(item.poster ?? Const.dummyImage),
-                              fit: BoxFit.fill,
-                              alignment: Alignment.topCenter,
+                            child: CachedNetworkImage(
+                              height: 168.h,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                              imageUrl: item.poster.toString(),
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                  child: Skeleton(),
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[300]!),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
                             ),
                           ),
                         ),

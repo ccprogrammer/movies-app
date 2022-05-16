@@ -247,20 +247,22 @@ class _DetailsTabState extends State<DetailsTab> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: CachedNetworkImage(
-                                height: 240.h,
-                                fit: BoxFit.fill,
-                                alignment: Alignment.topCenter,
-                                imageUrl: item.poster.toString(),
-                                placeholder: (context, url) =>
-                                    Shimmer.fromColors(
-                                        child: Skeleton(),
-                                        baseColor: Colors.grey[500]!,
-                                        highlightColor: Colors.grey[300]!),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                            Container(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: CachedNetworkImage(
+                                  height: 240.h,
+                                  fit: BoxFit.fill,
+                                  alignment: Alignment.topCenter,
+                                  imageUrl: item.poster.toString(),
+                                  placeholder: (context, url) =>
+                                      Shimmer.fromColors(
+                                          child: Skeleton(),
+                                          baseColor: Colors.grey[500]!,
+                                          highlightColor: Colors.grey[300]!),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
                               ),
                             ),
                             Container(
@@ -300,7 +302,7 @@ class _DetailsTabState extends State<DetailsTab> {
 
   Widget _buildRecommendations() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.w),
+      margin: EdgeInsets.fromLTRB(0.w, 12.h, 0.w, 0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
