@@ -38,36 +38,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildFAB() {
-    return Consumer<SearchedMoviesProvider>(
-      builder: (context, data, child) {
-        return OpenContainer(
-          closedShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(50),
-            ),
-          ),
-          closedColor: Const.colorIndicator,
-          openColor: Const.colorPrimary,
-          transitionDuration: Duration(milliseconds: 500),
-          closedBuilder: (context, action) => FloatingActionButton(
-            elevation: 0,
-            onPressed: () {
-              action();
-            },
-            child: Image.asset(
-              'assets/icon_search.png',
-              width: 24,
-              height: 24,
-            ),
-            backgroundColor: Const.colorIndicator,
-          ),
-          openBuilder: (context, action) => SearchMoviePage(),
-        );
-      },
-    );
-  }
-
   Widget _buildSliverAppBar() {
     return SliverAppBar(
       iconTheme: IconThemeData(color: Colors.white),
