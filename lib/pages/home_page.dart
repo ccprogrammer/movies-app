@@ -28,8 +28,6 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        floatingActionButton: _buildFAB(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),

@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class SearchMovieModel {
   int? id;
   String? title;
