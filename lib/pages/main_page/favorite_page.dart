@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
+import 'package:movies_app/provider/favorite_provider.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/widgets/custom_appbar.dart';
@@ -28,10 +29,10 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
         title: 'Favorites',
         noLeading: true,
       ),
-      body: Consumer<NowPlayingProvider>(
+      body: Consumer<FavoriteProvider>(
         builder: (context, data, child) {
-          if (data.isLoading) _buildIsLoading();
-          return _buildFavorites(data: data.nowPlaying);
+          // if (data.isLoading) _buildIsLoading();
+          return _buildFavorites(data: data.favorite);
         },
       ),
     );

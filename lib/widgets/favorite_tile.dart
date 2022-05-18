@@ -60,14 +60,14 @@ class FavoriteTile extends StatelessWidget {
                         ),
                         maxLines: 2,
                       ),
-                      SizedBox(height: 4.h),
+                      SizedBox(height: 8.h),
 
-                      // Text(
-                      //   movie.synopsis ?? '',
-                      //   style: Const.textSecondary.copyWith(fontSize: 12),
-                      //   maxLines: 2,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
+                      Text(
+                        movie.synopsis ?? '',
+                        style: Const.textSecondary.copyWith(fontSize: 12),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                 ),

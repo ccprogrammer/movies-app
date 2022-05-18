@@ -6,6 +6,7 @@ import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
+import 'package:movies_app/provider/favorite_provider.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/reviews_provider.dart';
@@ -26,6 +27,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     with SingleTickerProviderStateMixin {
   double rating = 0.0;
   late TabController _tabController;
+
+  bool favorite = false;
 
   getData() {
     Provider.of<MovieDetailProvider>(context, listen: false)
@@ -48,7 +51,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _tabController.dispose();
   }
@@ -122,6 +124,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // leading back icon button
                         GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
@@ -132,26 +135,61 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                             size: 32.w,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Const.colorPrimary,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Image.asset(
-                                'assets/icon_star.png',
-                                width: 22,
-                                height: 22,
-                                color: Const.colorSplashScreen,
+
+                        // favorite icon button
+                        Consumer<FavoriteProvider>(
+                          builder: (context, add, child) {
+                            return GestureDetector(
+                              onTap: () {
+                                add.setFavorite(data.movieDetail);
+
+                                if (add.isfavorite(data.movieDetail) == true) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    duration: Duration(milliseconds: 1000),
+                                    backgroundColor: Const.colorReleaseDate,
+                                    content: Text(
+                                      'Movie has been added to favorites',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: Duration(milliseconds: 1000),
+                                      backgroundColor: Const.colorSplashScreen,
+                                      content: Text(
+                                        'Movie has been removed from favorites',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color:
+                                      add.isfavorite(data.movieDetail) == true
+                                          ? Const.colorPrimary
+                                          : Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/icon_star.png',
+                                    width: 22,
+                                    height: 22,
+                                    color:
+                                        add.isfavorite(data.movieDetail) == true
+                                            ? Const.colorSplashScreen
+                                            : Const.colorPrimary,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       ],
                     ),
