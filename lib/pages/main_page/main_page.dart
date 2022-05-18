@@ -2,7 +2,8 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/pages/home_page.dart';
+import 'package:movies_app/pages/main_page/favorite_page.dart';
+import 'package:movies_app/pages/main_page/home_page.dart';
 import 'package:movies_app/pages/search/search_movie_page.dart';
 import 'package:movies_app/provider/search_movie_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  List<String> iconList = [
+  List<String> navIcon = [
     'assets/icon_home.png',
     'assets/icon_favorite.png',
   ];
@@ -35,7 +36,7 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildBottomNavigation() {
     return AnimatedBottomNavigationBar.builder(
-      itemCount: iconList.length,
+      itemCount: navIcon.length,
       tabBuilder: (int index, bool isActive) {
         final color = isActive ? Const.colorBlue : Colors.white30;
         return Column(
@@ -43,7 +44,7 @@ class _MainPageState extends State<MainPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              iconList[index],
+              navIcon[index],
               width: 24,
               height: 24,
               color: color,
@@ -65,11 +66,7 @@ class _MainPageState extends State<MainPage> {
       case 0:
         return HomePage();
       case 1:
-        return Container(
-          child: Center(
-            child: Text('HALAMAN 2'),
-          ),
-        );
+        return FavoriteMovies();
 
       default:
         return HomePage();

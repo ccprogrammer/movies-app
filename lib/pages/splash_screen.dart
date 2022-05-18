@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/pages/home_page.dart';
-import 'package:movies_app/pages/main_page.dart';
+import 'package:movies_app/pages/MAIN_PAGE/main_page.dart';
 import 'package:movies_app/provider/coming_soon_provider.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
 import 'package:movies_app/provider/popular_provider.dart';

@@ -1,14 +1,8 @@
-import 'package:animations/animations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/movie_model.dart';
-import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/pages/view_all/recommendations_all.dart';
 import 'package:movies_app/pages/view_all/similar_all.dart';
-import 'package:movies_app/pages/view_all/cast_all.dart';
-import 'package:movies_app/pages/view_all/photos_all.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
@@ -17,11 +11,9 @@ import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:movies_app/widgets/loading/shimmer_card.dart';
 import 'package:movies_app/widgets/loading/shimmer_overview.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
-import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:movies_app/widgets/recommendations_tile.dart';
 import 'package:movies_app/widgets/similar_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class DetailsTab extends StatefulWidget {
   const DetailsTab({Key? key}) : super(key: key);
@@ -213,9 +205,8 @@ class _DetailsTabState extends State<DetailsTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-              title: 'Cast & Crew',
-              route: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CastCrew()))),
+            title: 'Cast & Crew',
+          ),
           for (var i = 0; i < 3; i++) CastTile(),
         ],
       ),
@@ -229,9 +220,8 @@ class _DetailsTabState extends State<DetailsTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-              title: 'Photos',
-              route: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Photos()))),
+            title: 'Photos',
+          ),
           Container(
             margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
             child: SingleChildScrollView(

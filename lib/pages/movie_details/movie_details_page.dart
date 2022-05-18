@@ -98,76 +98,85 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget _buildHeaders() {
     return Consumer<MovieDetailProvider>(
       builder: (context, data, child) {
-        if (data.isLoading) {
-          return ShimmerHeaders();
-        } else {
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(10.w, 12.h, 18.w, 0),
-                width: double.infinity,
+        if (data.isLoading) return ShimmerHeaders();
+
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(10.w, 12.h, 18.w, 0),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(data.movieDetail.poster!),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
+              ),
+              height: 260.h,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+                child: SafeArea(
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.chevron_left,
+                            color: Colors.white,
+                            size: 32.w,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Const.colorPrimary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Image.asset(
+                                'assets/icon_star.png',
+                                width: 22,
+                                height: 22,
+                                color: Const.colorSplashScreen,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 125.h,
+              right: 0,
+              left: 0,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
+                width: 164.w,
+                height: 250.h,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(data.movieDetail.poster!),
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                  ),
-                ),
-                height: 260.h,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                  child: SafeArea(
-                    child: Container(
-                      alignment: Alignment.topCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.chevron_left,
-                              color: Colors.white,
-                              size: 32.w,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Image.asset(
-                              'assets/icon_share.png',
-                              width: 24.w,
-                              height: 24.h,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
-              Positioned(
-                top: 125.h,
-                right: 0,
-                left: 0,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
-                  width: 164.w,
-                  height: 250.h,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(data.movieDetail.poster!),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        }
+            ),
+          ],
+        );
       },
     );
   }
