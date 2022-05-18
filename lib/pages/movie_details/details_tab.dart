@@ -18,6 +18,8 @@ import 'package:movies_app/widgets/loading/shimmer_card.dart';
 import 'package:movies_app/widgets/loading/shimmer_overview.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
+import 'package:movies_app/widgets/recommendations_tile.dart';
+import 'package:movies_app/widgets/similar_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -45,34 +47,165 @@ class _DetailsTabState extends State<DetailsTab> {
 
   Widget _buildSynopsis() {
     return Consumer<MovieDetailProvider>(builder: (context, data, child) {
-      if (data.isLoading) {
-        return ShimmerOverview();
-      } else {
-        return Container(
-          margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Synopsis',
-                style: Const.textPrimary.copyWith(
-                  fontSize: 18,
-                ),
+      if (data.isLoading) return ShimmerOverview();
+
+      return Container(
+        margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Synopsis',
+              style: Const.textPrimary.copyWith(
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ExpandableText(
-                '${data.movieDetail.synopsis}',
-                trimLines: 4,
-                style: Const.textSecondary,
-              ),
-            ],
-          ),
-        );
-      }
+            ),
+            SizedBox(height: 16),
+            ExpandableText(
+              '${data.movieDetail.synopsis}',
+              trimLines: 4,
+              style: Const.textSecondary,
+            ),
+          ],
+        ),
+      );
     });
-    // return ShimmerOverview();
   }
 
+  Widget _buildSimilar() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionTitle(
+              title: 'Similar Movies',
+              route: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SimilarMoviesAll()));
+              }),
+          Consumer<SimilarMovieProvider>(
+            builder: (context, data, child) {
+              if (data.isLoading)
+                return Container(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 18.w),
+                        for (int i = 0; i < 5; i++) ShimmerCard(),
+                      ],
+                    ),
+                  ),
+                );
+
+              return Container(
+                margin: EdgeInsets.only(top: 8.h),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 9.w.w),
+                      for (var item in data.similarMovie)
+                        SimilarTile(movie: item),
+                      SizedBox(width: 9.w),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecommendations() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0.w, 6.h, 0.w, 0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionTitle(
+              title: 'Recommendations',
+              route: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RecommendationsAll()));
+              }),
+          Consumer<RecommendationsProvider>(
+            builder: (context, data, child) {
+              if (data.isLoading)
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (int i = 0; i < 5; i++) ShimmerTile(),
+                  ],
+                );
+
+              if (data.recommendationsMovie.isEmpty)
+                return Center(
+                  child: Text(
+                    'NO RECOMMENDATIONS',
+                    style: Const.textPrimary,
+                  ),
+                );
+
+              return Column(
+                children: [
+                  for (var item in data.recommendationsMovie)
+                    RecommendationsTile(movie: item),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Reuseable Widget
+  Widget _buildSectionTitle({String? title, Function? route}) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(18, 0, 18, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title ?? 'Section Title',
+            style: Const.textPrimary.copyWith(
+              fontSize: 18.sp,
+            ),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              shape: StadiumBorder(),
+              minimumSize: Size.zero,
+              padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
+            ),
+            onPressed: () {
+              route!();
+            },
+            child: Text(
+              'View All',
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: Const.medium,
+                color: Const.colorBlue,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Note Used
   Widget _buildCast() {
     return Container(
       margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),
@@ -176,336 +309,6 @@ class _DetailsTabState extends State<DetailsTab> {
                     ),
                   SizedBox(width: 12),
                 ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSimilar() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionTitle(
-              title: 'Similar Movies',
-              route: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SimilarMoviesAll()));
-              }),
-          SizedBox(height: 8.h),
-          _buildHorizontalSimilar(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHorizontalSimilar() {
-    return Consumer<SimilarMovieProvider>(
-      builder: (context, data, child) {
-        if (data.isLoading) {
-          return Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 18.w),
-                  for (int i = 0; i < 5; i++) ShimmerCard(),
-                ],
-              ),
-            ),
-          );
-        } else {
-          return Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 9.w),
-                  for (var item in data.similarMovie)
-                    InkWell(
-                      borderRadius: BorderRadius.circular(8),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MovieDetailsPage(
-                                movieId: item.id,
-                              ),
-                            ));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(9.w, 6.h, 9.w, 6.h),
-                        width: 170.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  height: 240.h,
-                                  fit: BoxFit.fill,
-                                  alignment: Alignment.topCenter,
-                                  imageUrl: item.poster.toString(),
-                                  placeholder: (context, url) =>
-                                      Shimmer.fromColors(
-                                          child: Skeleton(),
-                                          baseColor: Colors.grey[500]!,
-                                          highlightColor: Colors.grey[300]!),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 12.h, 0, 0),
-                              child: Text(
-                                item.title ?? '',
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: Const.textPrimary.copyWith(
-                                  fontWeight: Const.medium,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
-                              child: Text(
-                                item.synopsis ?? '',
-                                style: Const.textSecondary,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  SizedBox(width: 4),
-                ],
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  Widget _buildRecommendations() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 6.h, 0.w, 0.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionTitle(
-              title: 'Recommendations',
-              route: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RecommendationsAll()));
-              }),
-          _buildVerticalRecommendations(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildVerticalRecommendations() {
-    return Consumer<RecommendationsProvider>(
-      builder: (context, data, child) {
-        if (data.isLoading) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (int i = 0; i < 5; i++) ShimmerTile(),
-            ],
-          );
-        } else {
-          if (data.recommendationsMovie.isNotEmpty) {
-            return Column(
-              children: [
-                for (var item in data.recommendationsMovie)
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MovieDetailsPage(
-                              movieId: item.id,
-                            ),
-                          ));
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(18.w, 18.h, 24.w, 18.h),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  width: 84.w,
-                                  height: 84.h,
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.bottomCenter,
-                                  imageUrl: item.poster.toString(),
-                                  placeholder: (context, url) =>
-                                      Shimmer.fromColors(
-                                          child: Skeleton(),
-                                          baseColor: Colors.grey[500]!,
-                                          highlightColor: Colors.grey[300]!),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
-                              ),
-                              SizedBox(width: 12.w),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // nama
-                                    Text(
-                                      item.title ?? '',
-                                      style: Const.textPrimary.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: Const.medium,
-                                      ),
-                                      maxLines: 2,
-                                    ),
-                                    SizedBox(height: 4.h),
-
-                                    Text(
-                                      item.synopsis ?? '',
-                                      style: Const.textSecondary
-                                          .copyWith(fontSize: 12),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: 4.h),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.date_range_outlined,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(width: 4.w),
-                                        Expanded(
-                                          child: Text(
-                                            item.releaseDate ?? '',
-                                            style: Const.textReleaseDate
-                                                .copyWith(fontSize: 12),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 62.w),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 8,
-                          right: 18,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(6.w, 4.h, 6.w, 4.h),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 18.w,
-                                  height: 18.h,
-                                ),
-                                SizedBox(width: 4.w),
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: (item.rating! / 2)
-                                            .toStringAsFixed(0),
-                                        style: Const.textSecondary.copyWith(
-                                          color: Const.colorBlue,
-                                          fontSize: 14.sp,
-                                          fontWeight: Const.bold,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '/5',
-                                        style: Const.textSecondary.copyWith(
-                                          color: Const.colorBlue,
-                                          fontSize: 12.sp,
-                                          fontWeight: Const.semiBold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            );
-          } else {
-            return Center(
-              child: Text(
-                'NO RECOMMENDATIONS',
-                style: Const.textPrimary,
-              ),
-            );
-          }
-        }
-      },
-    );
-  }
-
-  // Reuseable Widget
-  Widget _buildSectionTitle({String? title, Function? route}) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(18, 0, 18, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title ?? 'Section Title',
-            style: Const.textPrimary.copyWith(
-              fontSize: 18.sp,
-            ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              shape: StadiumBorder(),
-              minimumSize: Size.zero,
-              padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
-            ),
-            onPressed: () {
-              route!();
-            },
-            child: Text(
-              'View All',
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: Const.medium,
-                color: Const.colorBlue,
               ),
             ),
           ),

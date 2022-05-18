@@ -10,13 +10,10 @@ import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/reviews_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
-import 'package:movies_app/services/http_services.dart';
 import 'package:movies_app/widgets/loading/shimmer_headers.dart';
 import 'package:movies_app/widgets/loading/shimmer_tabbar.dart';
 import 'package:movies_app/widgets/loading/shimmer_title.dart';
-
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage({Key? key, required this.movieId}) : super(key: key);
