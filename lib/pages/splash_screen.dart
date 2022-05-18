@@ -21,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   getData() async {
     await Provider.of<NowPlayingProvider>(context, listen: false)
         .getNowPlaying();
-    await Provider.of<ComingSoonProvider>(context, listen: false)
-        .getComingSoon();
+    await Provider.of<UpcomingProvider>(context, listen: false)
+        .getUpcoming();
     await Provider.of<PopularProvider>(context, listen: false).getPopular();
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => HomePage()), (route) => false);

@@ -35,7 +35,7 @@ class Http {
     }
   }
 
-  Future getComingSoon() async {
+  Future getUpcoming() async {
     Uri url = Uri.parse('$_baseUrl/movie/upcoming').replace(
       queryParameters: {
         'api_key': _apiKey,

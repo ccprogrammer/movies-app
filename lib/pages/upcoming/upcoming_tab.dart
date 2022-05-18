@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/home_movie_model.dart';
-import 'package:movies_app/provider/now_playing_provider.dart';
+import 'package:movies_app/provider/coming_soon_provider.dart';
 import 'package:movies_app/widgets/loading/shimmer_home_movie.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
 
-class NowPlaying extends StatelessWidget {
-  const NowPlaying({Key? key}) : super(key: key);
+class Upcoming extends StatelessWidget {
+  const Upcoming({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class NowPlaying extends StatelessWidget {
       backgroundColor: Const.colorPrimary,
       body: Container(
         padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-        child: SingleChildScrollView(
+         child: SingleChildScrollView(
           child: _buildMoviesGrid(),
         ),
       ),
@@ -24,10 +24,10 @@ class NowPlaying extends StatelessWidget {
   }
 
   Widget _buildMoviesGrid() {
-    return Consumer<NowPlayingProvider>(
+    return Consumer<UpcomingProvider>(
       builder: (context, data, child) {
         if (data.isLoading == true) return _buildIsLoading();
-        return _buildMovies(data: data.nowPlaying);
+        return _buildMovies(data: data.upcoming);
       },
     );
   }

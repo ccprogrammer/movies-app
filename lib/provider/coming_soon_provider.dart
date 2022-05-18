@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/models/home_movie_model.dart';
 import 'package:movies_app/services/http_services.dart';
 
-class ComingSoonProvider with ChangeNotifier {
-  List<HomeMovieModel> _comingSoon = [];
+class UpcomingProvider with ChangeNotifier {
+  List<HomeMovieModel> _upcoming = [];
   bool _isLoading = true;
 
-  List<HomeMovieModel> get comingSoon => _comingSoon;
+  List<HomeMovieModel> get upcoming => _upcoming;
   bool get isLoading => _isLoading;
 
-  set comingSoon(List<HomeMovieModel> _comingSoon) {
-    _comingSoon = comingSoon;
+  set upcoming(List<HomeMovieModel> _upcoming) {
+    _upcoming = upcoming;
     notifyListeners();
   }
 
@@ -19,11 +19,11 @@ class ComingSoonProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getComingSoon() async {
+  Future getUpcoming() async {
     _isLoading = true;
     try {
-      List<HomeMovieModel> comingSoon = await Http().getComingSoon();
-      _comingSoon = comingSoon;
+      List<HomeMovieModel> upcoming = await Http().getUpcoming();
+      _upcoming = upcoming;
       _isLoading = false;
 
       notifyListeners();

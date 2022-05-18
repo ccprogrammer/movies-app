@@ -1,13 +1,9 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/pages/coming_soon/coming_soon_tab.dart';
 import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
 import 'package:movies_app/pages/popular/popular_tab.dart';
-import 'package:movies_app/pages/search/search_movie_page.dart';
-import 'package:movies_app/provider/search_movie_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:movies_app/pages/upcoming/upcoming_tab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -87,7 +83,7 @@ class _HomePageState extends State<HomePage> {
     return TabBarView(
       children: [
         NowPlaying(),
-        ComingSoon(),
+        Upcoming(),
         Popular(),
       ],
     );

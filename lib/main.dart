@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           create: (context) => NowPlayingProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ComingSoonProvider(),
+          create: (context) => UpcomingProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => PopularProvider(),
