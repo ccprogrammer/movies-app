@@ -19,6 +19,8 @@ class Const {
   static const Color colorSplashScreen = Color(0xffE51937);
   static const Color colorSplashScreen2 = Color(0xffDB5252);
   static const Color colorReleaseDate = Colors.green;
+  static const Color colorFavorite = Color(0xff5A5866);
+
 
   // fontweight
   static const FontWeight light = FontWeight.w300;

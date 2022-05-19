@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/favorite_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
+import 'package:movies_app/provider/favorite_provider.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class FavoriteTile extends StatelessWidget {
@@ -76,43 +78,22 @@ class FavoriteTile extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 8,
+            top: 18,
             right: 18,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(6.w, 4.h, 6.w, 4.h),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/icon_star.png',
-                    width: 18.w,
-                    height: 18.h,
+            child: Consumer<FavoriteProvider>(
+              builder: (context, add, child) {
+                return GestureDetector(
+                  onTap: () {
+                    add.setFavorite(movie);
+                  },
+                  child: Image.asset(
+                    'assets/icon_save.png',
+                    width: 20.w,
+                    height: 20.h,
+                    color: Const.colorBlue,
                   ),
-                  SizedBox(width: 4.w),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: (movie.rating! / 2).toStringAsFixed(0),
-                          style: Const.textSecondary.copyWith(
-                            color: Const.colorBlue,
-                            fontSize: 14.sp,
-                            fontWeight: Const.bold,
-                          ),
-                        ),
-                        TextSpan(
-                          text: '/5',
-                          style: Const.textSecondary.copyWith(
-                            color: Const.colorBlue,
-                            fontSize: 12.sp,
-                            fontWeight: Const.semiBold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ],

@@ -55,6 +55,8 @@ class _MainPageState extends State<MainPage> {
       activeIndex: _currentIndex,
       gapLocation: GapLocation.center,
       notchSmoothness: NotchSmoothness.smoothEdge,
+      leftCornerRadius: 24,
+      rightCornerRadius: 24,
       backgroundColor: Const.colorPrimary,
       splashRadius: 0,
       onTap: (index) => setState(() => _currentIndex = index),

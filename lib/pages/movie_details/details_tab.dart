@@ -103,7 +103,7 @@ class _DetailsTabState extends State<DetailsTab> {
                     children: [
                       SizedBox(width: 9.w.w),
                       for (var item in data.similarMovie)
-                        SimilarTile(movie: item),
+                        SimilarCard(movie: item),
                       SizedBox(width: 9.w),
                     ],
                   ),

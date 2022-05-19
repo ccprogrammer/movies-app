@@ -7,8 +7,8 @@ import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SimilarTile extends StatelessWidget {
-  const SimilarTile({Key? key, required this.movie}) : super(key: key);
+class SimilarCard extends StatelessWidget {
+  const SimilarCard({Key? key, required this.movie}) : super(key: key);
   final SimilarMovieModel movie;
 
   @override

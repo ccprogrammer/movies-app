@@ -32,7 +32,7 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
       body: Consumer<FavoriteProvider>(
         builder: (context, data, child) {
           // if (data.isLoading) _buildIsLoading();
-          return _buildFavorites(data: data.favorite);
+          return _buildFavorites(data: data.favoriteId);
         },
       ),
     );

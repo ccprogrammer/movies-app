@@ -143,11 +143,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                               onTap: () {
                                 add.setFavorite(data.movieDetail);
 
-                                if (add.isfavorite(data.movieDetail) == true) {
+                                if (add.isFavorite(data.movieDetail) == true) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                     duration: Duration(milliseconds: 1000),
-                                    backgroundColor: Const.colorReleaseDate,
+                                    backgroundColor: Const.colorBlue,
                                     content: Text(
                                       'Movie has been added to favorites',
                                       textAlign: TextAlign.center,
@@ -171,20 +171,20 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                                 height: 40,
                                 decoration: BoxDecoration(
                                   color:
-                                      add.isfavorite(data.movieDetail) == true
-                                          ? Const.colorPrimary
-                                          : Colors.white,
+                                      add.isFavorite(data.movieDetail) == false
+                                          ? Const.colorFavorite
+                                          : Const.colorBlue,
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Image.asset(
-                                    'assets/icon_star.png',
-                                    width: 22,
-                                    height: 22,
+                                    'assets/icon_save.png',
+                                    width: 18.w,
+                                    height: 18.h,
                                     color:
-                                        add.isfavorite(data.movieDetail) == true
-                                            ? Const.colorSplashScreen
-                                            : Const.colorPrimary,
+                                        add.isFavorite(data.movieDetail) == false
+                                            ? Const.colorPrimary
+                                            : Colors.white,
                                   ),
                                 ),
                               ),
