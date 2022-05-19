@@ -51,7 +51,6 @@ class FavoriteTile extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // nama
                       Text(
@@ -85,6 +84,7 @@ class FavoriteTile extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     add.setFavorite(movie);
+                    print('asdasd');
                   },
                   child: Image.asset(
                     'assets/icon_save.png',

@@ -9,6 +9,7 @@ import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/widgets/custom_appbar.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:movies_app/widgets/favorite_tile.dart';
+import 'package:movies_app/widgets/loading/shimmer_tile.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -31,8 +32,8 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
       ),
       body: Consumer<FavoriteProvider>(
         builder: (context, data, child) {
-          // if (data.isLoading) _buildIsLoading();
-          return _buildFavorites(data: data.favoriteId);
+          if (data.isLoading == true) return _buildIsLoading();
+          return _buildFavorites(data: data.favorite);
         },
       ),
     );
@@ -49,38 +50,7 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
   Widget _buildIsLoading() {
     return ListView(
       children: [
-        for (var i = 0; i < 4; i++)
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Shimmer.fromColors(
-                  baseColor: Colors.grey[500]!,
-                  highlightColor: Colors.grey[300]!,
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(18, 24, 18, 0),
-                    child: Column(
-                      children: [
-                        Skeleton(
-                          height: 168.h,
-                          width: double.infinity,
-                          radius: 4.r,
-                        ),
-                        for (var i = 0; i < 2; i++)
-                          Skeleton(
-                            width: double.infinity,
-                            height: 20.h,
-                            marginTop: 8.h,
-                            radius: 4.r,
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+        for (var i = 0; i < 4; i++) ShimmerTile(),
       ],
     );
   }
