@@ -222,7 +222,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget _buildTitle() {
     return Consumer<MovieDetailProvider>(
       builder: (context, data, child) {
-        if (data.isLoading == false) return ShimmerTitle();
+        if (data.isLoading == true) return ShimmerTitle();
 
         return Container(
           margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
