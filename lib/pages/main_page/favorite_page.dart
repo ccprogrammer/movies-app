@@ -43,6 +43,7 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
     return ListView(
       children: [
         for (var item in data) FavoriteTile(movie: item),
+        SizedBox(height: 48),
       ],
     );
   }

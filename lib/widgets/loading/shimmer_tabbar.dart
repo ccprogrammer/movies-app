@@ -21,25 +21,18 @@ class ShimmerTabBar extends StatelessWidget {
               marginleft: 18,
               marginRight: 6,
               marginBottom: 38,
-              radius: 4,
+              radius: 8,
             ),
           ),
+         
           Expanded(
             flex: 1,
             child: Skeleton(
-              height: 28,
-              marginBottom: 38,
-              radius: 4,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Skeleton(
-              height: 28,
+              height: 26,
               marginleft: 6,
               marginRight: 18,
               marginBottom: 38,
-              radius: 4,
+              radius: 8,
             ),
           ),
         ],

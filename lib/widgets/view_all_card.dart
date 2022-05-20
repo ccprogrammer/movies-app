@@ -32,7 +32,7 @@ class ViewAllCard extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
-                  color: Colors.black87,
+                  color: Colors.black45,
                   spreadRadius: 1,
                   blurRadius: 10,
                   offset: Offset(0, 0), // changes position of shadow

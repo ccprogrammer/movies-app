@@ -11,6 +11,7 @@ import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:movies_app/widgets/loading/shimmer_card.dart';
 import 'package:movies_app/widgets/loading/shimmer_overview.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
+import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:movies_app/widgets/recommendations_tile.dart';
 import 'package:movies_app/widgets/similar_tile.dart';
 import 'package:provider/provider.dart';
@@ -70,14 +71,6 @@ class _DetailsTabState extends State<DetailsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionTitle(
-              title: 'Similar Movies',
-              route: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SimilarMoviesAll()));
-              }),
           Consumer<SimilarMovieProvider>(
             builder: (context, data, child) {
               if (data.isLoading)
@@ -94,20 +87,32 @@ class _DetailsTabState extends State<DetailsTab> {
                   ),
                 );
 
-              return Container(
-                margin: EdgeInsets.only(top: 8.h),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 9.w.w),
-                      for (var item in data.similarMovie)
-                        SimilarCard(movie: item),
-                      SizedBox(width: 9.w),
-                    ],
+              return Column(
+                children: [
+                  _buildSectionTitle(
+                      title: 'Similar Movies',
+                      route: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SimilarMoviesAll()));
+                      }),
+                  Container(
+                    margin: EdgeInsets.only(top: 8.h),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(width: 9.w.w),
+                          for (var item in data.similarMovie)
+                            SimilarCard(movie: item),
+                          SizedBox(width: 9.w),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               );
             },
           ),
@@ -119,44 +124,33 @@ class _DetailsTabState extends State<DetailsTab> {
   Widget _buildRecommendations() {
     return Container(
       margin: EdgeInsets.fromLTRB(0.w, 6.h, 0.w, 0.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionTitle(
-              title: 'Recommendations',
-              route: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RecommendationsAll()));
-              }),
-          Consumer<RecommendationsProvider>(
-            builder: (context, data, child) {
-              if (data.isLoading)
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (int i = 0; i < 5; i++) ShimmerTile(),
-                  ],
-                );
+      child: Consumer<RecommendationsProvider>(
+        builder: (context, data, child) {
+          if (data.isLoading)
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (int i = 0; i < 5; i++) ShimmerTile(),
+              ],
+            );
 
-              if (data.recommendationsMovie.isEmpty)
-                return Center(
-                  child: Text(
-                    'NO RECOMMENDATIONS',
-                    style: Const.textPrimary,
-                  ),
-                );
+          if (data.recommendationsMovie.isEmpty) return Container();
 
-              return Column(
-                children: [
-                  for (var item in data.recommendationsMovie)
-                    RecommendationsTile(movie: item),
-                ],
-              );
-            },
-          ),
-        ],
+          return Column(
+            children: [
+              _buildSectionTitle(
+                  title: 'Recommendations',
+                  route: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RecommendationsAll()));
+                  }),
+              for (var item in data.recommendationsMovie)
+                RecommendationsTile(movie: item),
+            ],
+          );
+        },
       ),
     );
   }

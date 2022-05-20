@@ -25,12 +25,17 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      floatingActionButton: _buildFAB(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: _buildBottomNavigation(),
-      body: _buildBody(currentIndex: _currentIndex),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        extendBody: true,
+        floatingActionButton: _buildFAB(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: _buildBottomNavigation(),
+        body: _buildBody(currentIndex: _currentIndex),
+      ),
     );
   }
 

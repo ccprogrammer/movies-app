@@ -181,10 +181,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                                     'assets/icon_save.png',
                                     width: 18.w,
                                     height: 18.h,
-                                    color:
-                                        add.isFavorite(data.movieDetail) == false
-                                            ? Const.colorPrimary
-                                            : Colors.white,
+                                    color: add.isFavorite(data.movieDetail) ==
+                                            false
+                                        ? Const.colorPrimary
+                                        : Colors.white,
                                   ),
                                 ),
                               ),
@@ -222,71 +222,69 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget _buildTitle() {
     return Consumer<MovieDetailProvider>(
       builder: (context, data, child) {
-        if (data.isLoading) {
-          return ShimmerTitle();
-        } else {
-          return Container(
-            margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  data.movieDetail.title ?? '',
-                  textAlign: TextAlign.center,
-                  style: Const.textPrimary,
+        if (data.isLoading == false) return ShimmerTitle();
+
+        return Container(
+          margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                data.movieDetail.title ?? '',
+                textAlign: TextAlign.center,
+                style: Const.textPrimary,
+              ),
+              SizedBox(height: 16.h),
+              _buildGenre(),
+              SizedBox(height: 12.h),
+              Text(
+                'Release Date',
+                style: Const.textSecondary.copyWith(
+                  fontSize: 14,
+                  color: Colors.white,
                 ),
-                SizedBox(height: 16.h),
-                _buildGenre(),
-                SizedBox(height: 12.h),
-                Text(
-                  'Release Date',
-                  style: Const.textSecondary.copyWith(
-                    fontSize: 14,
-                    color: Colors.white,
+              ),
+              SizedBox(height: 6.h),
+              Text(
+                data.movieDetail.releaseDate ?? 'TBA',
+                style: Const.textReleaseDate.copyWith(
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${(data.movieDetail.rating! / 2).toStringAsFixed(0)}/5',
+                    style: Const.textPrimary,
                   ),
-                ),
-                SizedBox(height: 6.h),
-                Text(
-                  data.movieDetail.releaseDate ?? 'TBA',
-                  style: Const.textReleaseDate.copyWith(
-                    fontSize: 12,
+                  SizedBox(width: 8.w),
+                  RatingBar.builder(
+                    initialRating: data.movieDetail.rating != null
+                        ? data.movieDetail.rating! / 2
+                        : 0,
+                    minRating: 0,
+                    direction: Axis.horizontal,
+                    glow: false,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
+                    ignoreGestures: true,
+                    itemSize: 20.w,
+                    itemBuilder: (context, _) => Image.asset(
+                      'assets/icon_star.png',
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (double value) {
+                      this.rating = rating;
+                    },
                   ),
-                ),
-                SizedBox(height: 16.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${(data.movieDetail.rating! / 2).toStringAsFixed(0)}/5',
-                      style: Const.textPrimary,
-                    ),
-                    SizedBox(width: 8.w),
-                    RatingBar.builder(
-                      initialRating: data.movieDetail.rating != null
-                          ? data.movieDetail.rating! / 2
-                          : 0,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      glow: false,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
-                      ignoreGestures: true,
-                      itemSize: 20.w,
-                      itemBuilder: (context, _) => Image.asset(
-                        'assets/icon_star.png',
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (double value) {
-                        this.rating = rating;
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        }
+                ],
+              ),
+            ],
+          ),
+        );
       },
     );
   }
@@ -296,34 +294,32 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       preferredSize: Size(80.0.w, 80.0.h),
       child: Consumer<MovieDetailProvider>(
         builder: (context, data, child) {
-          if (data.isLoading) {
-            return ShimmerTabBar();
-          } else {
-            return Container(
-              color: Const.colorPrimary,
-              padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),
-              child: Container(
-                height: 48.h,
-                margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-                padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Const.colorIndicatorBorder),
-                  borderRadius: BorderRadius.circular(50.r),
-                ),
-                child: TabBar(
-                  indicator: ShapeDecoration(
-                    shape: StadiumBorder(),
-                    color: Const.colorIndicator,
-                  ),
-                  labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
-                  tabs: [
-                    Tab(text: 'Detail'),
-                    Tab(text: 'Reviews'),
-                  ],
-                ),
+          if (data.isLoading) return ShimmerTabBar();
+
+          return Container(
+            color: Const.colorPrimary,
+            padding: EdgeInsets.fromLTRB(0.w, 16.h, 0.w, 16.h),
+            child: Container(
+              height: 48.h,
+              margin: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
+              padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
+              decoration: BoxDecoration(
+                border: Border.all(color: Const.colorIndicatorBorder),
+                borderRadius: BorderRadius.circular(50.r),
               ),
-            );
-          }
+              child: TabBar(
+                indicator: ShapeDecoration(
+                  shape: StadiumBorder(),
+                  color: Const.colorIndicator,
+                ),
+                labelStyle: Const.textPrimary.copyWith(fontSize: 14.sp),
+                tabs: [
+                  Tab(text: 'Detail'),
+                  Tab(text: 'Reviews'),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
