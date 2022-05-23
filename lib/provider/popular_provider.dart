@@ -23,6 +23,7 @@ class PopularProvider with ChangeNotifier {
     _isLoading = true;
     try {
       List<HomeMovieModel> popular = await Http().getPopular();
+      _popular.clear();
       _popular = popular;
       _isLoading = false;
 

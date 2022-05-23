@@ -23,6 +23,7 @@ class NowPlayingProvider with ChangeNotifier {
     _isLoading = true;
     try {
       List<HomeMovieModel> nowPlaying = await Http().getNowPlaying();
+      _nowPlaying.clear();
       _nowPlaying = nowPlaying;
       _isLoading = false;
 

@@ -23,6 +23,7 @@ class UpcomingProvider with ChangeNotifier {
     _isLoading = true;
     try {
       List<HomeMovieModel> upcoming = await Http().getUpcoming();
+      _upcoming.clear();
       _upcoming = upcoming;
       _isLoading = false;
 
