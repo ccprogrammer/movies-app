@@ -18,20 +18,6 @@ class Popular extends StatefulWidget {
 class _PopularState extends State<Popular> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Const.colorPrimary,
-      body: MyRefresher(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-          child: SingleChildScrollView(
-            child: _buildMoviesGrid(),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMoviesGrid() {
     return Consumer<PopularProvider>(
       builder: (context, data, child) {
         if (data.isLoading == true) return _buildIsLoading();

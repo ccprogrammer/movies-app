@@ -18,20 +18,6 @@ class Upcoming extends StatefulWidget {
 class _UpcomingState extends State<Upcoming> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Const.colorPrimary,
-      body: MyRefresher(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-          child: SingleChildScrollView(
-            child: _buildMoviesGrid(),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMoviesGrid() {
     return Consumer<UpcomingProvider>(
       builder: (context, data, child) {
         if (data.isLoading == true) return _buildIsLoading();

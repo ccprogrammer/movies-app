@@ -8,7 +8,6 @@ import 'package:movies_app/widgets/loading/shimmer_home_movie.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
 
-
 class NowPlaying extends StatefulWidget {
   const NowPlaying({Key? key}) : super(key: key);
 
@@ -19,20 +18,6 @@ class NowPlaying extends StatefulWidget {
 class _NowPlayingState extends State<NowPlaying> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Const.colorPrimary,
-      body: MyRefresher(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-          child: SingleChildScrollView(
-            child: _buildMoviesGrid(),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMoviesGrid() {
     return Consumer<NowPlayingProvider>(
       builder: (context, data, child) {
         if (data.isLoading == true) return _buildIsLoading();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/pages/main_page/tabbar_page.dart';
 import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
 import 'package:movies_app/pages/popular/popular_tab.dart';
 import 'package:movies_app/pages/upcoming/upcoming_tab.dart';
@@ -82,9 +83,15 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTabBarView() {
     return TabBarView(
       children: [
-        NowPlaying(),
-        Upcoming(),
-        Popular(),
+        TabbarPage(
+          child: NowPlaying(),
+        ),
+        TabbarPage(
+          child: Upcoming(),
+        ),
+        TabbarPage(
+          child: Popular(),
+        ),
       ],
     );
   }
