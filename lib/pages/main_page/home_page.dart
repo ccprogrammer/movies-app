@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/pages/main_page/tabs/now_playing/now_playing_tab.dart';
 import 'package:movies_app/pages/main_page/tabs/tabbar_page.dart';
-import 'package:movies_app/pages/main_page/tabs/now_showing/now_showing_tab.dart';
 import 'package:movies_app/pages/main_page/tabs/popular/popular_tab.dart';
 import 'package:movies_app/pages/main_page/tabs/upcoming/upcoming_tab.dart';
 
@@ -18,7 +18,19 @@ class HomePage extends StatelessWidget {
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
           ],
-          body: _buildTabBarView(),
+          body: TabBarView(
+            children: [
+              TabbarPage(
+                child: NowPlaying(),
+              ),
+              TabbarPage(
+                child: Upcoming(),
+              ),
+              TabbarPage(
+                child: Popular(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -66,22 +78,6 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTabBarView() {
-    return TabBarView(
-      children: [
-        TabbarPage(
-          child: NowPlaying(),
-        ),
-        TabbarPage(
-          child: Upcoming(),
-        ),
-        TabbarPage(
-          child: Popular(),
-        ),
-      ],
     );
   }
 }

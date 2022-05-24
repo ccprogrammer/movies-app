@@ -9,7 +9,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TabbarPage extends StatefulWidget {
   const TabbarPage({Key? key, required this.child}) : super(key: key);
-  final Widget child;
+  final Widget child; // NowPlaying, Upcoming, or Popular
+
 
   @override
   State<TabbarPage> createState() => _TabbarPageState();
