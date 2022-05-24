@@ -7,16 +7,16 @@ import 'package:movies_app/provider/upcoming_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class TabbarPage extends StatefulWidget {
-  const TabbarPage({Key? key, required this.child}) : super(key: key);
+class TabBarPage extends StatefulWidget {
+  const TabBarPage({Key? key, required this.child}) : super(key: key);
   final Widget child; // NowPlaying, Upcoming, or Popular
 
 
   @override
-  State<TabbarPage> createState() => _TabbarPageState();
+  State<TabBarPage> createState() => _TabBarPageState();
 }
 
-class _TabbarPageState extends State<TabbarPage> {
+class _TabBarPageState extends State<TabBarPage> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 

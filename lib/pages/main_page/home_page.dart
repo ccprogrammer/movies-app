@@ -20,13 +20,13 @@ class HomePage extends StatelessWidget {
           ],
           body: TabBarView(
             children: [
-              TabbarPage(
+              TabBarPage(
                 child: NowPlaying(),
               ),
-              TabbarPage(
+              TabBarPage(
                 child: Upcoming(),
               ),
-              TabbarPage(
+              TabBarPage(
                 child: Popular(),
               ),
             ],
