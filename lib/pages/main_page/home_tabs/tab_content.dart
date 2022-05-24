@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/widgets/movie_card.dart';
 
+// This widget used in home_tabs tab
 class TabContent extends StatelessWidget {
   const TabContent({Key? key, required this.data}) : super(key: key);
   final dynamic data;

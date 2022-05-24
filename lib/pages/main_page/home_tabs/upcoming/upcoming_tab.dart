@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/pages/main_page/tabs/tab_content.dart';
-import 'package:movies_app/widgets/loading/tab_loading.dart';
+import 'package:movies_app/pages/main_page/home_tabs/tab_content.dart';
+import 'package:movies_app/pages/main_page/home_tabs/tab_loading.dart';
 import 'package:movies_app/provider/upcoming_provider.dart';
 import 'package:provider/provider.dart';
 

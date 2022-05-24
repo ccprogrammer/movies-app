@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/pages/main_page/tabs/now_playing/now_playing_tab.dart';
-import 'package:movies_app/pages/main_page/tabs/tabbar_page.dart';
-import 'package:movies_app/pages/main_page/tabs/popular/popular_tab.dart';
-import 'package:movies_app/pages/main_page/tabs/upcoming/upcoming_tab.dart';
+import 'package:movies_app/pages/main_page/home_tabs/now_playing/now_playing_tab.dart';
+import 'package:movies_app/pages/main_page/home_tabs/popular/popular_tab.dart';
+import 'package:movies_app/pages/main_page/home_tabs/tabbar_page.dart';
+import 'package:movies_app/pages/main_page/home_tabs/upcoming/upcoming_tab.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
