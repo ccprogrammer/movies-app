@@ -12,8 +12,8 @@ class TabContent extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(0, 24.h, 0, 68.h),
       child: GridView.builder(
         padding: EdgeInsets.zero,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
           crossAxisSpacing: 12.w,
           mainAxisSpacing: 12.h,
           childAspectRatio: 16.w / 35.h,
