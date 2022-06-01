@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:movies_app/constants.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
 import 'package:movies_app/provider/popular_provider.dart';
 import 'package:movies_app/provider/upcoming_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class MyRefresher extends StatefulWidget {
-  const MyRefresher({Key? key, required this.child}) : super(key: key);
-  final Widget child;
+class TabBarPage extends StatefulWidget {
+  const TabBarPage({Key? key, required this.child}) : super(key: key);
+  final Widget child; // NowPlaying, Upcoming, or Popular
 
   @override
-  State<MyRefresher> createState() => _MyRefresherState();
+  State<TabBarPage> createState() => _TabBarPageState();
 }
 
-class _MyRefresherState extends State<MyRefresher> {
+class _TabBarPageState extends State<TabBarPage> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -23,7 +25,7 @@ class _MyRefresherState extends State<MyRefresher> {
         .getNowPlaying();
     await Provider.of<UpcomingProvider>(context, listen: false).getUpcoming();
     await Provider.of<PopularProvider>(context, listen: false).getPopular();
-    
+
     _refreshController.refreshCompleted();
   }
 
@@ -35,14 +37,19 @@ class _MyRefresherState extends State<MyRefresher> {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: false,
-      controller: _refreshController,
-      onRefresh: _onRefresh,
-      onLoading: _onLoading,
-      header: ClassicHeader(),
-      child: widget.child,
+    return Scaffold(
+      backgroundColor: Const.colorPrimary,
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        header: ClassicHeader(),
+        child: SingleChildScrollView(
+          child: this.widget.child,
+        ),
+      ),
     );
   }
 }

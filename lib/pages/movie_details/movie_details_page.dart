@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'dart:ui';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/models/movie_model.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
@@ -144,49 +145,43 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                                 add.setFavorite(data.movieDetail);
 
                                 if (add.isFavorite(data.movieDetail) == true) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    duration: Duration(milliseconds: 1000),
-                                    backgroundColor: Const.colorBlue,
-                                    content: Text(
-                                      'Movie has been added to favorites',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ));
+                                  helper(context).SnackBarCommon(
+                                    text: 'Movie has been added to favorites',
+                                    color: Const.colorBlue,
+                                  );
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      duration: Duration(milliseconds: 1000),
-                                      backgroundColor: Const.colorSplashScreen,
-                                      content: Text(
+                                  helper(context).SnackBarCommon(
+                                    text:
                                         'Movie has been removed from favorites',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
+                                    color: Const.colorSplashScreen,
                                   );
                                 }
                               },
                               child: Container(
-                                width: 40,
-                                height: 40,
+                                padding: const EdgeInsets.all(6),
+                                height: 42,
+                                width: 42,
                                 decoration: BoxDecoration(
-                                  color:
-                                      add.isFavorite(data.movieDetail) == false
-                                          ? Const.colorFavorite
-                                          : Const.colorBlue,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Image.asset(
-                                    'assets/icon_save.png',
-                                    width: 18.w,
-                                    height: 18.h,
-                                    color: add.isFavorite(data.movieDetail) ==
-                                            false
-                                        ? Const.colorPrimary
-                                        : Colors.white,
-                                  ),
-                                ),
+                                    color:
+                                        add.isFavorite(data.movieDetail) == true
+                                            ? Const.colorBlue
+                                            : Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 4.0,
+                                        spreadRadius: 2.0,
+                                        offset: Offset(
+                                          1.0,
+                                          1.0,
+                                        ),
+                                      )
+                                    ]),
+                                child: add.isFavorite(data.movieDetail) == false
+                                    ? Icon(Icons.favorite,
+                                        color: Const.colorPrimary)
+                                    : Icon(Icons.favorite, color: Colors.white),
                               ),
                             );
                           },

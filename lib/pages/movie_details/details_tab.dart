@@ -11,7 +11,6 @@ import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:movies_app/widgets/loading/shimmer_card.dart';
 import 'package:movies_app/widgets/loading/shimmer_overview.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
-import 'package:movies_app/widgets/loading/skeleton.dart';
 import 'package:movies_app/widgets/recommendations_tile.dart';
 import 'package:movies_app/widgets/similar_tile.dart';
 import 'package:provider/provider.dart';

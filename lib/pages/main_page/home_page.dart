@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/pages/now_showing/now_showing_tab.dart';
-import 'package:movies_app/pages/popular/popular_tab.dart';
-import 'package:movies_app/pages/upcoming/upcoming_tab.dart';
+import 'package:movies_app/pages/main_page/home_tabs/now_playing/now_playing_tab.dart';
+import 'package:movies_app/pages/main_page/home_tabs/popular/popular_tab.dart';
+import 'package:movies_app/pages/main_page/home_tabs/tabbar_page.dart';
+import 'package:movies_app/pages/main_page/home_tabs/upcoming/upcoming_tab.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +18,19 @@ class _HomePageState extends State<HomePage> {
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _buildSliverAppBar(),
           ],
-          body: _buildTabBarView(),
+          body: TabBarView(
+            children: [
+              TabBarPage(
+                child: NowPlaying(),
+              ),
+              TabBarPage(
+                child: Upcoming(),
+              ),
+              TabBarPage(
+                child: Popular(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -76,16 +78,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTabBarView() {
-    return TabBarView(
-      children: [
-        NowPlaying(),
-        Upcoming(),
-        Popular(),
-      ],
     );
   }
 }
