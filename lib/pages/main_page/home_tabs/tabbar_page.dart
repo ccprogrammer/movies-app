@@ -46,11 +46,8 @@ class _TabBarPageState extends State<TabBarPage> {
         onRefresh: _onRefresh,
         onLoading: _onLoading,
         header: ClassicHeader(),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 0),
-          child: SingleChildScrollView(
-            child: this.widget.child,
-          ),
+        child: SingleChildScrollView(
+          child: this.widget.child,
         ),
       ),
     );

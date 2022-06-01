@@ -38,7 +38,7 @@ class MovieCard extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 height: 250.h,
-                width: 164.w,
+                width: double.infinity,
                 fit: BoxFit.fill,
                 alignment: Alignment.topCenter,
                 imageUrl: movie.poster.toString(),

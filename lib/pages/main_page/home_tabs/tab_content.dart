@@ -12,7 +12,7 @@ class TabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
-      padding: EdgeInsets.fromLTRB(10.w, 24.h, 10.w, 0),
+      padding: EdgeInsets.fromLTRB(16.w, 24.h, 16.w, 0),
       crossAxisCount: 4,
       itemCount: data.length,
       shrinkWrap: true,
@@ -23,8 +23,8 @@ class TabContent extends StatelessWidget {
         );
       },
       staggeredTileBuilder: (int index) => new StaggeredTile.count(2, 4),
-      mainAxisSpacing: 20.0.h,
-      crossAxisSpacing: 12.0.w,
+      mainAxisSpacing: 4.0.h,
+      crossAxisSpacing: 0.0.w,
     );
   }
 }
