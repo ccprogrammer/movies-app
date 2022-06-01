@@ -14,62 +14,80 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MovieDetailsPage(
-                movieId: movie.id!,
+    return Card(
+      elevation: 4,
+      color: Const.colorPrimary,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MovieDetailsPage(
+                  movieId: movie.id!,
+                ),
+              ));
+        },
+        borderRadius: BorderRadius.circular(12.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.r),
+                topRight: Radius.circular(10.r),
               ),
-            ));
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CachedNetworkImage(
-            height: 250.h,
-            width: 164.w,
-            fit: BoxFit.fill,
-            alignment: Alignment.topCenter,
-            imageUrl: movie.poster.toString(),
-            placeholder: (context, url) => Shimmer.fromColors(
-                child: Skeleton(),
-                baseColor: Colors.grey[500]!,
-                highlightColor: Colors.grey[300]!),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          ),
-          SizedBox(height: 16.h),
-          RatingBar.builder(
-            initialRating: movie.rating != null ? movie.rating! / 2 : 0,
-            minRating: 0,
-            direction: Axis.horizontal,
-            glow: false,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-            ignoreGestures: true,
-            itemSize: 14,
-            itemBuilder: (context, _) => Image.asset(
-              'assets/icon_star.png',
-              color: Colors.amber,
+              child: CachedNetworkImage(
+                height: 250.h,
+                width: 164.w,
+                fit: BoxFit.fill,
+                alignment: Alignment.topCenter,
+                imageUrl: movie.poster.toString(),
+                placeholder: (context, url) => Shimmer.fromColors(
+                    child: Skeleton(),
+                    baseColor: Colors.grey[500]!,
+                    highlightColor: Colors.grey[300]!),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
             ),
-            onRatingUpdate: (double value) {},
-          ),
-          SizedBox(height: 7.h),
-          Text(
-            movie.title ?? '',
-            style: Const.textPrimary.copyWith(fontSize: 16.sp),
-            maxLines: 2,
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            movie.releaseDate ?? '',
-            style: Const.textReleaseDate,
-          )
-          // _buildGenre(),
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 16.h),
+                  RatingBar.builder(
+                    initialRating: movie.rating != null ? movie.rating! / 2 : 0,
+                    minRating: 0,
+                    direction: Axis.horizontal,
+                    glow: false,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    ignoreGestures: true,
+                    itemSize: 14,
+                    itemBuilder: (context, _) => Image.asset(
+                      'assets/icon_star.png',
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (double value) {},
+                  ),
+                  SizedBox(height: 7.h),
+                  Text(
+                    movie.title ?? '',
+                    style: Const.textPrimary.copyWith(fontSize: 16.sp),
+                    maxLines: 2,
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    movie.releaseDate ?? '',
+                    style: Const.textReleaseDate,
+                  )
+                  // _buildGenre(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

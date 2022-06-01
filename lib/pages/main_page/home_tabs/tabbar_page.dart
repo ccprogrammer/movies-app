@@ -11,7 +11,6 @@ class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key, required this.child}) : super(key: key);
   final Widget child; // NowPlaying, Upcoming, or Popular
 
-
   @override
   State<TabBarPage> createState() => _TabBarPageState();
 }
