@@ -158,26 +158,30 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                                 }
                               },
                               child: Container(
-                                width: 40,
-                                height: 40,
+                                padding: const EdgeInsets.all(6),
+                                height: 42,
+                                width: 42,
                                 decoration: BoxDecoration(
-                                  color:
-                                      add.isFavorite(data.movieDetail) == false
-                                          ? Const.colorFavorite
-                                          : Const.colorBlue,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Image.asset(
-                                    'assets/icon_save.png',
-                                    width: 18.w,
-                                    height: 18.h,
-                                    color: add.isFavorite(data.movieDetail) ==
-                                            false
-                                        ? Const.colorPrimary
-                                        : Colors.white,
-                                  ),
-                                ),
+                                    color:
+                                        add.isFavorite(data.movieDetail) == true
+                                            ? Const.colorBlue
+                                            : Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 4.0,
+                                        spreadRadius: 2.0,
+                                        offset: Offset(
+                                          1.0,
+                                          1.0,
+                                        ),
+                                      )
+                                    ]),
+                                child: add.isFavorite(data.movieDetail) == false
+                                    ? Icon(Icons.favorite,
+                                        color: Const.colorPrimary)
+                                    : Icon(Icons.favorite, color: Colors.white),
                               ),
                             );
                           },
