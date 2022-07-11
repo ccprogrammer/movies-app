@@ -17,14 +17,14 @@ class TabContent extends StatelessWidget {
       itemCount: data.length,
       shrinkWrap: true,
       physics: ScrollPhysics(),
+      staggeredTileBuilder: (int index) => new StaggeredTile.count(2, 4),
+      mainAxisSpacing: 4.0.h,
+      crossAxisSpacing: 0.0.w,
       itemBuilder: (BuildContext context, int index) {
         return MovieCard(
           movie: data[index],
         );
       },
-      staggeredTileBuilder: (int index) => new StaggeredTile.count(2, 4),
-      mainAxisSpacing: 4.0.h,
-      crossAxisSpacing: 0.0.w,
     );
   }
 }
