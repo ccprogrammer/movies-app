@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .getNowPlaying();
     await Provider.of<UpcomingProvider>(context, listen: false).getUpcoming();
     await Provider.of<PopularProvider>(context, listen: false).getPopular();
-    helper(context).NavigateTo(destination: MainPage());
+    helper(context).NavigateTo(destination: MainPage(), isRemove: true);
   }
 
   @override

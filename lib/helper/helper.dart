@@ -18,15 +18,24 @@ class helper {
     ));
   }
 
-  NavigateTo({Widget? destination}) {
-    Navigator.push(
-      context,
-      PageTransition(
-        type: PageTransitionType.fade,
-        alignment: Alignment.center,
-        child: destination!,
-      ),
-    );
+  NavigateTo({Widget? destination, bool isRemove = false}) {
+    isRemove
+        ? Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              child: destination!,
+            ),
+            (route) => false)
+        : Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              child: destination!,
+            ),
+          );
 
     return;
   }
