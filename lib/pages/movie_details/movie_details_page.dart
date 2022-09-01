@@ -12,6 +12,7 @@ import 'package:movies_app/provider/movie_detail_provider.dart';
 import 'package:movies_app/provider/recommendations_provider.dart';
 import 'package:movies_app/provider/reviews_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
+import 'package:movies_app/widgets/loading/loading_screen.dart';
 import 'package:movies_app/widgets/loading/shimmer_headers.dart';
 import 'package:movies_app/widgets/loading/shimmer_tabbar.dart';
 import 'package:movies_app/widgets/loading/shimmer_title.dart';
@@ -47,7 +48,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     // TODO: implement initState
     super.initState();
     getData();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -58,53 +59,47 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: Const.colorPrimary,
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            _buildSliverAppBar(),
-          ],
-          body: _buildTabView(),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSliverAppBar() {
-    return SliverAppBar(
-      iconTheme: IconThemeData(color: Colors.white),
-      titleSpacing: 18.w,
-      expandedHeight: 635.h,
+    return Scaffold(
       backgroundColor: Const.colorPrimary,
-      elevation: 0,
-      floating: false,
-      snap: false,
-      pinned: false,
-      automaticallyImplyLeading: false,
-      flexibleSpace: FlexibleSpaceBar(
-        collapseMode: CollapseMode.pin,
-        background: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildHeaders(),
-            _buildTitle(),
-            SizedBox(height: 10.h),
-            _buildTabBar(),
-          ],
-        ),
+      body: SafeArea(
+        child: Consumer<MovieDetailProvider>(
+            builder: (context, movieDetail, child) {
+          if (movieDetail.isLoading) return LoadingScreen();
+          return NestedScrollView(
+            headerSliverBuilder: (context, v) {
+              return [
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            _buildHeaderImage(),
+                            _buildHeaderContent(),
+                          ],
+                        ),
+                        _buildTabBar(),
+                      ],
+                    ),
+                  ),
+                ),
+              ];
+            },
+            body: _buildContent(),
+          );
+        }),
       ),
     );
   }
 
-  Widget _buildHeaders() {
+  Widget _buildHeaderImage() {
+    double width = MediaQuery.of(context).size.width;
+
     return Consumer<MovieDetailProvider>(
       builder: (context, data, child) {
         if (data.isLoading) return ShimmerHeaders();
 
         return Stack(
-          clipBehavior: Clip.none,
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(10.w, 12.h, 18.w, 0),
@@ -116,94 +111,22 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                   alignment: Alignment.topCenter,
                 ),
               ),
-              height: 260.h,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                child: SafeArea(
-                  child: Container(
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // leading back icon button
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            Icons.chevron_left,
-                            color: Colors.white,
-                            size: 32.w,
-                          ),
-                        ),
-
-                        // favorite icon button
-                        Consumer<FavoriteProvider>(
-                          builder: (context, add, child) {
-                            return GestureDetector(
-                              onTap: () {
-                                add.setFavorite(data.movieDetail);
-
-                                if (add.isFavorite(data.movieDetail) == true) {
-                                  helper(context).SnackBarCommon(
-                                    text: 'Movie has been added to favorites',
-                                    color: Const.colorBlue,
-                                  );
-                                } else {
-                                  helper(context).SnackBarCommon(
-                                    text:
-                                        'Movie has been removed from favorites',
-                                    color: Const.colorSplashScreen,
-                                  );
-                                }
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(6),
-                                height: 42,
-                                width: 42,
-                                decoration: BoxDecoration(
-                                    color:
-                                        add.isFavorite(data.movieDetail) == true
-                                            ? Const.colorBlue
-                                            : Colors.white,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 4.0,
-                                        spreadRadius: 2.0,
-                                        offset: Offset(
-                                          1.0,
-                                          1.0,
-                                        ),
-                                      )
-                                    ]),
-                                child: add.isFavorite(data.movieDetail) == false
-                                    ? Icon(Icons.favorite,
-                                        color: Const.colorPrimary)
-                                    : Icon(Icons.favorite, color: Colors.white),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              height: 300.h,
             ),
             Positioned(
-              top: 125.h,
-              right: 0,
-              left: 0,
+              bottom: -5,
               child: Container(
-                margin: EdgeInsets.fromLTRB(105, 0, 105, 0),
-                width: 164.w,
-                height: 250.h,
+                height: 100,
+                width: width,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(data.movieDetail.poster!),
-                    fit: BoxFit.fill,
+                  gradient: LinearGradient(
+                    colors: [
+                      Const.colorPrimary,
+                      Colors.transparent,
+                    ],
+                    stops: [0.1, 1.0],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
                   ),
                 ),
               ),
@@ -214,68 +137,167 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildHeaderContent() {
     return Consumer<MovieDetailProvider>(
       builder: (context, data, child) {
-        if (data.isLoading == true) return ShimmerTitle();
+        if (data.isLoading) return SizedBox();
 
         return Container(
-          margin: EdgeInsets.fromLTRB(18.w, 149.h, 18.w, 0),
+          margin: EdgeInsets.fromLTRB(18.w, 0.h, 18.w, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                data.movieDetail.title ?? '',
-                textAlign: TextAlign.center,
-                style: Const.textPrimary,
-              ),
-              SizedBox(height: 16.h),
-              _buildGenre(),
-              SizedBox(height: 12.h),
-              Text(
-                'Release Date',
-                style: Const.textSecondary.copyWith(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 6.h),
-              Text(
-                data.movieDetail.releaseDate ?? 'TBA',
-                style: Const.textReleaseDate.copyWith(
-                  fontSize: 12,
-                ),
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${(data.movieDetail.rating! / 2).toStringAsFixed(0)}/5',
-                    style: Const.textPrimary,
-                  ),
-                  SizedBox(width: 8.w),
-                  RatingBar.builder(
-                    initialRating: data.movieDetail.rating != null
-                        ? data.movieDetail.rating! / 2
-                        : 0,
-                    minRating: 0,
-                    direction: Axis.horizontal,
-                    glow: false,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
-                    ignoreGestures: true,
-                    itemSize: 20.w,
-                    itemBuilder: (context, _) => Image.asset(
-                      'assets/icon_star.png',
-                      color: Colors.amber,
+              // back and add favorite button
+              Container(
+                margin: EdgeInsets.only(top: 24.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // leading back icon button
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.chevron_left,
+                        color: Colors.white,
+                        size: 32.w,
+                      ),
                     ),
-                    onRatingUpdate: (double value) {
-                      this.rating = rating;
-                    },
+
+                    // favorite icon button
+                    Consumer<FavoriteProvider>(
+                      builder: (context, add, child) {
+                        return GestureDetector(
+                          onTap: () {
+                            add.setFavorite(data.movieDetail);
+
+                            if (add.isFavorite(data.movieDetail) == true) {
+                              helper(context).SnackBarCommon(
+                                text: 'Movie has been added to favorites',
+                                color: Const.colorBlue,
+                              );
+                            } else {
+                              helper(context).SnackBarCommon(
+                                text: 'Movie has been removed from favorites',
+                                color: Const.colorSplashScreen,
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            height: 42,
+                            width: 42,
+                            decoration: BoxDecoration(
+                                color: add.isFavorite(data.movieDetail) == true
+                                    ? Const.colorBlue
+                                    : Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4.0,
+                                    spreadRadius: 2.0,
+                                    offset: Offset(
+                                      1.0,
+                                      1.0,
+                                    ),
+                                  )
+                                ]),
+                            child: add.isFavorite(data.movieDetail) == false
+                                ? Icon(Icons.favorite,
+                                    color: Const.colorPrimary)
+                                : Icon(Icons.favorite, color: Colors.white),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              // movie image
+              Container(
+                margin: EdgeInsets.only(top: 51.h),
+                width: 164.w,
+                height: 250.h,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(data.movieDetail.poster!),
+                    fit: BoxFit.fill,
                   ),
-                ],
+                ),
+              ),
+
+              // movie title
+              Container(
+                margin: EdgeInsets.only(top: 32.h),
+                child: Text(
+                  data.movieDetail.title ?? '',
+                  textAlign: TextAlign.center,
+                  style: Const.textPrimary,
+                ),
+              ),
+
+              // movie genre
+              Container(
+                margin: EdgeInsets.only(top: 16.h),
+                child: _buildGenre(),
+              ),
+
+              // movie release date
+              Container(
+                margin: EdgeInsets.only(top: 12.h),
+                child: Text(
+                  'Release Date',
+                  style: Const.textSecondary.copyWith(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 6.h),
+                child: Text(
+                  data.movieDetail.releaseDate ?? 'TBA',
+                  style: Const.textReleaseDate.copyWith(
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+
+              // movie rating
+              Container(
+                margin: EdgeInsets.only(top: 16.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${(data.movieDetail.rating! / 2).toStringAsFixed(0)}/5',
+                      style: Const.textPrimary,
+                    ),
+                    SizedBox(width: 8.w),
+                    RatingBar.builder(
+                      initialRating: data.movieDetail.rating != null
+                          ? data.movieDetail.rating! / 2
+                          : 0,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      glow: false,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
+                      ignoreGestures: true,
+                      itemSize: 20.w,
+                      itemBuilder: (context, _) => Image.asset(
+                        'assets/icon_star.png',
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (double value) {
+                        this.rating = rating;
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -289,7 +311,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       preferredSize: Size(80.0.w, 80.0.h),
       child: Consumer<MovieDetailProvider>(
         builder: (context, data, child) {
-          if (data.isLoading) return ShimmerTabBar();
+          if (data.isLoading)
+            return SizedBox(
+              height: 38,
+            );
 
           return Container(
             color: Const.colorPrimary,
@@ -303,6 +328,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                 borderRadius: BorderRadius.circular(50.r),
               ),
               child: TabBar(
+                controller: _tabController,
                 indicator: ShapeDecoration(
                   shape: StadiumBorder(),
                   color: Const.colorIndicator,
@@ -317,15 +343,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           );
         },
       ),
-    );
-  }
-
-  Widget _buildTabView() {
-    return TabBarView(
-      children: [
-        DetailsTab(),
-        ReviewsTab(),
-      ],
     );
   }
 
@@ -353,6 +370,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Container(
+      child: TabBarView(controller: _tabController, children: [
+        DetailsTab(),
+        ReviewsTab(),
+      ]),
     );
   }
 }
