@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/models/movie_model.dart';
+import 'package:movies_app/pages/main_page/main_page.dart';
 import 'package:movies_app/pages/movie_details/details_tab.dart';
 import 'package:movies_app/pages/movie_details/reviews_tab.dart';
 import 'package:movies_app/provider/favorite_provider.dart';
@@ -59,35 +60,44 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Const.colorPrimary,
-      body: SafeArea(
-        child: Consumer<MovieDetailProvider>(
-            builder: (context, movieDetail, child) {
-          if (movieDetail.isLoading) return LoadingScreen();
-          return NestedScrollView(
-            headerSliverBuilder: (context, v) {
-              return [
-                SliverToBoxAdapter(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            _buildHeaderImage(),
-                            _buildHeaderContent(),
-                          ],
-                        ),
-                        _buildTabBar(),
-                      ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => MainPage()),
+            (route) => false);
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Const.colorPrimary,
+        body: SafeArea(
+          child: Consumer<MovieDetailProvider>(
+              builder: (context, movieDetail, child) {
+            if (movieDetail.isLoading) return LoadingScreen();
+            return NestedScrollView(
+              headerSliverBuilder: (context, v) {
+                return [
+                  SliverToBoxAdapter(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              _buildHeaderImage(),
+                              _buildHeaderContent(),
+                            ],
+                          ),
+                          _buildTabBar(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ];
-            },
-            body: _buildContent(),
-          );
-        }),
+                ];
+              },
+              body: _buildContent(),
+            );
+          }),
+        ),
       ),
     );
   }
@@ -156,7 +166,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     // leading back icon button
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => MainPage()),
+                            (route) => false);
                       },
                       child: Icon(
                         Icons.chevron_left,
