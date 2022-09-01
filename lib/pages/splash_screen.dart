@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/pages/MAIN_PAGE/main_page.dart';
 import 'package:movies_app/provider/upcoming_provider.dart';
 import 'package:movies_app/provider/now_playing_provider.dart';
@@ -20,9 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .getNowPlaying();
     await Provider.of<UpcomingProvider>(context, listen: false).getUpcoming();
     await Provider.of<PopularProvider>(context, listen: false).getPopular();
-
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => MainPage()), (route) => false);
+    helper(context).NavigateTo(destination: MainPage());
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/widgets/expandable_text.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
@@ -15,13 +16,11 @@ class ViewAllCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MovieDetailsPage(
-                movieId: data.id,
-              ),
-            ));
+        helper(context).NavigateTo(
+          destination: MovieDetailsPage(
+            movieId: data.id,
+          ),
+        );
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.w),

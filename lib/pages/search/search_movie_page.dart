@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/provider/search_movie_provider.dart';
 import 'package:movies_app/widgets/loading/shimmer_tile.dart';
@@ -62,13 +63,10 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
         for (var item in data)
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MovieDetailsPage(
-                      movieId: item.id,
-                    ),
-                  ));
+              helper(context).NavigateTo(
+                  destination: MovieDetailsPage(
+                movieId: item.id,
+              ));
             },
             child: Container(
               padding: EdgeInsets.fromLTRB(18.w, 18.h, 24.w, 18.h),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/models/home_movie_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
@@ -19,13 +20,11 @@ class MovieCard extends StatelessWidget {
       color: Const.colorPrimary,
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MovieDetailsPage(
-                  movieId: movie.id!,
-                ),
-              ));
+          helper(context).NavigateTo(
+            destination: MovieDetailsPage(
+              movieId: movie.id!,
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(12.r),
         child: Column(

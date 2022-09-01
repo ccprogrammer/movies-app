@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/models/similar_model.dart';
 import 'package:movies_app/pages/movie_details/movie_details_page.dart';
 import 'package:movies_app/widgets/loading/skeleton.dart';
@@ -16,13 +17,11 @@ class SimilarCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MovieDetailsPage(
-                movieId: movie.id,
-              ),
-            ));
+        helper(context).NavigateTo(
+          destination: MovieDetailsPage(
+            movieId: movie.id,
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(9.w, 6.h, 9.w, 6.h),

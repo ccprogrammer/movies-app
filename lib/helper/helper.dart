@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class helper {
   var context;
@@ -15,5 +16,27 @@ class helper {
         style: style ?? null,
       ),
     ));
+  }
+
+  NavigateTo({Widget? destination, bool isRemove = true}) {
+    isRemove
+        ? Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.scale,
+              alignment: Alignment.center,
+              child: destination!,
+            ),
+            (route) => route.isFirst)
+        : Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.scale,
+              alignment: Alignment.center,
+              child: destination!,
+            ),
+          );
+
+    return;
   }
 }

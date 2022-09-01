@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/helper/helper.dart';
 import 'package:movies_app/pages/view_all/recommendations_all.dart';
 import 'package:movies_app/pages/view_all/similar_all.dart';
 import 'package:movies_app/provider/movie_detail_provider.dart';
@@ -91,10 +92,8 @@ class _DetailsTabState extends State<DetailsTab> {
                   _buildSectionTitle(
                       title: 'Similar Movies',
                       route: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SimilarMoviesAll()));
+                        helper(context).NavigateTo(
+                            destination: SimilarMoviesAll(), isRemove: false);
                       }),
                   Container(
                     margin: EdgeInsets.only(top: 8.h),
@@ -140,10 +139,8 @@ class _DetailsTabState extends State<DetailsTab> {
               _buildSectionTitle(
                   title: 'Recommendations',
                   route: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RecommendationsAll()));
+                    helper(context).NavigateTo(
+                        destination: RecommendationsAll(), isRemove: false);
                   }),
               for (var item in data.recommendationsMovie)
                 RecommendationsTile(movie: item),

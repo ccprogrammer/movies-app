@@ -62,11 +62,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => MainPage()),
-            (route) => false);
-        return false;
+        return true;
       },
       child: Scaffold(
         backgroundColor: Const.colorPrimary,
@@ -166,10 +162,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     // leading back icon button
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => MainPage()),
-                            (route) => false);
+                        Navigator.pop(context);
                       },
                       child: Icon(
                         Icons.chevron_left,
