@@ -92,8 +92,8 @@ class _DetailsTabState extends State<DetailsTab> {
                   _buildSectionTitle(
                       title: 'Similar Movies',
                       route: () {
-                        helper(context).NavigateTo(
-                            destination: SimilarMoviesAll(), isRemove: false);
+                        helper(context)
+                            .NavigateTo(destination: SimilarMoviesAll());
                       }),
                   Container(
                     margin: EdgeInsets.only(top: 8.h),
@@ -139,8 +139,8 @@ class _DetailsTabState extends State<DetailsTab> {
               _buildSectionTitle(
                   title: 'Recommendations',
                   route: () {
-                    helper(context).NavigateTo(
-                        destination: RecommendationsAll(), isRemove: false);
+                    helper(context)
+                        .NavigateTo(destination: RecommendationsAll());
                   }),
               for (var item in data.recommendationsMovie)
                 RecommendationsTile(movie: item),

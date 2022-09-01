@@ -18,24 +18,15 @@ class helper {
     ));
   }
 
-  NavigateTo({Widget? destination, bool isRemove = true}) {
-    isRemove
-        ? Navigator.pushAndRemoveUntil(
-            context,
-            PageTransition(
-              type: PageTransitionType.scale,
-              alignment: Alignment.center,
-              child: destination!,
-            ),
-            (route) => route.isFirst)
-        : Navigator.push(
-            context,
-            PageTransition(
-              type: PageTransitionType.scale,
-              alignment: Alignment.center,
-              child: destination!,
-            ),
-          );
+  NavigateTo({Widget? destination}) {
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        alignment: Alignment.center,
+        child: destination!,
+      ),
+    );
 
     return;
   }
