@@ -73,7 +73,7 @@ class MovieCard extends StatelessWidget {
                   SizedBox(height: 7.h),
                   Text(
                     movie.title ?? '',
-                    style: Const.textPrimary.copyWith(fontSize: 16.sp),
+                    style: Const.textPrimary.copyWith(fontSize: 12.sp),
                     maxLines: 2,
                   ),
                   SizedBox(height: 4.h),
