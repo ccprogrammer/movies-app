@@ -101,7 +101,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
     return Consumer<MovieDetailProvider>(
       builder: (context, data, child) {
-        if (data.isLoading) return ShimmerHeaders();
+        if (data.isLoading) return SizedBox();
 
         return Stack(
           children: [
