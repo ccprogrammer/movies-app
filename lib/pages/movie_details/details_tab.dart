@@ -86,7 +86,7 @@ class _DetailsTabState extends State<DetailsTab> {
                     ),
                   ),
                 );
-
+          if (data.similarMovie.isEmpty) return Container();
               return Column(
                 children: [
                   _buildSectionTitle(
