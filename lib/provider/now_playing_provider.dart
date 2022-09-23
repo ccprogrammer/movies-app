@@ -9,16 +9,6 @@ class NowPlayingProvider with ChangeNotifier {
   List<HomeMovieModel> get nowPlaying => _nowPlaying;
   bool get isLoading => _isLoading;
 
-  set nowPlaying(List<HomeMovieModel> _nowPlaying) {
-    _nowPlaying = nowPlaying;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
   Future getNowPlaying() async {
     _isLoading = true;
     try {

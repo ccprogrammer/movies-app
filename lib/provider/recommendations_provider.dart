@@ -9,16 +9,6 @@ class RecommendationsProvider with ChangeNotifier {
   List<RecommendationsModel> get recommendationsMovie => _recommendationsMovie;
   bool get isLoading => _isLoading;
 
-  set recommendationsMovie(List<RecommendationsModel> _recommendationsMovie) {
-    _recommendationsMovie = recommendationsMovie;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
   Future getRecommendationsMovie(movieId) async {
     _isLoading = true;
 

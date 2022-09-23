@@ -9,16 +9,6 @@ class ReviewsProvider with ChangeNotifier {
   List<ReviewsModel> get reviews => _reviews;
   bool get isLoading => _isLoading;
 
-  set reviews(List<ReviewsModel> _reviews) {
-    _reviews = reviews;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
   Future getReviews(movieId) async {
     _isLoading = true;
 

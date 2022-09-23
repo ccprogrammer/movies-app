@@ -9,16 +9,6 @@ class PopularProvider with ChangeNotifier {
   List<HomeMovieModel> get popular => _popular;
   bool get isLoading => _isLoading;
 
-  set popular(List<HomeMovieModel> _popular) {
-    _popular = popular;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
   Future getPopular() async {
     _isLoading = true;
     try {

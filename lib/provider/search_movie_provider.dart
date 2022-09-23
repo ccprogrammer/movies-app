@@ -13,26 +13,6 @@ class SearchedMoviesProvider with ChangeNotifier {
   bool get isError => _isError;
   bool get noMovies => _noMovies;
 
-  set searchedMovies(List<SearchMovieModel> _searchedMovies) {
-    _searchedMovies = searchedMovies;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
-  set isError(bool _isError) {
-    _isError = isError;
-    notifyListeners();
-  }
-
-  set noMovies(bool _noMovies) {
-    _noMovies = noMovies;
-    notifyListeners();
-  }
-
   Future searchMovie(movieName) async {
     _isLoading = true;
     notifyListeners();

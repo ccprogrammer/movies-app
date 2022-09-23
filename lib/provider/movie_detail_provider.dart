@@ -6,22 +6,9 @@ class MovieDetailProvider with ChangeNotifier {
   MovieModel _movieDetail = MovieModel();
   bool _isLoading = true;
 
-
 // getter
   MovieModel get movieDetail => _movieDetail;
   bool get isLoading => _isLoading;
-
-
-// setter
-  set movieDetail(MovieModel _movieDetail) {
-    _movieDetail = movieDetail;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
 
   Future getMovieDetail({movieId}) async {
     _isLoading = true;

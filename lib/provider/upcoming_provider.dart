@@ -9,16 +9,6 @@ class UpcomingProvider with ChangeNotifier {
   List<HomeMovieModel> get upcoming => _upcoming;
   bool get isLoading => _isLoading;
 
-  set upcoming(List<HomeMovieModel> _upcoming) {
-    _upcoming = upcoming;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
   Future getUpcoming() async {
     _isLoading = true;
     try {

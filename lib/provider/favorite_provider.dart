@@ -11,21 +11,6 @@ class FavoriteProvider with ChangeNotifier {
   List<MovieModel> get favorite => _favorite;
   bool get isLoading => _isLoading;
 
-  set favoriteId(List<MovieModel> favoriteId) {
-    _favoriteId = favoriteId;
-    notifyListeners();
-  }
-
-  set favorite(List<MovieModel> favorite) {
-    _favorite = favorite;
-    notifyListeners();
-  }
-
-  set isLoading(bool _isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
-  }
-
 // initiate after implementing shared preferences
   Future setFavoriteList() async {
     _isLoading = true;
