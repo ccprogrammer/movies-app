@@ -74,18 +74,16 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               headerSliverBuilder: (context, v) {
                 return [
                   SliverToBoxAdapter(
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              _buildHeaderImage(),
-                              _buildHeaderContent(),
-                            ],
-                          ),
-                          _buildTabBar(),
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            _buildHeaderImage(),
+                            _buildHeaderContent(),
+                          ],
+                        ),
+                        _buildTabBar(),
+                      ],
                     ),
                   ),
                 ];
@@ -380,11 +378,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget _buildContent() {
-    return Container(
-      child: TabBarView(controller: _tabController, children: [
+    return TabBarView(
+      controller: _tabController,
+      children: [
         DetailsTab(),
         ReviewsTab(),
-      ]),
+      ],
     );
   }
 }
