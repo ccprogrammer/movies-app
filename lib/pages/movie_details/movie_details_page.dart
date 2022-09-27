@@ -74,6 +74,45 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               headerSliverBuilder: (context, v) {
                 return [
                   SliverToBoxAdapter(
+                    child: Stack(
+                      children: [
+                        _buildHeaderImage(),
+                        _buildHeaderContent(),
+                      ],
+                    ),
+                  ),
+                  SliverAppBar(
+                    toolbarHeight: 0,
+                    pinned: true,
+                    bottom: _buildTabBar(),
+                  ),
+                ];
+              },
+              body: _buildContent(),
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+/*
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Const.colorPrimary,
+        body: SafeArea(
+          child: Consumer<MovieDetailProvider>(
+              builder: (context, movieDetail, child) {
+            if (movieDetail.isLoading) return LoadingScreen();
+            return NestedScrollView(
+              headerSliverBuilder: (context, v) {
+                return [
+                  SliverToBoxAdapter(
                     child: Column(
                       children: [
                         Stack(
@@ -95,6 +134,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       ),
     );
   }
+*/
 
   Widget _buildHeaderImage() {
     double width = MediaQuery.of(context).size.width;
