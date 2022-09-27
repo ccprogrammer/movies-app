@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -22,18 +23,14 @@ class helper {
     isRemove
         ? Navigator.pushAndRemoveUntil(
             context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              alignment: Alignment.center,
-              child: destination!,
+            CupertinoPageRoute(
+              builder: (context) => destination!,
             ),
             (route) => false)
         : Navigator.push(
             context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              alignment: Alignment.center,
-              child: destination!,
+            CupertinoPageRoute(
+              builder: (context) => destination!,
             ),
           );
 
