@@ -18,14 +18,14 @@ class helper {
     ));
   }
 
-  NavigateTo({Widget? destination, bool isRemove = false}) {
-    isRemove
-        ? Navigator.pushAndRemoveUntil(
+  NavigateTo({Widget? destination, bool isReplace = false}) {
+    isReplace
+        ? Navigator.pushReplacement(
             context,
             CupertinoPageRoute(
               builder: (context) => destination!,
             ),
-            (route) => false)
+          )
         : Navigator.push(
             context,
             CupertinoPageRoute(

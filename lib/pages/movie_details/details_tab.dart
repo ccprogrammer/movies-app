@@ -187,7 +187,7 @@ class _DetailsTabState extends State<DetailsTab> {
     );
   }
 
-  // Note Used
+  // Not Used
   Widget _buildCast() {
     return Container(
       margin: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),

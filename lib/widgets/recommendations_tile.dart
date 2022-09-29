@@ -16,8 +16,10 @@ class RecommendationsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        helper(context)
-            .NavigateTo(destination: MovieDetailsPage(movieId: movie.id));
+        helper(context).NavigateTo(
+          destination: MovieDetailsPage(movieId: movie.id),
+          isReplace: true,
+        );
       },
       child: Stack(
         children: [

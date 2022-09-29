@@ -21,7 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
         .getNowPlaying();
     await Provider.of<UpcomingProvider>(context, listen: false).getUpcoming();
     await Provider.of<PopularProvider>(context, listen: false).getPopular();
-    helper(context).NavigateTo(destination: MainPage(), isRemove: true);
+
+    // Navigate to home
+    helper(context).NavigateTo(destination: MainPage(), isReplace: true);
   }
 
   @override
@@ -35,17 +37,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Const.colorSplashScreen, Const.colorSplashScreen2])),
-        child: Center(
-          child: Image.asset(
-            'assets/logo.png',
-            width: 108.w,
-            height: 184.h,
+      backgroundColor: Const.colorPrimary,
+      body: Hero(
+        tag: 'logo',
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Const.colorSplashScreen, Const.colorSplashScreen2])),
+          child: Center(
+            child: Image.asset(
+              'assets/logo.png',
+              width: 108.w,
+              height: 184.h,
+            ),
           ),
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/constants.dart';
 import 'package:movies_app/pages/splash_screen.dart';
 import 'package:movies_app/provider/upcoming_provider.dart';
 import 'package:movies_app/provider/favorite_provider.dart';
@@ -12,7 +14,11 @@ import 'package:movies_app/provider/search_movie_provider.dart';
 import 'package:movies_app/provider/similar_movie_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Const.colorPrimary));
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

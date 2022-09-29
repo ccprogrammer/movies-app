@@ -21,6 +21,7 @@ class SimilarCard extends StatelessWidget {
           destination: MovieDetailsPage(
             movieId: movie.id,
           ),
+          isReplace: true,
         );
       },
       child: Container(
